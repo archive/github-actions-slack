@@ -1,0 +1,18 @@
+name: "Github Actions Slack"
+description: "Send messages to Slack from you Github Actions"
+inputs:
+  slack-bot-user-oauth-access-token:
+    description: "Bot User OAuth Access Token"
+    required: true
+  slack-channel:
+    description: "Channel"
+    required: true
+  slack-text:
+    description: "Text"
+    required: true
+outputs:
+  slack-result:
+    description: "The result from the slack call"
+runs:
+  using: "node12"
+  main: "index.js"

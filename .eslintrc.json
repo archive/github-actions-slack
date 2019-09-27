@@ -1,0 +1,18 @@
+{
+  "extends": ["eslint:recommended", "plugin:prettier/recommended"],
+  "plugins": ["prettier"],
+  "env": {
+    "node": true
+  },
+  "parserOptions": {
+    "ecmaVersion": 9
+  },
+  "globals": {
+    "fetch": false,
+    "Promise": false,
+    "FormData": false
+  },
+  "rules": {
+    "no-console": 0
+  }
+}
