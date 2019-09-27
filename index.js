@@ -16,7 +16,9 @@ const run = async () => {
 
     core.setOutput("slack-result", resultAsJson);
 
-    log("payload", payload);
+    log("context", github.context);
+
+    log("payload", github.context.payload);
   } catch (error) {
     core.setFailed(error.message);
   }
