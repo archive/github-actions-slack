@@ -9,7 +9,8 @@ const run = async () => {
     const text = core.getInput("slack-text");
 
     const result = await notify(token, channel, text);
-    core.setOutput("slack-result", result);
+    const resultAsJson = JSON.stringify(result, undefined, 2);
+    core.setOutput("slack-result", resultAsJson);
 
     const payload = JSON.stringify(github.context.payload, undefined, 2);
     console.log(`The event payload: ${payload}`);
