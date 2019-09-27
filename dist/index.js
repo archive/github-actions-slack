@@ -413,6 +413,69 @@ module.exports = opts => {
 
 /***/ }),
 
+/***/ 43:
+/***/ (function(module, __unusedexports, __webpack_require__) {
+
+const https = __webpack_require__(211);
+
+const getOptions = token => {
+  return {
+    hostname: "slack.com",
+    port: 443,
+    path: "/api/chat.postMessage",
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json; charset=utf-8",
+      Authorization: `Bearer ${token}`
+    }
+  };
+};
+
+const post = (token, message) => {
+  return new Promise((resolve, reject) => {
+    const payload = JSON.stringify(message);
+    const options = getOptions(token);
+
+    const req = https.request(options, res => {
+      const chunks = [];
+
+      res.on("data", chunk => {
+        chunks.push(chunk);
+      });
+
+      res.on("end", () => {
+        resolve({
+          statusCode: res.statusCode,
+          result: Buffer.concat(chunks).toString()
+        });
+      });
+    });
+
+    req.on("error", error => {
+      reject(error);
+    });
+
+    req.write(payload);
+    req.end();
+  });
+};
+
+const postMessage = async (token, message) => {
+  const response = await post(token, message);
+  console.log("response", response);
+
+  const result = JSON.parse(response.result);
+
+  if (!result.ok || response.statusCode !== 200) {
+    console.error("Error!", response.statusCode, response.result);
+  }
+};
+
+module.exports = postMessage;
+
+
+/***/ }),
+
 /***/ 47:
 /***/ (function(module, __unusedexports, __webpack_require__) {
 
@@ -1984,7 +2047,7 @@ module.exports = require("os");
 
 const core = __webpack_require__(470);
 const github = __webpack_require__(469);
-const notify = __webpack_require__(676);
+const notify = __webpack_require__(628);
 
 const run = async () => {
   try {
@@ -3914,6 +3977,23 @@ isStream.transform = function (stream) {
 
 /***/ }),
 
+/***/ 325:
+/***/ (function(module) {
+
+const buildMessage = (channel, text) => {
+  const message = {
+    channel,
+    text
+  };
+
+  return message;
+};
+
+module.exports = buildMessage;
+
+
+/***/ }),
+
 /***/ 336:
 /***/ (function(module, __unusedexports, __webpack_require__) {
 
@@ -4155,23 +4235,6 @@ function authenticationRequestError(state, error, options) {
 /***/ (function(module) {
 
 module.exports = require("assert");
-
-/***/ }),
-
-/***/ 359:
-/***/ (function(module) {
-
-const buildMessage = (channel, text) => {
-  const message = {
-    channel,
-    text
-  };
-
-  return message;
-};
-
-module.exports = buildMessage;
-
 
 /***/ }),
 
@@ -7538,6 +7601,23 @@ module.exports = require("path");
 
 /***/ }),
 
+/***/ 628:
+/***/ (function(module, __unusedexports, __webpack_require__) {
+
+const buildMessage = __webpack_require__(325);
+const postMessage = __webpack_require__(43);
+
+const notify = async (token, channel, text) => {
+  const message = buildMessage(channel, text);
+  const status = await postMessage(token, message);
+  return status;
+};
+
+module.exports = notify;
+
+
+/***/ }),
+
 /***/ 649:
 /***/ (function(module, __unusedexports, __webpack_require__) {
 
@@ -7706,23 +7786,6 @@ function authenticate(state, options) {
 module.exports = function btoa(str) {
   return new Buffer(str).toString('base64')
 }
-
-
-/***/ }),
-
-/***/ 676:
-/***/ (function(module, __unusedexports, __webpack_require__) {
-
-const buildMessage = __webpack_require__(359);
-const postMessage = __webpack_require__(952);
-
-const notify = async (token, channel, text) => {
-  const message = buildMessage(channel, text);
-  const status = await postMessage(token, message);
-  return status;
-};
-
-module.exports = notify;
 
 
 /***/ }),
@@ -10713,69 +10776,6 @@ module.exports = function(fn) {
 	try { return fn() } catch (e) {}
 
 }
-
-/***/ }),
-
-/***/ 952:
-/***/ (function(module, __unusedexports, __webpack_require__) {
-
-const https = __webpack_require__(211);
-
-const getOptions = token => {
-  return {
-    hostname: "slack.com",
-    port: 443,
-    path: "/api/chat.postMessage",
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json; charset=utf-8",
-      Authorization: `Bearer ${token}`
-    }
-  };
-};
-
-const post = (token, message) => {
-  return new Promise((resolve, reject) => {
-    const payload = JSON.stringify(message);
-    const options = getOptions(token);
-
-    const req = https.request(options, res => {
-      const chunks = [];
-
-      res.on("data", chunk => {
-        chunks.push(chunk);
-      });
-
-      res.on("end", () => {
-        resolve({
-          statusCode: res.statusCode,
-          result: Buffer.concat(chunks).toString()
-        });
-      });
-    });
-
-    req.on("error", error => {
-      reject(error);
-    });
-
-    req.write(payload);
-    req.end();
-  });
-};
-
-const postMessage = async (token, message) => {
-  const response = await post(token, message);
-  console.log("response", response);
-
-  const result = JSON.parse(response.result);
-
-  if (!result.ok || response.statusCode !== 200) {
-    console.error("Error!", response.statusCode, response.result);
-  }
-};
-
-module.exports = postMessage;
-
 
 /***/ }),
 
