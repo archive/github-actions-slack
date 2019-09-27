@@ -10,6 +10,7 @@ const run = async () => {
 
     const result = await notify(token, channel, text);
     const resultAsJson = JSON.stringify(result, undefined, 2);
+    console.log("resultAsJson: " + resultAsJson);
     core.setOutput("slack-result", resultAsJson);
 
     const payload = JSON.stringify(github.context.payload, undefined, 2);
