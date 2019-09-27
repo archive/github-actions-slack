@@ -462,13 +462,13 @@ const post = (token, message) => {
 
 const postMessage = async (token, message) => {
   const response = await post(token, message);
-  console.log("response", response);
-
   const result = JSON.parse(response.result);
 
   if (!result.ok || response.statusCode !== 200) {
     console.error("Error!", response.statusCode, response.result);
   }
+
+  return response;
 };
 
 module.exports = postMessage;
@@ -2056,15 +2056,21 @@ const run = async () => {
     const text = core.getInput("slack-text");
 
     const result = await notify(token, channel, text);
+    log("result", result);
+
     const resultAsJson = JSON.stringify(result, undefined, 2);
-    console.log("resultAsJson: " + resultAsJson);
+    log("resultAsJson", resultAsJson);
+
     core.setOutput("slack-result", resultAsJson);
 
-    const payload = JSON.stringify(github.context.payload, undefined, 2);
-    console.log(`The event payload: ${payload}`);
+    log("payload", payload);
   } catch (error) {
     core.setFailed(error.message);
   }
+};
+
+const log = (name, data) => {
+  console.log(name, JSON.stringify(data, undefined, 2));
 };
 
 run();
@@ -7611,8 +7617,7 @@ const postMessage = __webpack_require__(43);
 
 const notify = async (token, channel, text) => {
   const message = buildMessage(channel, text);
-  const status = await postMessage(token, message);
-  return status;
+  return await postMessage(token, message);
 };
 
 module.exports = notify;

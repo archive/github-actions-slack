@@ -44,13 +44,13 @@ const post = (token, message) => {
 
 const postMessage = async (token, message) => {
   const response = await post(token, message);
-  console.log("response", response);
-
   const result = JSON.parse(response.result);
 
   if (!result.ok || response.statusCode !== 200) {
     console.error("Error!", response.statusCode, response.result);
   }
+
+  return response;
 };
 
 module.exports = postMessage;

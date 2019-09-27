@@ -9,15 +9,21 @@ const run = async () => {
     const text = core.getInput("slack-text");
 
     const result = await notify(token, channel, text);
+    log("result", result);
+
     const resultAsJson = JSON.stringify(result, undefined, 2);
-    console.log("resultAsJson: " + resultAsJson);
+    log("resultAsJson", resultAsJson);
+
     core.setOutput("slack-result", resultAsJson);
 
-    const payload = JSON.stringify(github.context.payload, undefined, 2);
-    console.log(`The event payload: ${payload}`);
+    log("payload", payload);
   } catch (error) {
     core.setFailed(error.message);
   }
+};
+
+const log = (name, data) => {
+  console.log(name, JSON.stringify(data, undefined, 2));
 };
 
 run();
