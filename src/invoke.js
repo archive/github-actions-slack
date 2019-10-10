@@ -25,6 +25,7 @@ const optional = () => {
   let opt = {};
 
   const env = context.getEnv();
+  console.log("env", stringify(env));
   Object.keys(env)
     .filter(key => key.toUpperCase().startsWith("INPUT_SLACK-OPTIONAL-"))
     .forEach(key => {
