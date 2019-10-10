@@ -1,5 +1,5 @@
-name: "Github Actions Slack"
-description: "Send messages to Slack from you Github Actions"
+name: "Github Actions Slack (with all optional arguments)"
+description: "Post messages to Slack from your Github Actions. Supports the required arguments as well as all the optional once. "
 inputs:
   slack-bot-user-oauth-access-token:
     description: "Bot User OAuth Access Token"
@@ -10,9 +10,12 @@ inputs:
   slack-text:
     description: "Text"
     required: true
+  slack-optional-x:
+    description: "Optional arguments"
+    required: true
 outputs:
   slack-result:
-    description: "The result from the slack call"
+    description: "The result from the post to slack"
 runs:
   using: "node12"
   main: "dist/index.js"
