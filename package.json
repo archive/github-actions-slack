@@ -6,13 +6,16 @@
   "license": "MIT",
   "scripts": {
     "lint": "./node_modules/.bin/eslint --fix *.js",
-    "build": "ncc build index.js -o dist"
+    "build": "ncc build index.js -o dist",
+    "test": "jest src  --notify --config=jest.config.js",
+    "test-debug": "node --inspect-brk node_modules/.bin/jest --runInBand src --config=jest.config.js"
   },
   "devDependencies": {
     "@zeit/ncc": "^0.20.5",
     "eslint": "^6.4.0",
     "eslint-config-prettier": "^6.3.0",
     "eslint-plugin-prettier": "^3.1.1",
+    "jest": "^24.9.0",
     "prettier": "^1.18.2"
   },
   "dependencies": {

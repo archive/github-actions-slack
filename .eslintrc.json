@@ -10,7 +10,11 @@
   "globals": {
     "fetch": false,
     "Promise": false,
-    "FormData": false
+    //"FormData": false,
+    "test": false,
+    "expect": false,
+    "jest": false,
+    "describe": false
   },
   "rules": {
     "no-console": 0
