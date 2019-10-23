@@ -1,4 +1,4 @@
-name: "Simple Github Actions Slack - With support for Slack's optional arguments"
+name: "Github Action to Slack - Simple way to send message to Slack from a Github Action"
 description: "Send messages to Slack from your Github Actions. Supports Slack's required arguments as well as all the optional once"
 branding:
   icon: "message-circle"
