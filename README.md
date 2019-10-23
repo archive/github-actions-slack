@@ -1,4 +1,6 @@
-# Github Action for sending message to Slack <br> - With support for Slack's optional arguments
+# Github Action for sending message to Slack
+
+<br> - With support for Slack's optional arguments
 
 ![](https://img.shields.io/github/release/archive/github-actions-slack/all.svg)
 ![](https://snyk.io/test/github/archive/github-actions-slack/badge.svg)
