@@ -15,7 +15,7 @@ inputs:
     required: true
   slack-optional-x:
     description: "Optional arguments"
-    required: true
+    required: false
 outputs:
   slack-result:
     description: "The result from the post to slack"
