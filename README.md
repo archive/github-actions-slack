@@ -105,24 +105,37 @@ Follow this guide on how to create a Slack App and Bot for your workspace:
 
 - https://slack.com/intl/en-se/help/articles/115005265703-create-a-bot-for-your-workspace
 
-In short, you should:
+You should:
 
-1 Create a new Slack App: https://api.slack.com/apps?new_app=1
-
-2. Add a new Bot user
+1. Create a new Slack App, https://api.slack.com/apps?new_app=1
+1. Go to "Basic Information" > "Display Information" > "App icon & Preview" and add avatar for you App. This will be shown in Slack when you receive messages
+1. Go to "Bot User" > "Add" and add a bot user to your Slack App
+1. Go to "Install App" > "Install App to Workspace" to install your Slack App into your Slack workspace
+1. Done
 
 ### 2. Save Bot Access Token on Github
 
-To be able to send messages to slack, the Action needs the Auth Token for the App
+To be able to send messages to slack, the Action needs the Auth Token for the Slack App. Since the Auth Token is sensitive information, you should NOT place it in the yaml file of the Action, but instead in the Github Secrets area.
 
 1. Go to your App on Slack, https://api.slack.com/apps/
-1. Go to "OAuth & Permissions"
-1. Copy the `OAuth Access Token`
+1. Go to "OAuth & Permissions" > "Bot User OAuth Access Token"
+1. Copy the `Bot User OAuth Access Token`
 1. Go to your Github Repo
-1. Go to Settings > Secrets
-1. Create a new secret called `SLACK_BOT_USER_OAUTH_ACCESS_TOKEN` with the value you just copied from Slack
+1. Go to "Settings" > "Secrets" for the repo
+1. Create a new secret called `SLACK_BOT_USER_OAUTH_ACCESS_TOKEN` with the value from `Bot User OAuth Access Token`
+1. Done
+
+### 2. Create a new Github Action
+
+1. Go to your github repo
+1. Go to actions
+1. Create a new one, you can use the samples above
 
 ## Q&A
+
+### It's not working
+
+Please look at the individual steps on your github action. Maybe you have forgotten something.
 
 ### What information about the repo etc is available?
 
