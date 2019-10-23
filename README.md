@@ -1,4 +1,4 @@
-# Simple Github Actions Slack <br> - With support for Slack's optional arguments
+# Github Action for sending message to Slack <br> - With support for Slack's optional arguments
 
 ![](https://img.shields.io/github/release/archive/github-actions-slack/all.svg)
 ![](https://snyk.io/test/github/archive/github-actions-slack/badge.svg)
@@ -7,22 +7,24 @@ This Action allows you to send messages to Slack from your Github Actions. Suppo
 
 ![Slack result](./images/slack-result.png "Slack result")
 
-This action is just an HTTPS call to Slack API, so you can easily build this for yourself, or use this action or any one of the hundred other Slack actions available.
+This action is just an HTTPS call to Slack API, so you can easily build this by yourself, or use this action or any one of the hundred other Slack actions available.
 
 ## Requirements
 
 1. Slack Workspace and Channel
 1. A Slack App and Bot - the App and Bot will be used to send messages to your channel. It sounds hard, but it's not :)
 1. A Github Action - the place where you wants to send Slack messages
-1. Github Secret - the Slack Bot auth token, used when posting messages to Github API
+1. Github Secret - the Slack Bot auth token, used when posting messages to Slack API
 
 ## Setup
 
 **Required: Github Repository Secret:**
 
-- `SLACK_BOT_USER_OAUTH_ACCESS_TOKEN` - This is the bot token, the credentials for allowing you to send messages from github
+- `SLACK_BOT_USER_OAUTH_ACCESS_TOKEN` - This is the Slack App token, the credentials for allowing you to send messages from github to Slack
 
 **Required: Github Action Parameters:**
+
+- `slack-bot-user-oauth-access-token` - `SLACK_BOT_USER_OAUTH_ACCESS_TOKEN` secret
 
 - `slack-channel` - The channel where you want the message
 
@@ -178,10 +180,6 @@ jobs:
 
 From: https://help.github.com/en/github/automating-your-workflow-with-github-actions/contexts-and-expression-syntax-for-github-actions
 
-### Why did you build your own?
-
-It was a good way to learn more about Github Actions
-
 ### Why JavaScript and not Shell/etc?
 
 _"JavaScript actions can run directly on any of the GitHub-hosted virtual machines, and separate the action code from the environment used to run the code. Using a JavaScript action simplifies the action code and executes faster than a Docker container action."_
@@ -193,4 +191,12 @@ It's simple, it just takes all the parameters and does an HTTPS POST to api.slac
 
 ### I want another avatar to be used in Slack
 
-By default the Avatar in Slack will be the same as for the Slack App you created. If you want to change this based on action, look at the https://api.slack.com/methods/chat.postMessage `icon_emoji` parameter.
+By default the avatar in Slack will be the same as for the Slack App you created. If you want to change this based on action, look at the https://api.slack.com/methods/chat.postMessage `icon_emoji` parameter.
+
+### Why did you build your own?
+
+It was a good way to learn more about Github Actions
+
+### Why should I use this?
+
+This action is just an HTTPS POST to Slack API, so you can easily build this by yourself, or use this, or use any other action available on the marketplace :)
