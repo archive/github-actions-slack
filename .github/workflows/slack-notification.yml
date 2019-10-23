@@ -5,14 +5,14 @@ on: [push, pull_request, issues]
 jobs:
   slack-notifications:
     runs-on: ubuntu-latest
-    name: Sends a message to Slack when a push, a pull request or an issues is made
+    name: Sends a message to Slack when a push, a pull request or an issue is made
     steps:
-    - name: Send
-      id: send
-      uses: archive/github-actions-slack@master
-      with:
-        slack-bot-user-oauth-access-token: ${{ secrets.SLACK_BOT_USER_OAUTH_ACCESS_TOKEN }}
-        slack-channel: test-temp
-        slack-text: Hello! We have a ${{ github.event_name }} on ${{ github.repository }}
-    - name: Result from send
-      run: echo "The result was ${{ steps.notify.outputs.slack-result }}"
+      - name: Send
+        id: send
+        uses: archive/github-actions-slack@master
+        with:
+          slack-bot-user-oauth-access-token: ${{ secrets.SLACK_BOT_USER_OAUTH_ACCESS_TOKEN }}
+          slack-channel: test-temp
+          slack-text: Hello! We have a ${{ github.event_name }} on ${{ github.repository }}
+      - name: Result from send
+        run: echo "The result was ${{ steps.notify.outputs.slack-result }}"

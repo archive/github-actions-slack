@@ -1,13 +1,13 @@
 # Simple Github Actions Slack - With good support for Slack's optional arguments
 
-This Action alow you to send messages to Slack from your Github Actions. Supports Slack's required arguments as well as all the optional once. It's JavaScript based and thus fast to run.
+This Action allows you to send messages to Slack from your Github Actions. Supports Slack's required arguments as well as all the optional once. It's JavaScript-based and thus fast to run.
 
-This action is just a HTTPS call to Slack API, so you can easily build this for yourself, or use this action, or anyone of the hundred other Slack actions available.
+This action is just an HTTPS call to Slack API, so you can easily build this for yourself, or use this action or any one of the hundred other Slack actions available.
 
 ## Requirements
 
 1. Slack Workspace and Channel
-1. A Slack App and Bot - the App and Bot will be used to send send messages to your channel. It sounds hard, but it's not :)
+1. A Slack App and Bot - the App and Bot will be used to send messages to your channel. It sounds hard, but it's not :)
 1. A Github Action - the place where you wants to send Slack messages
 1. Github Secret - the Slack Bot auth token, used when posting messages to Github API
 
@@ -50,17 +50,17 @@ on: [push, pull_request, issues]
 jobs:
   slack-notifications:
     runs-on: ubuntu-latest
-    name: Sends a message to Slack when a push, a pull request or an issues is made
+    name: Sends a message to Slack when a push, a pull request or an issue is made
     steps:
-    - name: Send
-      id: send
-      uses: archive/github-actions-slack@master
-      with:
-        slack-bot-user-oauth-access-token: ${{ secrets.SLACK_BOT_USER_OAUTH_ACCESS_TOKEN }}
-        slack-channel: test-temp
-        slack-text: Hello! We have a ${{ github.event_name }} on ${{ github.repository }}
-    - name: Result from send
-      run: echo "The result was ${{ steps.notify.outputs.slack-result }}"
+      - name: Send
+        id: send
+        uses: archive/github-actions-slack@master
+        with:
+          slack-bot-user-oauth-access-token: ${{ secrets.SLACK_BOT_USER_OAUTH_ACCESS_TOKEN }}
+          slack-channel: test-temp
+          slack-text: Hello! We have a ${{ github.event_name }} on ${{ github.repository }}
+      - name: Result from send
+        run: echo "The result was ${{ steps.notify.outputs.slack-result }}"
 ```
 
 ## How to setup your first Github Action in your repository that will call this Action
@@ -139,4 +139,4 @@ _"JavaScript actions can run directly on any of the GitHub-hosted virtual machin
 
 ### How does the Action JavaScript code work
 
-It's simple, it just takes all the parameters and do a HTTPS POST to api.slack.com.
+It's simple, it just takes all the parameters and does an HTTPS POST to api.slack.com.
