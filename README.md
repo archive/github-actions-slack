@@ -103,6 +103,7 @@ Follow this guide on how to create a Slack App and Bot for your workspace:
 - https://slack.com/intl/en-se/help/articles/115005265703-create-a-bot-for-your-workspace
 
 In short, you should:
+
 1 Create a new Slack App: https://api.slack.com/apps?new_app=1
 
 2. Add a new Bot user
