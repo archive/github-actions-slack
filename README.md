@@ -1,5 +1,8 @@
 # Simple Github Actions Slack - With good support for Slack's optional arguments
 
+![](https://img.shields.io/github/release/archive/github-actions-slack/all.svg)
+![](https://snyk.io/test/github/archive/github-actions-slack/badge.svg)
+
 This Action allows you to send messages to Slack from your Github Actions. Supports Slack's required arguments as well as all the optional once. It's JavaScript-based and thus fast to run.
 
 ![Slack result](./images/slack-result.png "Slack result")
