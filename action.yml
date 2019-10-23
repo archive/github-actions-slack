@@ -1,5 +1,5 @@
-name: "Github Actions Slack (with all optional arguments)"
-description: "Post messages to Slack from your Github Actions. Supports the required arguments as well as all the optional once. "
+name: "Github Actions Slack (simple with all optional arguments)"
+description: "Post/send messages to Slack from your Github Actions. Supports the required arguments as well as all the optional once. "
 inputs:
   slack-bot-user-oauth-access-token:
     description: "Bot User OAuth Access Token"

@@ -46,8 +46,8 @@ const sendMessage = async (token, message) => {
   const response = await post(token, message);
   const result = JSON.parse(response.result);
 
-  if (!result.ok || response.statusCode !== 200) {
-    console.error("Error!", response.statusCode, response.result);
+  if (!result || !result.ok || response.statusCode !== 200) {
+    throw `Error! ${JSON.stringify(response)}`;
   }
 
   return response;

@@ -11,7 +11,10 @@ const buildMessage = require("../src/build-message");
     return;
   }
 
-  const message = buildMessage(process.env.CHANNEL, process.env.TEXT, {});
+  const message = buildMessage(process.env.CHANNEL, process.env.TEXT, {
+    as_user: false,
+    icon_emoji: ":chart_with_upwards_trend:"
+  });
   const result = await postMessage(
     process.env.BOT_USER_OAUTH_ACCESS_TOKEN,
     message

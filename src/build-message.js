@@ -1,11 +1,11 @@
-const buildMessage = (channel, text, options) => {
+const buildMessage = (channel, text, optional = {}) => {
   const message = {
     channel,
     text
   };
 
-  Object.keys(options).forEach(name => {
-    message[name] = options[name];
+  Object.keys(optional).forEach(name => {
+    message[name] = optional[name];
   });
 
   return message;
