@@ -135,7 +135,9 @@ To be able to send messages to slack, the Action needs the Auth Token for the Sl
 
 ### It's not working
 
-Please look at the individual steps on your github action. Maybe you have forgotten something.
+Please look at the individual steps on your Github Action. Maybe you have forgotten to set Channel or Token:
+
+![Sample Error](./images/sample-error.png "Sample Error")
 
 ### What information about the repo etc is available?
 
