@@ -92,6 +92,8 @@ jobs:
         run: echo "The result was ${{ steps.notify.outputs.slack-result }}"
 ```
 
+![Slack result](./images/slack-result-optional.png "Slack result")
+
 ## How to setup your first Github Action in your repository that will call this Action
 
 ### 1. Create a Slack bot
