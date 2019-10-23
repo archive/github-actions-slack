@@ -1,9 +1,9 @@
-name: slack-notification
+name: slack-notification-with-optional-parameters
 
 on: [push, pull_request, issues]
 
 jobs:
-  slack-notification:
+  slack-notification-with-optional-parameters:
     runs-on: ubuntu-latest
     name: Sends a message to Slack when a push, a pull request or an issue is made
     steps:
@@ -12,6 +12,8 @@ jobs:
         with:
           slack-bot-user-oauth-access-token: ${{ secrets.SLACK_BOT_USER_OAUTH_ACCESS_TOKEN }}
           slack-channel: test-temp
-          slack-text: Hello! Event "${{ github.event_name }}" in "${{ github.repository }}" 🤓
+          slack-text: Hello! Something is burning! Or not...
+          slack-optional-icon_emoji: ":fire:"
+          slack-optional-as_user: false
       - name: Result from "Send Message"
         run: echo "The result was ${{ steps.notify.outputs.slack-result }}"

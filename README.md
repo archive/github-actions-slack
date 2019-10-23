@@ -38,7 +38,7 @@ and so forth.
 
 Please see Slack API documentation for all available optional parameters: https://api.slack.com/methods/chat.postMessage
 
-## Sample action file
+## Sample Action file with Slack Channel and Text
 
 [.github/workflows/slack-notification.yml](.github/workflows/slack-notification.yml)
 
@@ -55,7 +55,6 @@ jobs:
     name: Sends a message to Slack when a push, a pull request or an issue is made
     steps:
       - name: Send message to Slack API
-        id: send
         uses: archive/github-actions-slack@master
         with:
           slack-bot-user-oauth-access-token: ${{ secrets.SLACK_BOT_USER_OAUTH_ACCESS_TOKEN }}
@@ -66,6 +65,32 @@ jobs:
 ```
 
 ![Slack result](./images/slack-result.png "Slack result")
+
+## Sample Action file with Slack optional parameters
+
+[.github/workflows/slack-notification.yml](.github/workflows/slack-notification.yml)
+
+```
+name: slack-notification-with-optional-parameters
+
+on: [push, pull_request, issues]
+
+jobs:
+  slack-notification-with-optional-parameters:
+    runs-on: ubuntu-latest
+    name: Sends a message to Slack when a push, a pull request or an issue is made
+    steps:
+      - name: Send message to Slack API
+        uses: archive/github-actions-slack@master
+        with:
+          slack-bot-user-oauth-access-token: ${{ secrets.SLACK_BOT_USER_OAUTH_ACCESS_TOKEN }}
+          slack-channel: test-temp
+          slack-text: Hello! Something is burning! Or not...
+          slack-optional-icon_emoji: ":fire:"
+          slack-optional-as_user: false
+      - name: Result from "Send Message"
+        run: echo "The result was ${{ steps.notify.outputs.slack-result }}"
+```
 
 ## How to setup your first Github Action in your repository that will call this Action
 
