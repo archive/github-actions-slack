@@ -1,5 +1,8 @@
 name: "Simple Github Actions Slack - With support for Slack's optional arguments"
 description: "Send messages to Slack from your Github Actions. Supports Slack's required arguments as well as all the optional once"
+branding:
+  icon: "slack"
+  color: "green"
 inputs:
   slack-bot-user-oauth-access-token:
     description: "Bot User OAuth Access Token"
