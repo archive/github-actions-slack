@@ -2,6 +2,8 @@
 
 This Action allows you to send messages to Slack from your Github Actions. Supports Slack's required arguments as well as all the optional once. It's JavaScript-based and thus fast to run.
 
+![Slack result](./images/slack-result.png "Slack result")
+
 This action is just an HTTPS call to Slack API, so you can easily build this for yourself, or use this action or any one of the hundred other Slack actions available.
 
 ## Requirements
@@ -62,6 +64,8 @@ jobs:
       - name: Result from "Send Message"
         run: echo "The result was ${{ steps.notify.outputs.slack-result }}"
 ```
+
+![Slack result](./images/slack-result.png "Slack result")
 
 ## How to setup your first Github Action in your repository that will call this Action
 
@@ -140,3 +144,7 @@ _"JavaScript actions can run directly on any of the GitHub-hosted virtual machin
 ### How does the Action JavaScript code work
 
 It's simple, it just takes all the parameters and does an HTTPS POST to api.slack.com.
+
+### I want another avatar to be used in Slack
+
+By default the Avatar in Slack will be the same as for the Slack App you created. If you want to change this based on action, look at the https://api.slack.com/methods/chat.postMessage `icon_emoji` parameter.
