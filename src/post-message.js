@@ -1,6 +1,6 @@
 const https = require("https");
 
-const getOptions = token => {
+const getOptions = (token) => {
   return {
     hostname: "slack.com",
     port: 443,
@@ -8,32 +8,35 @@ const getOptions = token => {
     method: "POST",
     headers: {
       "Content-Type": "application/json; charset=utf-8",
-      Authorization: `Bearer ${token}`
-    }
+      Authorization: `Bearer ${token}`,
+    },
   };
 };
 
 const post = (token, message) => {
   return new Promise((resolve, reject) => {
     const payload = JSON.stringify(message);
+
+    console.log("DEBUG: Payload", payload);
+
     const options = getOptions(token);
 
-    const req = https.request(options, res => {
+    const req = https.request(options, (res) => {
       const chunks = [];
 
-      res.on("data", chunk => {
+      res.on("data", (chunk) => {
         chunks.push(chunk);
       });
 
       res.on("end", () => {
         resolve({
           statusCode: res.statusCode,
-          result: Buffer.concat(chunks).toString()
+          result: Buffer.concat(chunks).toString(),
         });
       });
     });
 
-    req.on("error", error => {
+    req.on("error", (error) => {
       reject(error);
     });
 

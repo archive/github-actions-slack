@@ -202,3 +202,17 @@ It was a good way to learn more about Github Actions
 ### Why should I use this?
 
 This action is just an HTTPS POST to Slack API, so you can easily build this by yourself, or use this, or use any other action available on the marketplace :)
+
+## Development and testing
+
+See package.json for `yarn lint`, `yarn test`, etc.
+
+Remember to create the dist with `yarn build`.
+
+To run local integration test (from this repository):
+
+```
+env BOT_USER_OAUTH_ACCESS_TOKEN=<YOUR TOKEN> CHANNEL=<YOUR CHANNEL> TEXT="Test" node integration-test/end-to-end.js
+```
+
+To debug action and see what payload is being sent to slack, enable debugging: https://docs.github.com/en/actions/configuring-and-managing-workflows/managing-a-workflow-run#enabling-debug-logging
