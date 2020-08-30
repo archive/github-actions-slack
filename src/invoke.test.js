@@ -3,7 +3,7 @@ describe("invoke", () => {
     mockSlackRequiredArguments({
       "slack-bot-user-oauth-access-token": "some-token",
       "slack-channel": "some-channel",
-      "slack-text": "some-text"
+      "slack-text": "some-text",
     });
 
     const httpsMock = mockHttps();
@@ -18,7 +18,7 @@ describe("invoke", () => {
   test("with optional", () => {
     mockSlackOptionalArguments({
       "INPUT_SLACK-OPTIONAL-ICON_EMOJI": ":some-emoji:",
-      "INPUT_SLACK-OPTIONAL-ICON_URL": "https://"
+      "INPUT_SLACK-OPTIONAL-ICON_URL": "https://",
     });
 
     const httpsMock = mockHttps();
@@ -28,6 +28,21 @@ describe("invoke", () => {
     const requestPayload = httpsMock.getRequestPayload();
     expect(requestPayload.icon_emoji).toBe(":some-emoji:");
     expect(requestPayload.icon_url).toBe("https://");
+  });
+
+  test("ignore empty optionals", () => {
+    mockSlackOptionalArguments({
+      "INPUT_SLACK-OPTIONAL-ICON_EMOJI": "",
+      "INPUT_SLACK-OPTIONAL-ICON_URL": "",
+    });
+
+    const httpsMock = mockHttps();
+
+    require("./invoke")();
+
+    const requestPayload = httpsMock.getRequestPayload();
+    expect(requestPayload.icon_emoji).not.toBeDefined();
+    expect(requestPayload.icon_url).not.toBeDefined();
   });
 
   const mockSlackRequiredArguments = (mockSetup, mockEnv = []) => {
@@ -41,11 +56,11 @@ describe("invoke", () => {
       setOutput: function() {},
       getEnv: function() {
         return mockEnv;
-      }
+      },
     }));
   };
 
-  const mockSlackOptionalArguments = mockEnv => {
+  const mockSlackOptionalArguments = (mockEnv) => {
     mockSlackRequiredArguments([], mockEnv);
   };
 
@@ -53,11 +68,11 @@ describe("invoke", () => {
     const mockRequest = {
       on: jest.fn(),
       write: jest.fn(),
-      end: jest.fn()
+      end: jest.fn(),
     };
 
     jest.mock("https", () => ({
-      request: jest.fn().mockReturnValue(mockRequest)
+      request: jest.fn().mockReturnValue(mockRequest),
     }));
 
     function getRequestPayload() {
@@ -65,7 +80,7 @@ describe("invoke", () => {
     }
 
     return {
-      getRequestPayload
+      getRequestPayload,
     };
   };
 });

@@ -24,8 +24,9 @@ const optional = () => {
 
   const env = context.getEnv();
   Object.keys(env)
-    .filter(key => key.toUpperCase().startsWith("INPUT_SLACK-OPTIONAL-"))
-    .forEach(key => {
+    .filter((key) => !!env[key])
+    .filter((key) => key.toUpperCase().startsWith("INPUT_SLACK-OPTIONAL-"))
+    .forEach((key) => {
       const slackKey = key.replace("INPUT_SLACK-OPTIONAL-", "").toLowerCase();
       opt[slackKey] = env[key];
     });
@@ -33,6 +34,6 @@ const optional = () => {
   return opt;
 };
 
-const stringify = data => JSON.stringify(data, undefined, 2);
+const stringify = (data) => JSON.stringify(data, undefined, 2);
 
 module.exports = invoke;
