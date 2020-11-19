@@ -156,7 +156,7 @@ on: push
 
 jobs:
   one:
-    runs-on: ubuntu-16.04
+    runs-on: ubuntu-latest
     steps:
       - name: Dump GitHub context
         env:
