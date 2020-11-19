@@ -63,6 +63,7 @@ jobs:
     steps:
       - name: Send message to Slack API
         uses: archive/github-actions-slack@v1.0.3
+        id: notify
         with:
           slack-bot-user-oauth-access-token: ${{ secrets.SLACK_BOT_USER_OAUTH_ACCESS_TOKEN }}
           slack-channel: test
@@ -89,6 +90,7 @@ jobs:
     steps:
       - name: Send message to Slack API
         uses: archive/github-actions-slack@v1.0.3
+        id: notify
         with:
           slack-bot-user-oauth-access-token: ${{ secrets.SLACK_BOT_USER_OAUTH_ACCESS_TOKEN }}
           slack-channel: test
