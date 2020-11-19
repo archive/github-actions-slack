@@ -143,6 +143,8 @@ Please look at the individual steps on your Github Action. Maybe you have forgot
 
 ![Sample Error](./images/sample-error.png "Sample Error")
 
+To debug action and see what payload is being sent to slack, enable debugging: https://docs.github.com/en/actions/configuring-and-managing-workflows/managing-a-workflow-run#enabling-debug-logging (`ACTIONS_RUNNER_DEBUG=true` and `ACTIONS_STEP_DEBUG=true` under `Settings > Secrets`)
+
 ### What information about the repo etc is available?
 
 You can easily print everything you have while running the action. It can be a good way to see what you can send to Slack.
@@ -214,5 +216,3 @@ To run local integration test (from this repository):
 ```
 env BOT_USER_OAUTH_ACCESS_TOKEN=<YOUR TOKEN> CHANNEL=<YOUR CHANNEL> TEXT="Test" node integration-test/end-to-end.js
 ```
-
-To debug action and see what payload is being sent to slack, enable debugging: https://docs.github.com/en/actions/configuring-and-managing-workflows/managing-a-workflow-run#enabling-debug-logging
