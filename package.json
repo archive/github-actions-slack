@@ -11,15 +11,15 @@
     "test-debug": "node --inspect-brk node_modules/.bin/jest --runInBand src --config=jest.config.js"
   },
   "devDependencies": {
-    "@zeit/ncc": "^0.20.5",
-    "eslint": "^6.4.0",
+    "@vercel/ncc": "^0.25.1",
+    "eslint": "^7.13.0",
     "eslint-config-prettier": "^6.3.0",
     "eslint-plugin-prettier": "^3.1.1",
-    "jest": "^24.9.0",
-    "prettier": "^1.18.2"
+    "jest": "^26.6.3",
+    "prettier": "^2.1.2"
   },
   "dependencies": {
     "@actions/core": "^1.1.1",
-    "@actions/github": "^1.1.0"
+    "@actions/github": "^4.0.0"
   }
 }
