@@ -1,16 +1,19 @@
 const core = require("@actions/core");
 
-const getRequired = name => core.getInput(name, { required: true });
+const getRequired = (name) => core.getInput(name, { required: true });
+
+const getOptional = (name) => core.getInput(name, { required: false });
 
 const getEnv = () => process.env;
 
-const setOutput = (...args) => core.setOutput(args);
+const setOutput = (name, value) => core.setOutput(name, value);
 
-const setFailed = (...args) => core.setFailed(args);
+const setFailed = (msg) => core.setFailed(msg);
 
 module.exports = {
   getRequired,
+  getOptional,
   getEnv,
   setOutput,
-  setFailed
+  setFailed,
 };

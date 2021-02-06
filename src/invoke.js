@@ -1,39 +1,27 @@
 const context = require("./context");
-const { postMessage } = require("./slack-api");
-const buildMessage = require("./build-message");
+const { postMessage } = require("./message");
+const { addReaction } = require("./reaction");
+
+const jsonPretty = (data) => JSON.stringify(data, undefined, 2);
 
 const invoke = async () => {
   try {
-    const token = context.getRequired("slack-bot-user-oauth-access-token");
-    const channel = context.getRequired("slack-channel");
-    const text = context.getRequired("slack-text");
+    const func = context.getOptional("slack-function") || "send-message";
 
-    const message = buildMessage(channel, text, optional());
-    const result = await postMessage(token, message);
-
-    const resultAsJson = stringify(result);
-
-    context.setOutput("slack-result", resultAsJson);
+    switch (func) {
+      case "send-message":
+        await postMessage();
+        break;
+      case "send-reaction":
+        await addReaction();
+        break;
+      default:
+        context.setFailed("Unhandled `slack-function`: " + func);
+        break;
+    }
   } catch (error) {
-    context.setFailed(stringify(error));
+    context.setFailed("invoke failed:" + error + ":" + jsonPretty(error));
   }
 };
-
-const optional = () => {
-  let opt = {};
-
-  const env = context.getEnv();
-  Object.keys(env)
-    .filter((key) => !!env[key])
-    .filter((key) => key.toUpperCase().startsWith("INPUT_SLACK-OPTIONAL-"))
-    .forEach((key) => {
-      const slackKey = key.replace("INPUT_SLACK-OPTIONAL-", "").toLowerCase();
-      opt[slackKey] = env[key];
-    });
-
-  return opt;
-};
-
-const stringify = (data) => JSON.stringify(data, undefined, 2);
 
 module.exports = invoke;
