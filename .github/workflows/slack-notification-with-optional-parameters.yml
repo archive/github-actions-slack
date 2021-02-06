@@ -1,6 +1,6 @@
 name: slack-notification-with-optional-parameters
 
-on: [push, pull_request, issues]
+on: [push, issues]
 
 jobs:
   slack-notification-with-optional-parameters:
