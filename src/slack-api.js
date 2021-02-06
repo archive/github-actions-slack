@@ -43,7 +43,7 @@ const post = (token, message) => {
   });
 };
 
-const sendMessage = async (token, message) => {
+const postMessage = async (token, message) => {
   const response = await post(token, message);
   const result = JSON.parse(response.result);
 
@@ -54,4 +54,4 @@ const sendMessage = async (token, message) => {
   return response;
 };
 
-module.exports = sendMessage;
+module.exports = { postMessage };

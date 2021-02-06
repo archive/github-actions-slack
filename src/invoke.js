@@ -1,5 +1,5 @@
 const context = require("./context");
-const postMessage = require("./post-message");
+const { postMessage } = require("./slack-api");
 const buildMessage = require("./build-message");
 
 const invoke = async () => {
