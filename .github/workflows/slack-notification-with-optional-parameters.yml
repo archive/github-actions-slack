@@ -19,4 +19,4 @@ jobs:
           slack-optional-as_user: false
 
       - name: Result from "Send Slack Message"
-        run: echo "${{ steps.send-message.outputs.slack-result }}"
+        run: echo -e "${{ steps.send-message.outputs.slack-result }}"
