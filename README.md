@@ -170,7 +170,7 @@ jobs:
 
 **Result / return value**
 
-- slack-result (.outputs.slack-result) - Contains the result of the sent reaction
+- `slack-result` (.outputs.slack-result) - Contains the result of the sent reaction
 
 ### Sample Action file with Slack Channel and Text
 
