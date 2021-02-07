@@ -26,10 +26,10 @@ With the latest changes to Slack API, please use channel id instead of channel n
 
 This action supports:
 
-- 1. Send messages to Slack<br>
+* 1. Send messages to Slack<br>
      <img src="./images/message.png" width="300">
 
-- 2. Send reaction on sent messages to Slack<br>
+* 2. Send reaction on sent messages to Slack<br>
      <img src="./images/reaction.png" width="300">
 
 ## 1. Send messages to Slack
