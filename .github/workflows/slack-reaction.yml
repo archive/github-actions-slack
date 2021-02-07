@@ -25,7 +25,7 @@ jobs:
         run: echo "..."
 
       - name: Send Slack Reaction To Message
-        uses: archive/github-actions-slack@slack-reactions
+        uses: archive/github-actions-slack@master
         with:
           slack-function: send-reaction
           slack-bot-user-oauth-access-token: ${{ secrets.SLACK_BOT_USER_OAUTH_ACCESS_TOKEN }}
