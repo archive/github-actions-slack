@@ -9,7 +9,7 @@ jobs:
 
     steps:
       - name: Send Slack Message
-        uses: archive/github-actions-slack@slack-reactions
+        uses: archive/github-actions-slack@master
         id: send-message
 
         with:
