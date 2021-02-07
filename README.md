@@ -1,4 +1,4 @@
-# Github Action for sending message to Slack
+# Github Action for sending message (and reactions) to Slack
 
 — With support for Slack's optional arguments
 
