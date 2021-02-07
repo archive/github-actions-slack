@@ -162,11 +162,11 @@ jobs:
 
 - `slack-bot-user-oauth-access-token` - `SLACK_BOT_USER_OAUTH_ACCESS_TOKEN` secret
 
-- `slack-channel` - The channel where you want the message
+- `slack-channel` - The channel where you want the message. You can find the channel id in the response payload after sending a message
 
 - `slack-emoji-name` - The name of the emoji to send (e.g. "fire"/"thumbsup")
 
-- `slack-message-timestamp` - The unique ts/timestamp of the message you want to react to. You can find the timestamp in the response payload after sending a message (TBD)
+- `slack-message-timestamp` - The unique ts/timestamp of the message you want to react to. You can find the timestamp in the response payload after sending a message
 
 **Result / return value**
 
