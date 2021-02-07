@@ -1,4 +1,4 @@
-describe("invoke", () => {
+describe("message", () => {
   test("with required (token, channel and text)", () => {
     mockSlackRequiredArguments({
       "slack-bot-user-oauth-access-token": "some-token",
@@ -8,7 +8,8 @@ describe("invoke", () => {
 
     const httpsMock = mockHttps();
 
-    require("./invoke")();
+    const { postMessage } = require("./index");
+    postMessage();
 
     const requestPayload = httpsMock.getRequestPayload();
     expect(requestPayload.channel).toBe("some-channel");
@@ -23,7 +24,8 @@ describe("invoke", () => {
 
     const httpsMock = mockHttps();
 
-    require("./invoke")();
+    const { postMessage } = require("./index");
+    postMessage();
 
     const requestPayload = httpsMock.getRequestPayload();
     expect(requestPayload.icon_emoji).toBe(":some-emoji:");
@@ -38,7 +40,8 @@ describe("invoke", () => {
 
     const httpsMock = mockHttps();
 
-    require("./invoke")();
+    const { postMessage } = require("./index");
+    postMessage();
 
     const requestPayload = httpsMock.getRequestPayload();
     expect(requestPayload.icon_emoji).not.toBeDefined();
@@ -46,15 +49,15 @@ describe("invoke", () => {
   });
 
   const mockSlackRequiredArguments = (mockSetup, mockEnv = []) => {
-    jest.mock("./context", () => ({
-      getRequired: function(key) {
+    jest.mock("../context", () => ({
+      getRequired: function (key) {
         return mockSetup[key];
       },
-      setFailed: function(ex) {
+      setFailed: function (ex) {
         console.error("Test failed: " + ex);
       },
-      setOutput: function() {},
-      getEnv: function() {
+      setOutput: function () {},
+      getEnv: function () {
         return mockEnv;
       },
     }));

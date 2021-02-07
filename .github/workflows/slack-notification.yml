@@ -5,13 +5,16 @@ on: [push, issues]
 jobs:
   slack-notification:
     runs-on: ubuntu-20.04
-    name: Sends a message to Slack when a push, a pull request or an issue is made
+    name: Sends a message to Slack on push and issue
+
     steps:
-      - name: Send message to Slack API
-        uses: archive/github-actions-slack@v1.1.0
+      - name: Send Slack Message
+        uses: archive/github-actions-slack@master
+        id: send-message
         with:
           slack-bot-user-oauth-access-token: ${{ secrets.SLACK_BOT_USER_OAUTH_ACCESS_TOKEN }}
-          slack-channel: test
-          slack-text: Hello! Event *${{ github.event_name }}* in *${{ github.repository }}* 🤓
-      - name: Result from "Send Message"
-        run: echo "The result was ${{ steps.notify.outputs.slack-result }}"
+          slack-channel: CPPUV5KU0
+          slack-text: Hello! Event "${{ github.event_name }}" in "${{ github.repository }}" 🤓
+
+      - name: Result from "Send Slack Message"
+        run: echo "${{ steps.send-message.outputs.slack-result }}"

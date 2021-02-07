@@ -5,7 +5,7 @@
 ![](https://img.shields.io/github/release/archive/github-actions-slack/all.svg)
 ![](https://snyk.io/test/github/archive/github-actions-slack/badge.svg)
 
-This Action allows you to send messages to Slack from your Github Actions. Supports Slack's required arguments as well as all the optional once. It's JavaScript-based and thus fast to run.
+This Action allows you to send messages (and reactions) to Slack from your Github Actions. Supports Slack's required arguments as well as all the optional once. It's JavaScript-based and thus fast to run.
 
 ![Slack result](./images/slack-result.png "Slack result")
 
@@ -18,7 +18,21 @@ This action is just an HTTPS call to Slack API, so you can easily build this by 
 1. A Github Action - the place where you wants to send Slack messages
 1. Github Secret - the Slack Bot auth token, used when posting messages to Slack API
 
+## Important
+
+With the latest changes to Slack API, please use channel id instead of channel name. E.g. use `CPPUV5KU0` instead of `test` (You can find the ID in the API calls or https://stackoverflow.com/questions/40940327/what-is-the-simplest-way-to-find-a-slack-team-id-and-a-channel-id)
+
 ## Setup
+
+This action supports:
+
+- 1. Send messages to Slack<br>
+     <img src="./images/message.png" width="300">
+
+- 2. Send reaction on sent messages to Slack<br>
+     <img src="./images/reaction.png" width="300">
+
+## 1. Send messages to Slack
 
 **Required: Github Repository Secret:**
 
@@ -45,7 +59,42 @@ and so forth.
 
 Please see Slack API documentation for all available optional parameters: https://api.slack.com/methods/chat.postMessage
 
-## Sample Action file with Slack Channel and Text
+**Result / return value**
+
+- `slack-result` (.outputs.slack-result) - Contains the result of the sent message. This can be used for following steps like sending a reaction
+
+Sample `slack-result`:
+
+```
+{
+  "statusCode": 200,
+  "statusMessage": "OK",
+  "ok": true,
+  "result": "<deprecated - same as response but as string>",
+  "response": {
+    "ok": true,
+    "channel": "XXXX",
+    "ts": "1612623790.009600",
+    "message": {
+      "type": "message",
+      "subtype": "bot_message",
+      "text": "Lipsum",
+      "ts": "1612623790.009600",
+      "username": "Lipsum",
+      "bot_id": "XXXX"
+    }
+  }
+}
+```
+
+If you want to output or debug the result, add:
+
+```
+      - name: Send Slack Message Result
+        run: echo "${{ steps.send-message.outputs.slack-result }}"
+```
+
+### Sample Action file with Slack Channel and Text
 
 [.github/workflows/slack-notification.yml](.github/workflows/slack-notification.yml)
 
@@ -66,7 +115,7 @@ jobs:
         id: notify
         with:
           slack-bot-user-oauth-access-token: ${{ secrets.SLACK_BOT_USER_OAUTH_ACCESS_TOKEN }}
-          slack-channel: test
+          slack-channel: CPPUV5KU0
           slack-text: Hello! Event "${{ github.event_name }}" in "${{ github.repository }}" 🤓
       - name: Result from "Send Message"
         run: echo "The result was ${{ steps.notify.outputs.slack-result }}"
@@ -74,7 +123,7 @@ jobs:
 
 ![Slack result](./images/slack-result.png "Slack result")
 
-## Sample Action file with Slack optional parameters
+### Sample Action file with Slack optional parameters
 
 [.github/workflows/slack-notification.yml](.github/workflows/slack-notification.yml)
 
@@ -93,7 +142,7 @@ jobs:
         id: notify
         with:
           slack-bot-user-oauth-access-token: ${{ secrets.SLACK_BOT_USER_OAUTH_ACCESS_TOKEN }}
-          slack-channel: test
+          slack-channel: CPPUV5KU0 #USE CHANNEL ID, NOT CHANNEL NAME, SINCE ID IS USED IN NEW SLACK API's
           slack-text: Hello! Something is burning! Or not...
           slack-optional-icon_emoji: ":fire:"
           slack-optional-as_user: false
@@ -102,6 +151,74 @@ jobs:
 ```
 
 ![Slack result](./images/slack-result-optional.png "Slack result")
+
+## 2. Send reaction on sent messages to Slack
+
+**Required: Github Repository Secret:**
+
+- `SLACK_BOT_USER_OAUTH_ACCESS_TOKEN` - This is the Slack App token, the credentials for allowing you to send messages from github to Slack
+
+**Required: Github Action Parameters:**
+
+- `slack-bot-user-oauth-access-token` - `SLACK_BOT_USER_OAUTH_ACCESS_TOKEN` secret
+
+- `slack-channel` - The channel where you want the message
+
+- `slack-emoji-name` - The name of the emoji to send (e.g. "fire"/"thumbsup")
+
+- `slack-message-timestamp` - The unique ts/timestamp of the message you want to react to. You can find the timestamp in the response payload after sending a message (TBD)
+
+**Result / return value**
+
+- slack-result (.outputs.slack-result) - Contains the result of the sent reaction
+
+### Sample Action file with Slack Channel and Text
+
+[.github/workflows/slack-reaction.yml](.github/workflows/slack-reaction.yml)
+
+This will send a Slack message every time someone push, creates pull request or create an issue, and then, create a reaction to it
+
+```
+name: slack-reaction
+
+on: [push, issues]
+
+jobs:
+  slack-reaction:
+    runs-on: ubuntu-20.04
+    name: Sends a message to Slack when a push, a pull request or an issue is made
+
+    steps:
+      - name: Send Slack Message
+        uses: archive/github-actions-slack@slack-reactions
+        id: send-message
+
+        with:
+          slack-function: send-message
+          slack-bot-user-oauth-access-token: ${{ secrets.SLACK_BOT_USER_OAUTH_ACCESS_TOKEN }}
+          slack-channel: CPPUV5KU0
+          slack-text: Time to react...
+
+      - name: Send Slack Message Result
+        run: echo "Data - ${{ steps.send-message.outputs.slack-result }}"
+
+      - name: Some step in between
+        run: echo "..."
+
+      - name: Send Slack Reaction To Message
+        uses: archive/github-actions-slack@slack-reactions
+        with:
+          slack-function: send-reaction
+          slack-bot-user-oauth-access-token: ${{ secrets.SLACK_BOT_USER_OAUTH_ACCESS_TOKEN }}
+          slack-channel: ${{ fromJson(steps.send-message.outputs.slack-result).response.channel }}
+          slack-emoji-name: thumbsup
+          slack-message-timestamp: ${{ fromJson(steps.send-message.outputs.slack-result).response.message.ts }}
+
+      - name: Send Slack Reaction To Message Result
+        run: echo "Data - ${{ steps.send-message.outputs.slack-result }}"
+```
+
+![Slack result](./images/reaction.png "Slack result")
 
 ## How to setup your first Github Action in your repository that will call this Action
 

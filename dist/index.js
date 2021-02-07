@@ -3,9 +3,9 @@ module.exports =
 /******/ 	var __webpack_modules__ = ({
 
 /***/ 932:
-/***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
+/***/ ((__unused_webpack_module, __unused_webpack_exports, __nccwpck_require__) => {
 
-const invoke = __webpack_require__(662);
+const invoke = __nccwpck_require__(662);
 
 const run = async () => {
   await invoke();
@@ -17,7 +17,7 @@ run();
 /***/ }),
 
 /***/ 351:
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+/***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
 
 "use strict";
 
@@ -29,8 +29,8 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-const os = __importStar(__webpack_require__(87));
-const utils_1 = __webpack_require__(278);
+const os = __importStar(__nccwpck_require__(87));
+const utils_1 = __nccwpck_require__(278);
 /**
  * Commands
  *
@@ -103,7 +103,7 @@ function escapeProperty(s) {
 /***/ }),
 
 /***/ 186:
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+/***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
 
 "use strict";
 
@@ -124,11 +124,11 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-const command_1 = __webpack_require__(351);
-const file_command_1 = __webpack_require__(717);
-const utils_1 = __webpack_require__(278);
-const os = __importStar(__webpack_require__(87));
-const path = __importStar(__webpack_require__(622));
+const command_1 = __nccwpck_require__(351);
+const file_command_1 = __nccwpck_require__(717);
+const utils_1 = __nccwpck_require__(278);
+const os = __importStar(__nccwpck_require__(87));
+const path = __importStar(__nccwpck_require__(622));
 /**
  * The code to exit an action
  */
@@ -348,7 +348,7 @@ exports.getState = getState;
 /***/ }),
 
 /***/ 717:
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+/***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
 
 "use strict";
 
@@ -363,9 +363,9 @@ var __importStar = (this && this.__importStar) || function (mod) {
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 // We use any as a valid input type
 /* eslint-disable @typescript-eslint/no-explicit-any */
-const fs = __importStar(__webpack_require__(747));
-const os = __importStar(__webpack_require__(87));
-const utils_1 = __webpack_require__(278);
+const fs = __importStar(__nccwpck_require__(747));
+const os = __importStar(__nccwpck_require__(87));
+const utils_1 = __nccwpck_require__(278);
 function issueCommand(command, message) {
     const filePath = process.env[`GITHUB_${command}`];
     if (!filePath) {
@@ -409,7 +409,148 @@ exports.toCommandValue = toCommandValue;
 
 /***/ }),
 
-/***/ 284:
+/***/ 319:
+/***/ ((module, __unused_webpack_exports, __nccwpck_require__) => {
+
+const core = __nccwpck_require__(186);
+
+const getRequired = (name) => core.getInput(name, { required: true });
+
+const getOptional = (name) => core.getInput(name, { required: false });
+
+const getEnv = () => process.env;
+
+const setOutput = (name, value) => core.setOutput(name, value);
+
+const setFailed = (msg) => core.setFailed(msg);
+
+module.exports = {
+  getRequired,
+  getOptional,
+  getEnv,
+  setOutput,
+  setFailed,
+};
+
+
+/***/ }),
+
+/***/ 202:
+/***/ ((module, __unused_webpack_exports, __nccwpck_require__) => {
+
+const https = __nccwpck_require__(211);
+
+const getOptions = (token, path) => {
+  return {
+    hostname: "slack.com",
+    port: 443,
+    path: path,
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json; charset=utf-8",
+      Authorization: `Bearer ${token}`,
+    },
+  };
+};
+
+const post = (token, path, message) => {
+  return new Promise((resolve, reject) => {
+    const payload = JSON.stringify(message);
+
+    const options = getOptions(token, path);
+
+    const req = https.request(options, (res) => {
+      const chunks = [];
+
+      res.on("data", (chunk) => {
+        chunks.push(chunk);
+      });
+
+      res.on("end", () => {
+        const result = Buffer.concat(chunks).toString();
+        const response = JSON.parse(result);
+
+        resolve({
+          statusCode: res.statusCode,
+          statusMessage: res.statusMessage,
+          ok: res.statusCode >= 200 && res.statusCode <= 299,
+          result: result,
+          response: response,
+        });
+      });
+    });
+
+    req.on("error", (error) => {
+      reject(error);
+    });
+
+    req.write(payload);
+    req.end();
+  });
+};
+
+const apiPostMessage = async (token, message) => {
+  const path = "/api/chat.postMessage";
+  const result = await post(token, path, message);
+
+  if (!result || !result.ok) {
+    throw `Error! ${JSON.stringify(response)}`;
+  }
+
+  return result;
+};
+
+const apiAddReaction = async (token, message) => {
+  const path = "/api/reactions.add";
+  const result = await post(token, path, message);
+
+  if (!result || !result.ok) {
+    throw `Error! ${JSON.stringify(response)}`;
+  }
+
+  return result;
+};
+
+module.exports = { apiPostMessage, apiAddReaction };
+
+
+/***/ }),
+
+/***/ 662:
+/***/ ((module, __unused_webpack_exports, __nccwpck_require__) => {
+
+const context = __nccwpck_require__(319);
+const { postMessage } = __nccwpck_require__(563);
+const { addReaction } = __nccwpck_require__(380);
+
+const jsonPretty = (data) => JSON.stringify(data, undefined, 2);
+
+const invoke = async () => {
+  try {
+    const func = context.getOptional("slack-function") || "send-message";
+
+    switch (func) {
+      case "send-message":
+        await postMessage();
+        break;
+      case "send-reaction":
+        await addReaction();
+        break;
+      default:
+        context.setFailed("Unhandled `slack-function`: " + func);
+        break;
+    }
+  } catch (error) {
+    context.setFailed("invoke failed:" + error + ":" + jsonPretty(error));
+  }
+};
+
+module.exports = invoke;
+
+
+/***/ }),
+
+/***/ 690:
 /***/ ((module) => {
 
 const buildMessage = (channel = "", text = "", optional = {}) => {
@@ -438,50 +579,29 @@ module.exports = buildMessage;
 
 /***/ }),
 
-/***/ 319:
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+/***/ 563:
+/***/ ((module, __unused_webpack_exports, __nccwpck_require__) => {
 
-const core = __webpack_require__(186);
+const context = __nccwpck_require__(319);
+const { apiPostMessage } = __nccwpck_require__(202);
+const buildMessage = __nccwpck_require__(690);
+const core = __nccwpck_require__(186);
 
-const getRequired = name => core.getInput(name, { required: true });
+const jsonPretty = (data) => JSON.stringify(data, undefined, 2);
 
-const getEnv = () => process.env;
-
-const setOutput = (...args) => core.setOutput(args);
-
-const setFailed = (...args) => core.setFailed(args);
-
-module.exports = {
-  getRequired,
-  getEnv,
-  setOutput,
-  setFailed
-};
-
-
-/***/ }),
-
-/***/ 662:
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
-
-const context = __webpack_require__(319);
-const postMessage = __webpack_require__(132);
-const buildMessage = __webpack_require__(284);
-
-const invoke = async () => {
+const postMessage = async () => {
   try {
     const token = context.getRequired("slack-bot-user-oauth-access-token");
     const channel = context.getRequired("slack-channel");
     const text = context.getRequired("slack-text");
 
-    const message = buildMessage(channel, text, optional());
-    const result = await postMessage(token, message);
+    const payload = buildMessage(channel, text, optional());
+    const result = await apiPostMessage(token, payload);
 
-    const resultAsJson = stringify(result);
-
+    const resultAsJson = jsonPretty(result);
     context.setOutput("slack-result", resultAsJson);
   } catch (error) {
-    context.setFailed(stringify(error));
+    context.setFailed(jsonPretty(error));
   }
 };
 
@@ -500,73 +620,60 @@ const optional = () => {
   return opt;
 };
 
-const stringify = (data) => JSON.stringify(data, undefined, 2);
-
-module.exports = invoke;
+module.exports = { postMessage };
 
 
 /***/ }),
 
-/***/ 132:
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+/***/ 179:
+/***/ ((module) => {
 
-const https = __webpack_require__(211);
-
-const getOptions = (token) => {
-  return {
-    hostname: "slack.com",
-    port: 443,
-    path: "/api/chat.postMessage",
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json; charset=utf-8",
-      Authorization: `Bearer ${token}`,
-    },
+const buildReaction = (
+  channelId = "",
+  emojiName = "",
+  messageTimestamp = ""
+) => {
+  const message = {
+    channel: channelId,
+    name: emojiName,
+    timestamp: messageTimestamp,
   };
+
+  return message;
 };
 
-const post = (token, message) => {
-  return new Promise((resolve, reject) => {
-    const payload = JSON.stringify(message);
+module.exports = buildReaction;
 
-    const options = getOptions(token);
 
-    const req = https.request(options, (res) => {
-      const chunks = [];
+/***/ }),
 
-      res.on("data", (chunk) => {
-        chunks.push(chunk);
-      });
+/***/ 380:
+/***/ ((module, __unused_webpack_exports, __nccwpck_require__) => {
 
-      res.on("end", () => {
-        resolve({
-          statusCode: res.statusCode,
-          result: Buffer.concat(chunks).toString(),
-        });
-      });
-    });
+const context = __nccwpck_require__(319);
+const { apiAddReaction } = __nccwpck_require__(202);
+const buildMessage = __nccwpck_require__(179);
 
-    req.on("error", (error) => {
-      reject(error);
-    });
+const jsonPretty = (data) => JSON.stringify(data, undefined, 2);
 
-    req.write(payload);
-    req.end();
-  });
-};
+const addReaction = async () => {
+  try {
+    const token = context.getRequired("slack-bot-user-oauth-access-token");
+    const channelId = context.getRequired("slack-channel");
+    const emojiName = context.getRequired("slack-emoji-name");
+    const messageTimestamp = context.getRequired("slack-message-timestamp");
 
-const sendMessage = async (token, message) => {
-  const response = await post(token, message);
-  const result = JSON.parse(response.result);
+    const payload = buildMessage(channelId, emojiName, messageTimestamp);
+    const result = await apiAddReaction(token, payload);
 
-  if (!result || !result.ok || response.statusCode !== 200) {
-    throw `Error! ${JSON.stringify(response)}`;
+    const resultAsJson = jsonPretty(result);
+    context.setOutput("slack-result", resultAsJson);
+  } catch (error) {
+    context.setFailed(jsonPretty(error));
   }
-
-  return response;
 };
 
-module.exports = sendMessage;
+module.exports = { addReaction };
 
 
 /***/ }),
@@ -609,7 +716,7 @@ module.exports = require("path");;
 /******/ 	var __webpack_module_cache__ = {};
 /******/ 	
 /******/ 	// The require function
-/******/ 	function __webpack_require__(moduleId) {
+/******/ 	function __nccwpck_require__(moduleId) {
 /******/ 		// Check if module is in cache
 /******/ 		if(__webpack_module_cache__[moduleId]) {
 /******/ 			return __webpack_module_cache__[moduleId].exports;
@@ -624,7 +731,7 @@ module.exports = require("path");;
 /******/ 		// Execute the module function
 /******/ 		var threw = true;
 /******/ 		try {
-/******/ 			__webpack_modules__[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+/******/ 			__webpack_modules__[moduleId].call(module.exports, module, module.exports, __nccwpck_require__);
 /******/ 			threw = false;
 /******/ 		} finally {
 /******/ 			if(threw) delete __webpack_module_cache__[moduleId];
@@ -637,10 +744,10 @@ module.exports = require("path");;
 /************************************************************************/
 /******/ 	/* webpack/runtime/compat */
 /******/ 	
-/******/ 	__webpack_require__.ab = __dirname + "/";/************************************************************************/
+/******/ 	__nccwpck_require__.ab = __dirname + "/";/************************************************************************/
 /******/ 	// module exports must be returned from runtime so entry inlining is disabled
 /******/ 	// startup
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(932);
+/******/ 	return __nccwpck_require__(932);
 /******/ })()
 ;

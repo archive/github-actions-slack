@@ -6,7 +6,7 @@ describe("build message", () => {
 
     expect(message).toEqual({
       channel: "channel",
-      text: "text"
+      text: "text",
     });
   });
 
@@ -18,7 +18,7 @@ describe("build message", () => {
     expect(message).toEqual({
       channel: "channel",
       text: "text",
-      key: "value"
+      key: "value",
     });
   });
 });
