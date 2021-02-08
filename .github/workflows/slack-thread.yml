@@ -32,10 +32,6 @@ jobs:
           slack-channel: ${{ fromJson(steps.send-message.outputs.slack-result).response.channel }}
           slack-text: This is a thread reply
           slack-optional-thread_ts: ${{ fromJson(steps.send-message.outputs.slack-result).response.message.ts }}
-
-          # Optional
-          slack-optional-icon_emoji: ":arrow_right:"
-          slack-optional-as_user: false
           #slack-optional-reply_broadcast: true # To broadcast thread reply in channel
 
       - name: Send "Send Thread Message" Result
