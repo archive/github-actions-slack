@@ -1,9 +1,9 @@
-name: slack-reaction
+name: slack-thread
 
 on: [push, issues]
 
 jobs:
-  slack-reaction:
+  slack-thread:
     runs-on: ubuntu-20.04
     name: Sends a message to Slack when a push, a pull request or an issue is made
 

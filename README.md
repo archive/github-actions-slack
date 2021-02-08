@@ -5,7 +5,7 @@
 ![](https://img.shields.io/github/release/archive/github-actions-slack/all.svg)
 ![](https://snyk.io/test/github/archive/github-actions-slack/badge.svg)
 
-This Action allows you to send messages (and reactions) to Slack from your Github Actions. Supports Slack's required arguments as well as all the optional once. It's JavaScript-based and thus fast to run.
+This Action allows you to send messages (and reactions/threads) to Slack from your Github Actions. Supports Slack's required arguments as well as all the optional once. It's JavaScript-based and thus fast to run.
 
 ![Slack result](./images/slack-result.png "Slack result")
 
@@ -26,10 +26,13 @@ With the latest changes to Slack API, please use channel id instead of channel n
 
 This action supports:
 
-- 1. Send messages to Slack<br>
+- 1. Send messages<br>
      <img src="./images/message.png" width="300">
 
-- 2. Send reaction on sent messages to Slack<br>
+- 2. Send thread response to message<br>
+     <img src="./images/thread.png" width="300">
+
+- 3. Send reaction on sent messages<br>
      <img src="./images/reaction.png" width="300">
 
 ## 1. Send messages to Slack
@@ -152,7 +155,63 @@ jobs:
 
 ![Slack result](./images/slack-result-optional.png "Slack result")
 
-## 2. Send reaction on sent messages to Slack
+## 2. Send thread response to message to Slack
+
+To send a thread response you have the same setup as for sending a message, but you add some extra optional parameters:
+
+- `slack-optional-thread_ts` - The timestamp of the message you want to reply/send thread to. You can find the timestamp in the response payload after sending a message
+
+- `slack-optional-reply_broadcast` - To broadcast thread reply in channel
+
+### Sample Action file
+
+[.github/workflows/slack-thread.yml](.github/workflows/slack-thread.yml)
+
+See `Send Thread Message` part below:
+
+```
+name: slack-thread
+
+on: [push, issues]
+
+jobs:
+  slack-thread:
+    runs-on: ubuntu-20.04
+    name: Sends a message to Slack when a push, a pull request or an issue is made
+
+    steps:
+      - name: Send Slack Message
+        uses: archive/github-actions-slack@master
+        id: send-message
+
+        with:
+          slack-function: send-message
+          slack-bot-user-oauth-access-token: ${{ secrets.SLACK_BOT_USER_OAUTH_ACCESS_TOKEN }}
+          slack-channel: CPPUV5KU0
+          slack-text: This is a message
+
+      - name: Send "Slack Message" Result
+        run: echo "Data - ${{ steps.send-message.outputs.slack-result }}"
+
+      - name: Some step in between
+        run: echo "..."
+
+      - name: Send Thread Message
+        uses: archive/github-actions-slack@master
+        with:
+          slack-function: send-message
+          slack-bot-user-oauth-access-token: ${{ secrets.SLACK_BOT_USER_OAUTH_ACCESS_TOKEN }}
+          slack-channel: ${{ fromJson(steps.send-message.outputs.slack-result).response.channel }}
+          slack-text: This is a thread reply
+          slack-optional-thread_ts: ${{ fromJson(steps.send-message.outputs.slack-result).response.message.ts }}
+          #slack-optional-reply_broadcast: true # To broadcast thread reply in channel
+
+      - name: Send "Send Thread Message" Result
+        run: echo "Data - ${{ steps.send-message.outputs.slack-result }}"
+
+```
+
+## 3. Send reaction on sent messages to Slack
 
 **Required: Github Repository Secret:**
 
