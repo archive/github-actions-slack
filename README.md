@@ -211,6 +211,8 @@ jobs:
 
 ```
 
+![Slack result](./images/thread.png "Slack result")
+
 ## 3. Send reaction on sent messages to Slack
 
 **Required: Github Repository Secret:**
