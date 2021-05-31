@@ -864,10 +864,10 @@
   dependencies:
     "@types/yargs-parser" "*"
 
-"@vercel/ncc@^0.26.1":
-  version "0.26.2"
-  resolved "https://registry.yarnpkg.com/@vercel/ncc/-/ncc-0.26.2.tgz#d0799374eb8618e48cc0841c82793b5b670c9219"
-  integrity sha512-qdajZzkGn62Ry+v7bmTSd7Qza2BVjEBuCcGpxCV5Y+ANa6d//BzByMkODmYQAhAXOg6kiAgVpbnfsd/At3PWQA==
+"@vercel/ncc@^0.28.6":
+  version "0.28.6"
+  resolved "https://registry.yarnpkg.com/@vercel/ncc/-/ncc-0.28.6.tgz#073c0ce8e0269210c0a9f180fb0bf949eecc20e0"
+  integrity sha512-t4BoSSuyK8BZaUE0gV18V6bkFs4st7baumtFGa50dv1tMu2GDBEBF8sUZaKBdKiL6DzJ2D2+XVCwYWWDcQOYdQ==
 
 abab@^2.0.3, abab@^2.0.5:
   version "2.0.5"
