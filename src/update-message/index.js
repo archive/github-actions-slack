@@ -8,8 +8,8 @@ const addReaction = async () => {
   try {
     const token = context.getRequired("slack-bot-user-oauth-access-token");
     const channelId = context.getRequired("slack-channel");
-    const emojiName = context.getRequired("slack-text");
-    const messageTimestamp = context.getRequired("slack-message-timestamp");
+    const emojiName = context.getRequired("slack-update-message-text");
+    const messageTimestamp = context.getRequired("slack-update-message-ts");
 
     const payload = buildUpdateMessage(channelId, text, messageTimestamp);
     const result = await apiUpdateMessage(token, payload);

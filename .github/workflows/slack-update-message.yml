@@ -1,15 +1,15 @@
-name: slack-reaction
+name: slack-update-message
 
 on: [push, issues]
 
 jobs:
-  slack-reaction:
+  slack-update-message:
     runs-on: ubuntu-20.04
     name: Test 5 (Sends message on Push and Issue)
 
     steps:
       - name: Send Slack Message
-        uses: archive/github-actions-slack@update-message
+        uses: archive/github-actions-slack@master
         id: send-message
 
         with:
