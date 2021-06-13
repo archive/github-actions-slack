@@ -5,7 +5,7 @@ on: [push, issues]
 jobs:
   slack-notification-with-optional-parameters:
     runs-on: ubuntu-20.04
-    name: Sends a message to Slack on push and issue
+    name: Test 1 (Sends message on Push and Issue)
 
     steps:
       - name: Send Slack Message
@@ -14,7 +14,7 @@ jobs:
         with:
           slack-bot-user-oauth-access-token: ${{ secrets.SLACK_BOT_USER_OAUTH_ACCESS_TOKEN }}
           slack-channel: CPPUV5KU0
-          slack-text: "Hello! Something is burning! Or not... from slack-notification-with-optional-parameters"
+          slack-text: "Test 1 - With :fire: icon [at locked version]"
           slack-optional-icon_emoji: ":fire:"
           slack-optional-as_user: false
 
