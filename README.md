@@ -281,7 +281,7 @@ jobs:
 
 ![Slack result](./images/reaction.png "Slack result")
 
-## 3. Update message
+## 4. Update message
 
 Similar to Add Reaction, but with text instead.
 
