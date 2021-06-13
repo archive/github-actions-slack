@@ -71,4 +71,15 @@ const apiAddReaction = async (token, message) => {
   return result;
 };
 
-module.exports = { apiPostMessage, apiAddReaction };
+const apiUpdateMessage = async (token, message) => {
+  const path = "/api/chat.update";
+  const result = await post(token, path, message);
+
+  if (!result || !result.ok) {
+    throw `Error! ${JSON.stringify(response)}`;
+  }
+
+  return result;
+};
+
+module.exports = { apiPostMessage, apiAddReaction, apiUpdateMessage };
