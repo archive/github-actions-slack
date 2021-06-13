@@ -394,5 +394,5 @@ Remember to create the dist with `yarn build`.
 To run local integration test (from this repository):
 
 ```
-env BOT_USER_OAUTH_ACCESS_TOKEN=<YOUR TOKEN> CHANNEL=<YOUR CHANNEL> TEXT="Test" node integration-test/end-to-end.js
+env BOT_USER_OAUTH_ACCESS_TOKEN=<YOUR TOKEN> CHANNEL=<YOUR CHANNEL> node integration-test/end-to-end.js
 ```
