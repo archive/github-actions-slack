@@ -19,10 +19,10 @@ jobs:
           slack-text: Test 3 - Message to send a react to [at master]
 
       - name: Send Slack Message Result
-        run: echo "Data - ${{ steps.send-message.outputs.slack-result }}"
+        run: echo 'Data - ${{ steps.send-message.outputs.slack-result }}'
 
       - name: Some step in between
-        run: echo "..."
+        run: echo '...'
 
       - name: Send Slack Reaction To Message
         uses: archive/github-actions-slack@master
@@ -34,4 +34,4 @@ jobs:
           slack-message-timestamp: ${{ fromJson(steps.send-message.outputs.slack-result).response.message.ts }}
 
       - name: Send Slack Reaction To Message Result
-        run: echo "Data - ${{ steps.send-message.outputs.slack-result }}"
+        run: echo 'Data - ${{ steps.send-message.outputs.slack-result }}'

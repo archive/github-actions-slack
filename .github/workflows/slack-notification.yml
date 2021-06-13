@@ -4,7 +4,7 @@ on: [push, issues]
 
 jobs:
   slack-notification:
-    runs-on: ubuntu-20.04
+    runs-on: windows-2019
     name: Test 2 (Sends message on Push and Issue)
 
     steps:
@@ -17,4 +17,4 @@ jobs:
           slack-text: Test 2 - 🤓 With Event name "${{ github.event_name }}" and Repo "${{ github.repository }}" [at mater]
 
       - name: Result from "Send Slack Message"
-        run: echo "${{ steps.send-message.outputs.slack-result }}"
+        run: echo '${{ steps.send-message.outputs.slack-result }}'

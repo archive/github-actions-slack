@@ -19,10 +19,10 @@ jobs:
           slack-text: Test 4 - Message to send thread to [at master]
 
       - name: Send "Slack Message" Result
-        run: echo "Data - ${{ steps.send-message.outputs.slack-result }}"
+        run: echo 'Data - ${{ steps.send-message.outputs.slack-result }}'
 
       - name: Some step in between
-        run: echo "..."
+        run: echo '...'
 
       - name: Send Thread Message
         uses: archive/github-actions-slack@master
@@ -35,4 +35,4 @@ jobs:
           #slack-optional-reply_broadcast: true # To broadcast thread reply in channel
 
       - name: Send "Send Thread Message" Result
-        run: echo "Data - ${{ steps.send-message.outputs.slack-result }}"
+        run: echo 'Data - ${{ steps.send-message.outputs.slack-result }}'

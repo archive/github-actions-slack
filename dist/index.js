@@ -752,7 +752,10 @@ const addReaction = async () => {
     const messageTimestamp = context.getRequired("slack-message-timestamp");
 
     const payload = buildMessage(channelId, emojiName, messageTimestamp);
+
+    context.debugExtra("Add Reaction PAYLOAD", payload);
     const result = await apiAddReaction(token, payload);
+    context.debugExtra("Add Reaction PAYLOAD", result);
 
     const resultAsJson = jsonPretty(result);
     context.setOutput("slack-result", resultAsJson);
