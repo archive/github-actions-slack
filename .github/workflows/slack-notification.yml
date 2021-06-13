@@ -4,7 +4,7 @@ on: [push, issues]
 
 jobs:
   slack-notification:
-    runs-on: ubuntu-20.04
+    runs-on: windows-2019
     name: Test 2 (Sends message on Push and Issue)
 
     steps:
