@@ -19,7 +19,7 @@ jobs:
           slack-text: Test 5 - Message to update [at master]
 
       - name: Send Slack Message Result
-        run: echo 'Data - ${{ steps.send-message.outputs.slack-result }}''
+        run: echo 'Data - ${{ steps.send-message.outputs.slack-result }}'
 
       - name: Some step in between
         run: echo '...'

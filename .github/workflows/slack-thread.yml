@@ -22,7 +22,7 @@ jobs:
         run: echo 'Data - ${{ steps.send-message.outputs.slack-result }}'
 
       - name: Some step in between
-        run: echo '...''
+        run: echo '...'
 
       - name: Send Thread Message
         uses: archive/github-actions-slack@master
