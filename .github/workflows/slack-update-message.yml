@@ -30,8 +30,8 @@ jobs:
           slack-function: send-reaction
           slack-bot-user-oauth-access-token: ${{ secrets.SLACK_BOT_USER_OAUTH_ACCESS_TOKEN }}
           slack-channel: ${{ fromJson(steps.send-message.outputs.slack-result).response.channel }}
-          slack-text: Test 5 - Message to update [at master] ! updated !
-          slack-message-timestamp: ${{ fromJson(steps.send-message.outputs.slack-result).response.message.ts }}
+          slack-update-message-text: Test 5 - Message to update [at master] ! updated !
+          slack-update-message-ts: ${{ fromJson(steps.send-message.outputs.slack-result).response.message.ts }}
 
       - name: Send Slack Reaction To Message Result
         run: echo "Data - ${{ steps.send-message.outputs.slack-result }}"
