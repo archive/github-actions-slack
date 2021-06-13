@@ -1,11 +1,11 @@
-# Github Action for sending message (and reactions/threads) to Slack
+# Github Action for sending message (and reactions/threads/update) to Slack
 
 — With support for Slack's optional arguments
 
 ![](https://img.shields.io/github/release/archive/github-actions-slack/all.svg)
 ![](https://snyk.io/test/github/archive/github-actions-slack/badge.svg)
 
-This Action allows you to send messages (and reactions/threads) to Slack from your Github Actions. Supports Slack's required arguments as well as all the optional once. It's JavaScript-based and thus fast to run.
+This Action allows you to send messages (and reactions/threads/update) to Slack from your Github Actions. Supports Slack's required arguments as well as all the optional once. It's JavaScript-based and thus fast to run.
 
 ![Slack result](./images/slack-result.png "Slack result")
 
@@ -280,6 +280,12 @@ jobs:
 ```
 
 ![Slack result](./images/reaction.png "Slack result")
+
+## 3. Update message
+
+Similar to Add Reaction, but with text instead.
+
+Please see [.github/workflows/slack-update-message.yml](.github/workflows/slack-update-message.yml)
 
 ## How to setup your first Github Action in your repository that will call this Action
 
