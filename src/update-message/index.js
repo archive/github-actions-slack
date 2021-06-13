@@ -1,24 +1,28 @@
 const context = require("../context");
-const { apiAddReaction } = require("../integration/slack-api");
-const buildMessage = require("./build-reaction");
+const { apiUpdateMessage } = require("../integration/slack-api");
+const buildUpdateMessage = require("./build-update-message");
 
 const jsonPretty = (data) => JSON.stringify(data, undefined, 2);
 
-const addReaction = async () => {
+const updateMessage = async () => {
   try {
     const token = context.getRequired("slack-bot-user-oauth-access-token");
     const channelId = context.getRequired("slack-channel");
-    const emojiName = context.getRequired("slack-update-message-text");
-    const messageTimestamp = context.getRequired("slack-update-message-ts");
+    const text = context.getRequired("slack-update-message-text");
+    const ts = context.getRequired("slack-update-message-ts");
 
-    const payload = buildUpdateMessage(channelId, text, messageTimestamp);
+    const payload = buildUpdateMessage(channelId, text, ts);
+
+    context.debugExtra("Update Message PAYLOAD", payload);
     const result = await apiUpdateMessage(token, payload);
+    context.debug("Update Message RESULT", result);
 
     const resultAsJson = jsonPretty(result);
     context.setOutput("slack-result", resultAsJson);
   } catch (error) {
+    context.debug(error);
     context.setFailed(jsonPretty(error));
   }
 };
 
-module.exports = { addReaction };
+module.exports = { updateMessage };

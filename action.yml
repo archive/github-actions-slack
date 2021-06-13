@@ -53,7 +53,7 @@ inputs:
     description: "https://api.slack.com/methods/chat.postMessage#arg_username"
     required: false
   slack-function:
-    description: send-message (https://api.slack.com/methods/chat.postMessage) or send-reaction (https://api.slack.com/methods/reactions.add)
+    description: send-message (https://api.slack.com/methods/chat.postMessage) or send-reaction (https://api.slack.com/methods/reactions.add) or update-message (https://api.slack.com/methods/chat.update)
     required: false
   slack-emoji-name:
     description: "https://api.slack.com/methods/reactions.add#arg_name"

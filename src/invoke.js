@@ -1,6 +1,7 @@
 const context = require("./context");
 const { postMessage } = require("./message");
 const { addReaction } = require("./reaction");
+const { updateMessage } = require("./update-message");
 
 const jsonPretty = (data) => JSON.stringify(data, undefined, 2);
 
@@ -14,6 +15,9 @@ const invoke = async () => {
         break;
       case "send-reaction":
         await addReaction();
+        break;
+      case "update-message":
+        await updateMessage();
         break;
       default:
         context.setFailed("Unhandled `slack-function`: " + func);

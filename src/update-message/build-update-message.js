@@ -1,12 +1,8 @@
-const buildUpdateMessage = (
-  channelId = "",
-  text = "",
-  messageTimestamp = ""
-) => {
+const buildUpdateMessage = (channelId = "", text = "", ts = "") => {
   const message = {
     channel: channelId,
     text: text,
-    ts: messageTimestamp,
+    ts: ts,
   };
 
   return message;

@@ -477,12 +477,29 @@ const setOutput = (name, value) => core.setOutput(name, value);
 
 const setFailed = (msg) => core.setFailed(msg);
 
+const debug = (msg) => core.debug(msg);
+
+const debugExtra = (name, json) => {
+  core.debug("CUSTOM DEBUG " + name);
+
+  const message = JSON.stringify(json, undefined, 2);
+  core.debug(message);
+};
+
+const info = (msg) => core.info(msg);
+
+const warning = (msg) => core.warning(msg);
+
 module.exports = {
   getRequired,
   getOptional,
   getEnv,
   setOutput,
   setFailed,
+  debug,
+  debugExtra,
+  info,
+  warning,
 };
 
 
@@ -564,7 +581,18 @@ const apiAddReaction = async (token, message) => {
   return result;
 };
 
-module.exports = { apiPostMessage, apiAddReaction };
+const apiUpdateMessage = async (token, message) => {
+  const path = "/api/chat.update";
+  const result = await post(token, path, message);
+
+  if (!result || !result.ok) {
+    throw `Error! ${JSON.stringify(response)}`;
+  }
+
+  return result;
+};
+
+module.exports = { apiPostMessage, apiAddReaction, apiUpdateMessage };
 
 
 /***/ }),
@@ -575,6 +603,7 @@ module.exports = { apiPostMessage, apiAddReaction };
 const context = __nccwpck_require__(319);
 const { postMessage } = __nccwpck_require__(563);
 const { addReaction } = __nccwpck_require__(380);
+const { updateMessage } = __nccwpck_require__(308);
 
 const jsonPretty = (data) => JSON.stringify(data, undefined, 2);
 
@@ -588,6 +617,9 @@ const invoke = async () => {
         break;
       case "send-reaction":
         await addReaction();
+        break;
+      case "update-message":
+        await updateMessage();
         break;
       default:
         context.setFailed("Unhandled `slack-function`: " + func);
@@ -649,7 +681,10 @@ const postMessage = async () => {
     const text = context.getRequired("slack-text");
 
     const payload = buildMessage(channel, text, optional());
+
+    context.debug("Post Message PAYLOAD", payload);
     const result = await apiPostMessage(token, payload);
+    context.debug("Post Message RESULT", result);
 
     const resultAsJson = jsonPretty(result);
     context.setOutput("slack-result", resultAsJson);
@@ -727,6 +762,59 @@ const addReaction = async () => {
 };
 
 module.exports = { addReaction };
+
+
+/***/ }),
+
+/***/ 51:
+/***/ ((module) => {
+
+const buildUpdateMessage = (channelId = "", text = "", ts = "") => {
+  const message = {
+    channel: channelId,
+    text: text,
+    ts: ts,
+  };
+
+  return message;
+};
+
+module.exports = buildUpdateMessage;
+
+
+/***/ }),
+
+/***/ 308:
+/***/ ((module, __unused_webpack_exports, __nccwpck_require__) => {
+
+const context = __nccwpck_require__(319);
+const { apiUpdateMessage } = __nccwpck_require__(202);
+const buildUpdateMessage = __nccwpck_require__(51);
+
+const jsonPretty = (data) => JSON.stringify(data, undefined, 2);
+
+const updateMessage = async () => {
+  try {
+    const token = context.getRequired("slack-bot-user-oauth-access-token");
+    const channelId = context.getRequired("slack-channel");
+    const text = context.getRequired("slack-update-message-text");
+    const ts = context.getRequired("slack-update-message-ts");
+
+    const payload = buildUpdateMessage(channelId, text, ts);
+
+    context.debugExtra("Update Message PAYLOAD", payload);
+    const result = await apiUpdateMessage(token, payload);
+    context.debug("Update Message RESULT", result);
+
+    const resultAsJson = jsonPretty(result);
+    context.setOutput("slack-result", resultAsJson);
+  } catch (error) {
+    context.debug(error);
+    context.setFailed(jsonPretty(error));
+  }
+};
+
+module.exports = { updateMessage };
 
 
 /***/ }),

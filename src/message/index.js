@@ -12,7 +12,10 @@ const postMessage = async () => {
     const text = context.getRequired("slack-text");
 
     const payload = buildMessage(channel, text, optional());
+
+    context.debug("Post Message PAYLOAD", payload);
     const result = await apiPostMessage(token, payload);
+    context.debug("Post Message RESULT", result);
 
     const resultAsJson = jsonPretty(result);
     context.setOutput("slack-result", resultAsJson);
