@@ -54,13 +54,20 @@ inputs:
     required: false
   slack-function:
     description: send-message (https://api.slack.com/methods/chat.postMessage) or send-reaction (https://api.slack.com/methods/reactions.add)
-    required: false  
+    required: false
   slack-emoji-name:
     description: "https://api.slack.com/methods/reactions.add#arg_name"
-    required: false  
+    required: false
   slack-message-timestamp:
     description: https://api.slack.com/methods/reactions.add#arg_timestamp"
-    required: false  
+    required: false
+  slack-update-message-ts:
+    description: https://api.slack.com/methods/chat.update#ts
+    required: false
+  slack-update-message-text:
+    description: https://api.slack.com/methods/chat.update#text
+    required: false
+
 outputs:
   slack-result:
     description: "The result from the post to slack"

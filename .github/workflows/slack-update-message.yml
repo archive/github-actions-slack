@@ -1,0 +1,37 @@
+name: slack-reaction
+
+on: [push, issues]
+
+jobs:
+  slack-reaction:
+    runs-on: ubuntu-20.04
+    name: Test 5 (Sends message on Push and Issue)
+
+    steps:
+      - name: Send Slack Message
+        uses: archive/github-actions-slack@update-message
+        id: send-message
+
+        with:
+          slack-function: send-message
+          slack-bot-user-oauth-access-token: ${{ secrets.SLACK_BOT_USER_OAUTH_ACCESS_TOKEN }}
+          slack-channel: CPPUV5KU0
+          slack-text: Test 5 - Message to update [at master]
+
+      - name: Send Slack Message Result
+        run: echo "Data - ${{ steps.send-message.outputs.slack-result }}"
+
+      - name: Some step in between
+        run: echo "..."
+
+      - name: Send Slack Reaction To Message
+        uses: archive/github-actions-slack@master
+        with:
+          slack-function: send-reaction
+          slack-bot-user-oauth-access-token: ${{ secrets.SLACK_BOT_USER_OAUTH_ACCESS_TOKEN }}
+          slack-channel: ${{ fromJson(steps.send-message.outputs.slack-result).response.channel }}
+          slack-update-message-text: Test 5 - Message to update [at master] ! updated !
+          slack-update-message-ts: ${{ fromJson(steps.send-message.outputs.slack-result).response.message.ts }}
+
+      - name: Send Slack Reaction To Message Result
+        run: echo "Data - ${{ steps.send-message.outputs.slack-result }}"
