@@ -134,7 +134,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.getState = exports.saveState = exports.group = exports.endGroup = exports.startGroup = exports.info = exports.warning = exports.error = exports.debug = exports.isDebug = exports.setFailed = exports.setCommandEcho = exports.setOutput = exports.getBooleanInput = exports.getInput = exports.addPath = exports.setSecret = exports.exportVariable = exports.ExitCode = void 0;
+exports.getState = exports.saveState = exports.group = exports.endGroup = exports.startGroup = exports.info = exports.warning = exports.error = exports.debug = exports.isDebug = exports.setFailed = exports.setCommandEcho = exports.setOutput = exports.getBooleanInput = exports.getMultilineInput = exports.getInput = exports.addPath = exports.setSecret = exports.exportVariable = exports.ExitCode = void 0;
 const command_1 = __nccwpck_require__(351);
 const file_command_1 = __nccwpck_require__(717);
 const utils_1 = __nccwpck_require__(278);
@@ -220,6 +220,21 @@ function getInput(name, options) {
     return val.trim();
 }
 exports.getInput = getInput;
+/**
+ * Gets the values of an multiline input.  Each value is also trimmed.
+ *
+ * @param     name     name of the input to get
+ * @param     options  optional. See InputOptions.
+ * @returns   string[]
+ *
+ */
+function getMultilineInput(name, options) {
+    const inputs = getInput(name, options)
+        .split('\n')
+        .filter(x => x !== '');
+    return inputs;
+}
+exports.getMultilineInput = getMultilineInput;
 /**
  * Gets the input value of the boolean type in the YAML 1.2 "core schema" specification.
  * Support boolean input list: `true | True | TRUE | false | False | FALSE` .
@@ -677,17 +692,23 @@ const jsonPretty = (data) => JSON.stringify(data, undefined, 2);
 const postMessage = async () => {
   try {
     const token = context.getRequired("slack-bot-user-oauth-access-token");
-    const channel = context.getRequired("slack-channel");
+    const channels = context.getRequired("slack-channel");
     const text = context.getRequired("slack-text");
+    const resultsAsJson = []
+    
+    for(let channel of channels.split(',')) {
+      channel = channel.trim()
+      
+      const payload = buildMessage(channel, text, optional());
 
-    const payload = buildMessage(channel, text, optional());
+      context.debug("Post Message PAYLOAD", payload);
+      const result = await apiPostMessage(token, payload);
+      context.debug("Post Message RESULT", result);
 
-    context.debug("Post Message PAYLOAD", payload);
-    const result = await apiPostMessage(token, payload);
-    context.debug("Post Message RESULT", result);
-
-    const resultAsJson = jsonPretty(result);
-    context.setOutput("slack-result", resultAsJson);
+      resultsAsJson.push(jsonPretty(result))
+    }
+    
+    context.setOutput("slack-result", resultsAsJson);
   } catch (error) {
     context.setFailed(jsonPretty(error));
   }
