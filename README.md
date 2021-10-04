@@ -1,7 +1,5 @@
 # Github Action for sending message (and reactions/threads/update) to Slack
 
-⚠️ Forked to add multiple channel support
-
 — With support for Slack's optional arguments
 
 ![](https://img.shields.io/github/release/archive/github-actions-slack/all.svg)
