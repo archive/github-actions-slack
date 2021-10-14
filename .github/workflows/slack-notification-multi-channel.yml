@@ -13,7 +13,7 @@ jobs:
         id: send-message
         with:
           slack-bot-user-oauth-access-token: ${{ secrets.SLACK_BOT_USER_OAUTH_ACCESS_TOKEN }}
-          slack-channel: CPPUV5KU0, C02HEBQP46T
+          slack-channel: CPPUV5KU0,C02HEBQP46T
           slack-text: Test 7 - Same message multiple channels
 
       - name: Result from "Send Slack Message"
