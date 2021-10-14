@@ -4,8 +4,8 @@ on: [push, issues]
 
 jobs:
   slack-thread:
-    runs-on: ubuntu-20.04
-    name: Test 4 (Sends message on Push and Issue)
+    runs-on: macos-latest
+    name: Test 4 [macos-latest]
 
     steps:
       - name: Send Slack Message
@@ -16,7 +16,7 @@ jobs:
           slack-function: send-message
           slack-bot-user-oauth-access-token: ${{ secrets.SLACK_BOT_USER_OAUTH_ACCESS_TOKEN }}
           slack-channel: CPPUV5KU0
-          slack-text: Test 4 - Message to send thread to [at master]
+          slack-text: Test 4 - Message to send thread to
 
       - name: Send "Slack Message" Result
         run: echo 'Data - ${{ steps.send-message.outputs.slack-result }}'

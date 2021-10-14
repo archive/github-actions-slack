@@ -1,11 +1,11 @@
-name: slack-notification
+name: slack-notification-with-optional-parameters
 
 on: [push, issues]
 
 jobs:
-  slack-notification:
-    runs-on: windows-2019
-    name: Test 2 (Sends message on Push and Issue)
+  slack-notification-with-optional-parameters:
+    runs-on: ubuntu-20.04
+    name: Test 1 [ubuntu-20.04]
 
     steps:
       - name: Send Slack Message
@@ -14,7 +14,9 @@ jobs:
         with:
           slack-bot-user-oauth-access-token: ${{ secrets.SLACK_BOT_USER_OAUTH_ACCESS_TOKEN }}
           slack-channel: CPPUV5KU0
-          slack-text: Test 2 - 🤓 With Event name "${{ github.event_name }}" and Repo "${{ github.repository }}" [at mater]
+          slack-text: "Test 1 - :fire:"
+          slack-optional-icon_emoji: ":fire:"
+          slack-optional-as_user: false
 
       - name: Result from "Send Slack Message"
         run: echo '${{ steps.send-message.outputs.slack-result }}'
