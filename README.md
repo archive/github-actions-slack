@@ -13,7 +13,7 @@ This action is just an HTTPS call to Slack API, so you can easily build this by 
 
 ## Requirements
 
-1. Slack Workspace and Channel
+1. Slack Workspace and Channel(s)
 1. A Slack App and Bot - the App and Bot will be used to send messages to your channel. It sounds hard, but it's not :)
 1. A Github Action - the place where you wants to send Slack messages
 1. Github Secret - the Slack Bot auth token, used when posting messages to Slack API
@@ -45,7 +45,7 @@ This action supports:
 
 - `slack-bot-user-oauth-access-token` - `SLACK_BOT_USER_OAUTH_ACCESS_TOKEN` secret
 
-- `slack-channel` - The channel where you want the message
+- `slack-channel` - The channel/channels where you want the message (comma separated)
 
 - `slack-text` - The text of the message
 
