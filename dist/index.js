@@ -722,17 +722,28 @@ const jsonPretty = (data) => JSON.stringify(data, undefined, 2);
 const postMessage = async () => {
   try {
     const token = context.getRequired("slack-bot-user-oauth-access-token");
-    const channel = context.getRequired("slack-channel");
+    const channels = context.getRequired("slack-channel");
     const text = context.getRequired("slack-text");
 
-    const payload = buildMessage(channel, text, optional());
+    const results = [];
+    for (let channel of channels.split(",")) {
+      channel = channel.trim();
 
-    context.debug("Post Message PAYLOAD", payload);
-    const result = await apiPostMessage(token, payload);
-    context.debug("Post Message RESULT", result);
+      const payload = buildMessage(channel, text, optional());
 
-    const resultAsJson = jsonPretty(result);
+      context.debug("Post Message PAYLOAD", payload);
+      const result = await apiPostMessage(token, payload);
+      context.debug("Post Message RESULT", result);
+
+      results.push(result);
+    }
+
+    // To not break backward compatibility
+    const resultAsJson = jsonPretty(results[0]);
     context.setOutput("slack-result", resultAsJson);
+
+    const resultsAsJson = jsonPretty(results);
+    context.setOutput("slack-results", resultsAsJson);
   } catch (error) {
     context.setFailed(jsonPretty(error));
   }
