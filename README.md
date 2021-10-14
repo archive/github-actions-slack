@@ -97,9 +97,11 @@ If you want to output or debug the result, add:
         run: echo "${{ steps.send-message.outputs.slack-result }}"
 ```
 
+- `slack-results` (.outputs.slack-results) - Contains an array of all the results when sending to multiple channels. This can be used for following steps like sending a reaction. See [.github/workflows/7-slack-notification-multi-channel.yml](.github/workflows/7-slack-notification-multi-channel.yml)
+
 ### Sample Action file with Slack Channel and Text
 
-[.github/workflows/slack-notification.yml](.github/workflows/slack-notification.yml)
+[.github/workflows/2-slack-notification.yml](.github/workflows/2-slack-notification.yml)
 
 This will send a Slack message every time someone push, creates pull request or create an issue
 
@@ -128,7 +130,7 @@ jobs:
 
 ### Sample Action file with Slack optional parameters
 
-[.github/workflows/slack-notification.yml](.github/workflows/slack-notification.yml)
+[.github/workflows/2-slack-notification.yml](.github/workflows/2-slack-notification.yml)
 
 ```
 name: slack-notification-with-optional-parameters
@@ -165,7 +167,7 @@ To send a thread response you have the same setup as for sending a message, but 
 
 ### Sample Action file
 
-[.github/workflows/slack-thread.yml](.github/workflows/slack-thread.yml)
+[.github/workflows/4-slack-thread.yml](.github/workflows/4-slack-thread.yml)
 
 See `Send Thread Message` part below:
 
@@ -235,7 +237,7 @@ jobs:
 
 ### Sample Action file with Slack Channel and Text
 
-[.github/workflows/slack-reaction.yml](.github/workflows/slack-reaction.yml)
+[.github/workflows/3-slack-reaction.yml](.github/workflows/3-slack-reaction.yml)
 
 This will send a Slack message every time someone push, creates pull request or create an issue, and then, create a reaction to it
 
@@ -285,7 +287,7 @@ jobs:
 
 Similar to Add Reaction, but with text instead.
 
-Please see [.github/workflows/slack-update-message.yml](.github/workflows/slack-update-message.yml)
+Please see [.github/workflows/5-slack-update-message.yml](.github/workflows/5-slack-update-message.yml)
 
 ## How to setup your first Github Action in your repository that will call this Action
 
