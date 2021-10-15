@@ -3,7 +3,7 @@ name: slack-update-message
 on: [push, issues]
 
 jobs:
-  slack-update-message:
+  test-5-slack-update-message:
     runs-on: ubuntu-20.04
     name: Test 5 [ubuntu-20.04]
 

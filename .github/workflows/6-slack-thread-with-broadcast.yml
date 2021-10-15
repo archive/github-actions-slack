@@ -3,7 +3,7 @@ name: slack-thread-with-broadcast
 on: [push, issues]
 
 jobs:
-  slack-thread-with-broadcast:
+  test-6-slack-thread-with-broadcast:
     runs-on: ubuntu-20.04
     name: Test 6 [ubuntu-20.04]
 

@@ -3,7 +3,7 @@ name: slack-reaction
 on: [push, issues]
 
 jobs:
-  slack-reaction:
+  test-3-slack-reaction:
     runs-on: ubuntu-latest
     name: Test 3 [ubuntu-latest]
 

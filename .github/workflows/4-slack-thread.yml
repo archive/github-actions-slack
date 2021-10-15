@@ -3,7 +3,7 @@ name: slack-thread
 on: [push, issues]
 
 jobs:
-  slack-thread:
+  test-4-slack-thread:
     runs-on: macos-latest
     name: Test 4 [macos-latest]
 

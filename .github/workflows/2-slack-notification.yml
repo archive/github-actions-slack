@@ -3,7 +3,7 @@ name: slack-notification
 on: [push, issues]
 
 jobs:
-  slack-notification:
+  test-2-slack-notification:
     runs-on: windows-latest
     name: Test 2 [windows-latest]
 
