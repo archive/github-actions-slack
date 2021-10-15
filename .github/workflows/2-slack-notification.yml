@@ -1,9 +1,9 @@
-name: slack-notification
+name: test-2-slack-notification
 
 on: [push, issues]
 
 jobs:
-  test-2-slack-notification:
+  slack-action:
     runs-on: windows-latest
     name: Test 2 [windows-latest]
 

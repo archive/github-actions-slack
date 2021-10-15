@@ -1,9 +1,9 @@
-name: slack-thread-with-broadcast
+name: test-6-slack-thread-with-broadcast
 
 on: [push, issues]
 
 jobs:
-  test-6-slack-thread-with-broadcast:
+  slack-action:
     runs-on: ubuntu-20.04
     name: Test 6 [ubuntu-20.04]
 

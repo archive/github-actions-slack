@@ -1,9 +1,9 @@
-name: slack-thread
+name: test-4-slack-thread
 
 on: [push, issues]
 
 jobs:
-  test-4-slack-thread:
+  slack-action:
     runs-on: macos-latest
     name: Test 4 [macos-latest]
 

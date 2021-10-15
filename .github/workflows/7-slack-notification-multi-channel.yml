@@ -1,9 +1,9 @@
-name: slack-notification
+name: test-7-slack-notification-multi-channel
 
 on: [push, issues]
 
 jobs:
-  test-7-slack-notification-multi-channel:
+  slack-action:
     runs-on: windows-2019
     name: Test 7 [windows-2019]
 

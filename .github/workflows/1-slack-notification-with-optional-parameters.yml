@@ -1,9 +1,9 @@
-name: slack-notification-with-optional-parameters
+name: test-1-slack-notification-with-optional-parameters
 
 on: [push, issues]
 
 jobs:
-  test-1-slack-notification-with-optional-parameters:
+  slack-action:
     runs-on: ubuntu-20.04
     name: Test 1 [ubuntu-20.04]
 
