@@ -1,0 +1,74 @@
+name: test-9-slack-update-message-line-breaks
+
+on: [push, issues]
+
+jobs:
+  slack-action:
+    runs-on: ubuntu-20.04
+    name: Test 9 [ubuntu-20.04]
+
+    steps:
+      - name: Send Slack Message
+        uses: archive/github-actions-slack@master
+        id: send-message-1
+
+        with:
+          slack-function: send-message
+          slack-bot-user-oauth-access-token: ${{ secrets.SLACK_BOT_USER_OAUTH_ACCESS_TOKEN }}
+          slack-channel: CPPUV5KU0
+          slack-text: Test 9 - 1/2 - Message to update
+
+      - name: Send Slack Message Result
+        run: echo 'Data - ${{ steps.send-message-1.outputs.slack-result }}'
+
+      - name: Send Slack Reaction To Message
+        uses: archive/github-actions-slack@master
+        with:
+          slack-function: update-message
+          slack-bot-user-oauth-access-token: ${{ secrets.SLACK_BOT_USER_OAUTH_ACCESS_TOKEN }}
+          slack-channel: ${{ fromJson(steps.send-message-1.outputs.slack-result).response.channel }}
+          slack-update-message-text: |
+            Test 9.1 - 1/2
+
+            Message to update
+
+            Updated!
+          slack-update-message-ts: ${{ fromJson(steps.send-message-1.outputs.slack-result).response.message.ts }}
+
+      - name: Send Slack Reaction To Message Result
+        run: echo 'Data - ${{ steps.send-message-1.outputs.slack-result }}'
+
+
+
+      - name: Send Slack Message
+        uses: archive/github-actions-slack@master
+        id: send-message-2
+
+        with:
+          slack-function: send-message
+          slack-bot-user-oauth-access-token: ${{ secrets.SLACK_BOT_USER_OAUTH_ACCESS_TOKEN }}
+          slack-channel: CPPUV5KU0
+          slack-text: Test 9 - 2/2 - Message to update
+
+      - name: Send Slack Message Result
+        run: echo 'Data - ${{ steps.send-message-2.outputs.slack-result }}'
+
+      - name: Some step in between
+        run: echo '...'
+
+      - name: Send Slack Reaction To Message
+        uses: archive/github-actions-slack@master
+        with:
+          slack-function: update-message
+          slack-bot-user-oauth-access-token: ${{ secrets.SLACK_BOT_USER_OAUTH_ACCESS_TOKEN }}
+          slack-channel: ${{ fromJson(steps.send-message-2.outputs.slack-result).response.channel }}
+          slack-update-message-text: |
+            Test 9.1 - 2/2
+
+            Message to update
+
+            Updated!
+          slack-update-message-ts: ${{ fromJson(steps.send-message-2.outputs.slack-result).response.message.ts }}
+
+      - name: Send Slack Reaction To Message Result
+        run: echo 'Data - ${{ steps.send-message-2.outputs.slack-result }}'
