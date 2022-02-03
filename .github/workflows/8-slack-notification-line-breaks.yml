@@ -9,14 +9,14 @@ jobs:
 
     steps:
 
-      - name: Send Slack Message 1/2
+      - name: Send Slack Message 1/3
         uses: archive/github-actions-slack@master
         id: send-message-1
         with:
           slack-bot-user-oauth-access-token: ${{ secrets.SLACK_BOT_USER_OAUTH_ACCESS_TOKEN }}
           slack-channel: CPPUV5KU0
           slack-text: |
-            Test 8 - 1/2!
+            Test 8 - 1/3!
 
             This
             should
@@ -27,13 +27,26 @@ jobs:
       - name: Result from "Send Slack Message"
         run: echo '${{ steps.send-message-1.outputs.slack-result }}'
 
-      - name: Send Slack Message 2/2
+
+      - name: Send Slack Message 2/3
         uses: archive/github-actions-slack@master
         id: send-message-2
         with:
           slack-bot-user-oauth-access-token: ${{ secrets.SLACK_BOT_USER_OAUTH_ACCESS_TOKEN }}
           slack-channel: CPPUV5KU0
-          slack-text: "Test 8 - 2/2!\n\nThis\nshould\nhave\nline\nbreaks..."
+          slack-text: "Test 8 - 2/3!\n\nThis\nshould\nhave\nline\nbreaks..."
 
       - name: Result from "Send Slack Message"
         run: echo '${{ steps.send-message-2.outputs.slack-result }}'
+
+
+      - name: Send Slack Message 3/3
+        uses: archive/github-actions-slack@master
+        id: send-message-3
+        with:
+          slack-bot-user-oauth-access-token: ${{ secrets.SLACK_BOT_USER_OAUTH_ACCESS_TOKEN }}
+          slack-channel: CPPUV5KU0
+          slack-text: "${{ toJson(runner) }}"
+
+      - name: Result from "Send Slack Message"
+        run: echo '${{ steps.send-message-3.outputs.slack-result }}'
