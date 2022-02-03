@@ -8,14 +8,16 @@ jobs:
     name: Test 8 [windows-latest]
 
     steps:
-      - name: Send Slack Message 1/3
+
+      - name: Send Slack Message 1/2
         uses: archive/github-actions-slack@master
         id: send-message-1
         with:
           slack-bot-user-oauth-access-token: ${{ secrets.SLACK_BOT_USER_OAUTH_ACCESS_TOKEN }}
           slack-channel: CPPUV5KU0
-          slack-text: >
-            Test 8, 1/3!
+          slack-text: |
+            Test 8 - 1/2!
+
             This
             should
             have
@@ -25,35 +27,13 @@ jobs:
       - name: Result from "Send Slack Message"
         run: echo '${{ steps.send-message-1.outputs.slack-result }}'
 
-      - name: Send Slack Message 2/3
+      - name: Send Slack Message 2/2
         uses: archive/github-actions-slack@master
         id: send-message-2
         with:
           slack-bot-user-oauth-access-token: ${{ secrets.SLACK_BOT_USER_OAUTH_ACCESS_TOKEN }}
           slack-channel: CPPUV5KU0
-          slack-text: |
-            Test 8, 2/3!
-            This
-            should
-            have
-            line
-            breaks...
+          slack-text: "Test 8 - 2/2!\n\nThis\nshould\nhave\nline\nbreaks..."
 
       - name: Result from "Send Slack Message"
         run: echo '${{ steps.send-message-2.outputs.slack-result }}'
-
-      - name: Send Slack Message 3/3
-        uses: archive/github-actions-slack@master
-        id: send-message-3
-        with:
-          slack-bot-user-oauth-access-token: ${{ secrets.SLACK_BOT_USER_OAUTH_ACCESS_TOKEN }}
-          slack-channel: CPPUV5KU0
-          slack-text: "Test 8, 3/3!\
-            This\n
-            should\n
-            have\n
-            line\n
-            breaks..."
-
-      - name: Result from "Send Slack Message"
-        run: echo '${{ steps.send-message-3.outputs.slack-result }}'
