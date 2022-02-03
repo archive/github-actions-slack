@@ -46,7 +46,7 @@ jobs:
         with:
           slack-bot-user-oauth-access-token: ${{ secrets.SLACK_BOT_USER_OAUTH_ACCESS_TOKEN }}
           slack-channel: CPPUV5KU0
-          slack-text: "${{ format('{0} {1}', 'Test 8 - 3/3', toJson(runner)) }}"
+          slack-text: "${{ format('{0}\n\n```{1}```', 'Test 8 - 3/3', toJson(runner)) }}"
 
       - name: Result from "Send Slack Message"
         run: echo '${{ steps.send-message-3.outputs.slack-result }}'
