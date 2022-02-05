@@ -10,7 +10,7 @@ jobs:
     steps:
 
       - name: Send Slack Message 1/3
-        uses: archive/github-actions-slack@master
+        uses: archive/github-actions-slack@v1.0.3
         id: send-message-1
         with:
           slack-bot-user-oauth-access-token: ${{ secrets.SLACK_BOT_USER_OAUTH_ACCESS_TOKEN }}
@@ -29,7 +29,7 @@ jobs:
 
 
       - name: Send Slack Message 2/3
-        uses: archive/github-actions-slack@master
+        uses: archive/github-actions-slack@v2.3.2
         id: send-message-2
         with:
           slack-bot-user-oauth-access-token: ${{ secrets.SLACK_BOT_USER_OAUTH_ACCESS_TOKEN }}
