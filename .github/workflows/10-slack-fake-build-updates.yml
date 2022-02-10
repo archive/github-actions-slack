@@ -18,7 +18,6 @@ jobs:
           slack-channel: C032M45S3H9
           slack-optional-icon_emoji: ":hourglass:"
           slack-optional-as_user: false
-
           slack-text: |
             Build status: Building
 
@@ -26,17 +25,15 @@ jobs:
 
       - name: Fake build process
         id: fake-build-process
-        #run: |-
-        #  ::set-output name=BUILD_RESULT:: curl "https://httpbin.org/get" -s
-        #run: '::set-output name=BUILD_RESULT::$(curl "https://httpbin.org/get" -s)'
         run: |
-          echo "::set-output name=BUILD_RESULT::$(curl https://httpbin.org/json)"
+          RES=$(curl https://httpbin.org/json)
+          RES="${RES//'%'/'%25'}"
+          RES="${RES//$'\n'/'%0A'}"
+          RES="${RES//$'\r'/'%0D'}"
+          echo "::set-output name=BUILD_RESULT::$RES"
 
       - name: Result from "Fake build process"
         run: echo '${{ steps.fake-build-process.outputs.BUILD_RESULT }}'
-
-      #- name: Result from "Fake build process"
-      #  run: echo '${{ fromJson(steps.fake-build-process.outputs.BUILD_RESULT) }}'
 
       - name: Update slack with build result
         uses: archive/github-actions-slack@master
