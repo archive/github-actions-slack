@@ -27,10 +27,13 @@ jobs:
       - name: Fake build process
         id: fake-build-process
         run: |-
-          curl "https://httpbin.org/get"
+          curl "https://httpbin.org/get" -s
 
-      - name: Result from "Fake build process"
+      - name: Result from "Fake build process1"
         run: echo '${{ steps.fake-build-process.outputs }}'
+
+      - name: Result from "Fake build process2"
+        run: echo '${{ fromJson(steps.fake-build-process.outputs) }}'
 
       - name: Update slack with build result
         uses: archive/github-actions-slack@master
