@@ -29,9 +29,8 @@ jobs:
         #run: |-
         #  ::set-output name=BUILD_RESULT:: curl "https://httpbin.org/get" -s
         #run: '::set-output name=BUILD_RESULT::$(curl "https://httpbin.org/get" -s)'
-        shell: bash
         run: |
-          curl https://httpbin.org/json >> $BUILD_RESULT
+          echo "::set-output name=BUILD_RESULT::$(curl https://httpbin.org/json)"
 
       - name: Result from "Fake build process"
         run: echo '${{ steps.fake-build-process.outputs.BUILD_RESULT }}'
