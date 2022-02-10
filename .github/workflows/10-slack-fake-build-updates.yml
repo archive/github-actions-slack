@@ -1,0 +1,36 @@
+name: test-10-fake-build-updates
+
+on: [push, issues]
+
+jobs:
+  slack-action:
+    runs-on: ubuntu-20.04
+    name: Test 10 [ubuntu-20.04]
+
+    steps:
+      - name: Send build started to slack
+        uses: archive/github-actions-slack@master
+        id: slack-build-started
+
+        with:
+          slack-function: send-message
+          slack-bot-user-oauth-access-token: ${{ secrets.SLACK_BOT_USER_OAUTH_ACCESS_TOKEN }}
+          slack-channel: C032M45S3H9
+          slack-text: |
+            Build status: Building
+
+            Please wait 😁
+
+      - name: Fake build process
+        id: fake-build-process
+        run: |-
+          curl "https://httpbin.org/get"
+
+      - name: Update slack with build result
+        uses: archive/github-actions-slack@master
+        with:
+          slack-function: update-message
+          slack-bot-user-oauth-access-token: ${{ secrets.SLACK_BOT_USER_OAUTH_ACCESS_TOKEN }}
+          slack-channel: C032M45S3H9
+          slack-update-message-text: "${{ format('{0}\n\n{1}', 'Build status: Done', steps.fake-build-process.outputs) }}"
+          slack-update-message-ts: ${{ fromJson(steps.send-message.outputs.slack-result).response.message.ts }}
