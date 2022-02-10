@@ -32,16 +32,14 @@ jobs:
           RES="${RES//$'\r'/'%0D'}"
           echo "::set-output name=BUILD_RESULT::$RES"
 
-      - name: Result from "Fake build process"
-        run: echo '${{ steps.fake-build-process.outputs.BUILD_RESULT }}'
-
       - name: Update slack with build result
         uses: archive/github-actions-slack@master
         with:
           slack-function: update-message
           slack-bot-user-oauth-access-token: ${{ secrets.SLACK_BOT_USER_OAUTH_ACCESS_TOKEN }}
           slack-channel: C032M45S3H9
-          #slack-optional-icon_emoji: ":no_entry_sign:"
-          #slack-optional-as_user: false
-          slack-update-message-text: "${{ format('{0}\n\n{1}', 'Build status: Done', fromJson(steps.fake-build-process.outputs)) }}"
+          slack-optional-icon_emoji: ":no_entry_sign:"
+          slack-optional-as_user: false
+          #slack-update-message-text: "${{ format('{0}\n\n{1}', 'Build status: Done', fromJson(steps.fake-build-process.outputs)) }}"
+          slack-update-message-text: "${{ format('{0}\n\n{1}', 'Build status: Done', steps.fake-build-process.outputs.BUILD_RESULT }}"
           slack-update-message-ts: ${{ fromJson(steps.slack-build-started.outputs.slack-result).response.message.ts }}
