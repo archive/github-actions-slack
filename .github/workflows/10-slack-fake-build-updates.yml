@@ -32,5 +32,5 @@ jobs:
           slack-function: update-message
           slack-bot-user-oauth-access-token: ${{ secrets.SLACK_BOT_USER_OAUTH_ACCESS_TOKEN }}
           slack-channel: C032M45S3H9
-          slack-update-message-text: "${{ format('{0}\n\n{1}', 'Build status: Done', steps.fake-build-process.outputs) }}"
-          slack-update-message-ts: ${{ fromJson(steps.send-message.outputs.slack-result).response.message.ts }}
+          slack-update-message-text: "${{ format('{0}\n\n{1}', 'Build status: Done', 'asd') }}"
+          slack-update-message-ts: ${{ fromJson(steps.send-message-2.outputs.slack-result).response.message.ts }}
