@@ -8,7 +8,7 @@ const updateMessage = async () => {
   try {
     const token = context.getRequired("slack-bot-user-oauth-access-token");
     const channelId = context.getRequired("slack-channel");
-    const text = context.getRequired("slack-update-message-text");
+    const text = context.getOptional("slack-update-message-text");
     const ts = context.getRequired("slack-update-message-ts");
 
     const payload = buildUpdateMessage(channelId, text, ts);

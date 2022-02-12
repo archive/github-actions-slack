@@ -9,7 +9,7 @@ const postMessage = async () => {
   try {
     const token = context.getRequired("slack-bot-user-oauth-access-token");
     const channels = context.getRequired("slack-channel");
-    const text = context.getRequired("slack-text");
+    const text = context.getOptional("slack-text");
 
     const results = [];
     for (let channel of channels.split(",")) {
