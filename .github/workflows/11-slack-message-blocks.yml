@@ -4,8 +4,8 @@ on: [push, issues]
 
 jobs:
   slack-action:
-    runs-on: windows-latest
-    name: Test 11 [windows-latest]
+    runs-on: ubuntu-20.04
+    name: Test 11 [ubuntu-20.04]
 
     steps:
       - name: Send Slack Message
@@ -14,7 +14,7 @@ jobs:
         with:
           slack-bot-user-oauth-access-token: ${{ secrets.SLACK_BOT_USER_OAUTH_ACCESS_TOKEN }}
           slack-channel: CPPUV5KU0
-          slack-optional-blocks: |
+          slack-optional-blocks: >-
             [
               {
                 "block_id": "text1",
