@@ -17,8 +17,6 @@ test("message with required (token, channel and text)", async () => {
 });
 
 test("message with optional", async () => {
-  debugger;
-
   mockSlackArguments(
     {
       "slack-bot-user-oauth-access-token": "some-token",
@@ -65,10 +63,8 @@ test("message ignore empty optionals", async () => {
 });
 
 const mockSlackArguments = (mockRequired, mockEnv = []) => {
-  debugger;
   jest.mock("../context", () => ({
     getRequired: function (key) {
-      debugger;
       return mockRequired[key];
     },
     getOptional: function (key) {
@@ -108,7 +104,6 @@ const mockIntegrationFns = () => {
   jest.mock("../integration/slack-api", () => mockFns);
 
   function getApiPostMessagePayload() {
-    debugger;
     return mockFns.apiPostMessage.mock.calls[0][1];
   }
 

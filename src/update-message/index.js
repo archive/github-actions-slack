@@ -21,7 +21,6 @@ const updateMessage = async () => {
     context.setOutput("slack-result", resultAsJson);
   } catch (error) {
     context.debug(error);
-    debugger;
     context.setFailed(jsonPretty(error));
   }
 };

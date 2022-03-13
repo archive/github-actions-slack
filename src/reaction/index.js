@@ -20,7 +20,6 @@ const addReaction = async () => {
     const resultAsJson = jsonPretty(result);
     context.setOutput("slack-result", resultAsJson);
   } catch (error) {
-    debugger;
     context.setFailed(jsonPretty(error));
   }
 };

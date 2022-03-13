@@ -20,12 +20,10 @@ const invoke = async () => {
         await updateMessage();
         break;
       default:
-        debugger;
         context.setFailed("Unhandled `slack-function`: " + func);
         break;
     }
   } catch (error) {
-    debugger;
     context.setFailed("invoke failed:" + error + ":" + jsonPretty(error));
   }
 };
