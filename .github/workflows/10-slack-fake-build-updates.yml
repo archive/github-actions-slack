@@ -15,7 +15,7 @@ jobs:
         with:
           slack-function: send-message
           slack-bot-user-oauth-access-token: ${{ secrets.SLACK_BOT_USER_OAUTH_ACCESS_TOKEN }}
-          slack-channel: C032M45S3H9
+          slack-channel: C036UR31LTD
           slack-text: |
             :hourglass: Build status: Building...
 
@@ -35,6 +35,6 @@ jobs:
         with:
           slack-function: update-message
           slack-bot-user-oauth-access-token: ${{ secrets.SLACK_BOT_USER_OAUTH_ACCESS_TOKEN }}
-          slack-channel: C032M45S3H9
+          slack-channel: C036UR31LTD
           slack-update-message-text: "${{ format('{0}\n\n```{1}```', ':no_entry_sign: Build status: Failed!', steps.fake-build-process.outputs.BUILD_RESULT) }}"
           slack-update-message-ts: ${{ fromJson(steps.slack-build-started.outputs.slack-result).response.message.ts }}

@@ -15,7 +15,7 @@ jobs:
         with:
           slack-function: send-message
           slack-bot-user-oauth-access-token: ${{ secrets.SLACK_BOT_USER_OAUTH_ACCESS_TOKEN }}
-          slack-channel: CPPUV5KU0
+          slack-channel: C036E7G0RPH
           slack-text: Test 4 - Message to send thread to
 
       - name: Send "Slack Message" Result
