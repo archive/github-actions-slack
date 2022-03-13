@@ -1,11 +1,23 @@
-const buildUpdateMessage = (channelId = "", text = "", ts = "") => {
+const {
+  restoreEscapedNewLine,
+  restoreEscapedTab,
+} = require("../util/escaper.js");
+
+const buildMessage = (channel = "", text = "", ts = "", optional = {}) => {
   const message = {
-    channel: channelId,
-    text: text,
-    ts: ts,
+    channel,
+    text,
+    ts,
   };
+
+  message.text = restoreEscapedNewLine(message.text);
+  message.text = restoreEscapedTab(message.text);
+
+  Object.keys(optional).forEach((name) => {
+    message[name] = optional[name];
+  });
 
   return message;
 };
 
-module.exports = buildUpdateMessage;
+module.exports = buildMessage;
