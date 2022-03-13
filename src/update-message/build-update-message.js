@@ -1,8 +1,13 @@
-const buildMessage = (channel = "", text = "", ts="", optional={}) => {
+const {
+  restoreEscapedNewLine,
+  restoreEscapedTab,
+} = require("../util/escaper.js");
+
+const buildMessage = (channel = "", text = "", ts = "", optional = {}) => {
   const message = {
     channel,
     text,
-    ts
+    ts,
   };
 
   message.text = restoreEscapedNewLine(message.text);
@@ -14,10 +19,5 @@ const buildMessage = (channel = "", text = "", ts="", optional={}) => {
 
   return message;
 };
-
-const restoreEscapedNewLine = (text) =>
-  text.replace(/\\r\\n/g, "\n").replace(/\\n/g, "\n");
-
-const restoreEscapedTab = (text) => text.replace(/\\t/g, "\t");
 
 module.exports = buildMessage;

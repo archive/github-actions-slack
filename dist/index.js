@@ -1729,7 +1729,12 @@ module.exports = invoke;
 /***/ }),
 
 /***/ 690:
-/***/ ((module) => {
+/***/ ((module, __unused_webpack_exports, __nccwpck_require__) => {
+
+const {
+  restoreEscapedNewLine,
+  restoreEscapedTab,
+} = __nccwpck_require__(307);
 
 const buildMessage = (channel = "", text = "", optional = {}) => {
   const message = {
@@ -1746,11 +1751,6 @@ const buildMessage = (channel = "", text = "", optional = {}) => {
 
   return message;
 };
-
-const restoreEscapedNewLine = (text) =>
-  text.replace(/\\r\\n/g, "\n").replace(/\\n/g, "\n");
-
-const restoreEscapedTab = (text) => text.replace(/\\t/g, "\t");
 
 module.exports = buildMessage;
 
@@ -1874,13 +1874,18 @@ module.exports = { addReaction };
 /***/ }),
 
 /***/ 51:
-/***/ ((module) => {
+/***/ ((module, __unused_webpack_exports, __nccwpck_require__) => {
 
-const buildMessage = (channel = "", text = "", ts="", optional={}) => {
+const {
+  restoreEscapedNewLine,
+  restoreEscapedTab,
+} = __nccwpck_require__(307);
+
+const buildMessage = (channel = "", text = "", ts = "", optional = {}) => {
   const message = {
     channel,
     text,
-    ts
+    ts,
   };
 
   message.text = restoreEscapedNewLine(message.text);
@@ -1892,11 +1897,6 @@ const buildMessage = (channel = "", text = "", ts="", optional={}) => {
 
   return message;
 };
-
-const restoreEscapedNewLine = (text) =>
-  text.replace(/\\r\\n/g, "\n").replace(/\\n/g, "\n");
-
-const restoreEscapedTab = (text) => text.replace(/\\t/g, "\t");
 
 module.exports = buildMessage;
 
@@ -1934,6 +1934,19 @@ const updateMessage = async () => {
 };
 
 module.exports = { updateMessage };
+
+
+/***/ }),
+
+/***/ 307:
+/***/ ((module) => {
+
+const restoreEscapedNewLine = (text) =>
+  text.replace(/\\r\\n/g, "\n").replace(/\\n/g, "\n");
+
+const restoreEscapedTab = (text) => text.replace(/\\t/g, "\t");
+
+module.exports = { restoreEscapedNewLine, restoreEscapedTab };
 
 
 /***/ }),
