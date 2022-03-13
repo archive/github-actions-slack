@@ -6,7 +6,8 @@
   "license": "MIT",
   "scripts": {
     "lint": "./node_modules/.bin/eslint --fix *.js",
-    "build": "NODE_OPTIONS=--openssl-legacy-provider ncc build index.js -o dist",
+    "build": "ncc build index.js -o dist",
+    "build-legacy": "NODE_OPTIONS=--openssl-legacy-provider ncc build index.js -o dist",
     "test": "jest src --config=jest.config.js",
     "test-debug": "node --inspect-brk node_modules/.bin/jest --runInBand src --config=jest.config.js",
     "deploy-wip": "rm -f dist/index.js && yarn build && git ac wip && git push",
