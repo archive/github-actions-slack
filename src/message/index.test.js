@@ -1,89 +1,118 @@
-describe("message", () => {
-  test("with required (token, channel and text)", () => {
-    mockSlackRequiredArguments({
+test("message with required (token, channel and text)", async () => {
+  mockSlackArguments({
+    "slack-bot-user-oauth-access-token": "some-token",
+    "slack-channel": "some-channel",
+    "slack-text": "some-text",
+  });
+
+  const mockApi = mockIntegrationFns();
+
+  const { postMessage } = require("./index");
+  await postMessage();
+
+  const requestPayload = mockApi.getApiPostMessagePayload();
+
+  expect(requestPayload.channel).toBe("some-channel");
+  expect(requestPayload.text).toBe("some-text");
+});
+
+test("message with optional", async () => {
+  debugger;
+
+  mockSlackArguments(
+    {
       "slack-bot-user-oauth-access-token": "some-token",
       "slack-channel": "some-channel",
       "slack-text": "some-text",
-    });
-
-    const httpsMock = mockHttps();
-
-    const { postMessage } = require("./index");
-    postMessage();
-
-    const requestPayload = httpsMock.getRequestPayload();
-    expect(requestPayload.channel).toBe("some-channel");
-    expect(requestPayload.text).toBe("some-text");
-  });
-
-  test("with optional", () => {
-    mockSlackOptionalArguments({
+    },
+    {
       "INPUT_SLACK-OPTIONAL-ICON_EMOJI": ":some-emoji:",
       "INPUT_SLACK-OPTIONAL-ICON_URL": "https://",
-    });
+    }
+  );
 
-    const httpsMock = mockHttps();
+  const mockApi = mockIntegrationFns();
 
-    const { postMessage } = require("./index");
-    postMessage();
+  const { postMessage } = require("./index");
+  await postMessage();
 
-    const requestPayload = httpsMock.getRequestPayload();
-    expect(requestPayload.icon_emoji).toBe(":some-emoji:");
-    expect(requestPayload.icon_url).toBe("https://");
-  });
+  const requestPayload = mockApi.getApiPostMessagePayload();
+  expect(requestPayload.icon_emoji).toBe(":some-emoji:");
+  expect(requestPayload.icon_url).toBe("https://");
+});
 
-  test("ignore empty optionals", () => {
-    mockSlackOptionalArguments({
+test("message ignore empty optionals", async () => {
+  mockSlackArguments(
+    {
+      "slack-bot-user-oauth-access-token": "some-token",
+      "slack-channel": "some-channel",
+      "slack-text": "some-text",
+    },
+    {
       "INPUT_SLACK-OPTIONAL-ICON_EMOJI": "",
       "INPUT_SLACK-OPTIONAL-ICON_URL": "",
-    });
-
-    const httpsMock = mockHttps();
-
-    const { postMessage } = require("./index");
-    postMessage();
-
-    const requestPayload = httpsMock.getRequestPayload();
-    expect(requestPayload.icon_emoji).not.toBeDefined();
-    expect(requestPayload.icon_url).not.toBeDefined();
-  });
-
-  const mockSlackRequiredArguments = (mockSetup, mockEnv = []) => {
-    jest.mock("../context", () => ({
-      getRequired: function (key) {
-        return mockSetup[key];
-      },
-      setFailed: function (ex) {
-        console.error("Test failed: " + ex);
-      },
-      setOutput: function () {},
-      getEnv: function () {
-        return mockEnv;
-      },
-    }));
-  };
-
-  const mockSlackOptionalArguments = (mockEnv) => {
-    mockSlackRequiredArguments([], mockEnv);
-  };
-
-  const mockHttps = () => {
-    const mockRequest = {
-      on: jest.fn(),
-      write: jest.fn(),
-      end: jest.fn(),
-    };
-
-    jest.mock("https", () => ({
-      request: jest.fn().mockReturnValue(mockRequest),
-    }));
-
-    function getRequestPayload() {
-      return JSON.parse(mockRequest.write.mock.calls[0][0]);
     }
+  );
 
-    return {
-      getRequestPayload,
-    };
-  };
+  const mockApi = mockIntegrationFns();
+
+  const { postMessage } = require("./index");
+  await postMessage();
+
+  const requestPayload = mockApi.getApiPostMessagePayload();
+  expect(requestPayload.icon_emoji).not.toBeDefined();
+  expect(requestPayload.icon_url).not.toBeDefined();
 });
+
+const mockSlackArguments = (mockRequired, mockEnv = []) => {
+  debugger;
+  jest.mock("../context", () => ({
+    getRequired: function (key) {
+      debugger;
+      return mockRequired[key];
+    },
+    getOptional: function (key) {
+      return mockRequired[key];
+    },
+    getEnv: function () {
+      return mockEnv;
+    },
+    setOutput: function () {
+      //console.debug("Test setOutput: " + arguments);
+    },
+    setFailed: function (ex) {
+      console.error("Test setFailed: " + ex);
+    },
+    debug: function (ex) {
+      //console.debug("Test debug: " + ex);
+    },
+    debugExtra: function (ex) {
+      //console.debug("Test debugExtra: " + ex);
+    },
+    info: function (ex) {
+      //console.info("Test info: " + ex);
+    },
+    warning: function (ex) {
+      console.warn("Test warning: " + ex);
+    },
+  }));
+};
+
+const mockIntegrationFns = () => {
+  const mockFns = {
+    apiPostMessage: jest.fn(),
+    apiAddReaction: jest.fn(),
+    apiUpdateMessage: jest.fn(),
+  };
+
+  jest.mock("../integration/slack-api", () => mockFns);
+
+  function getApiPostMessagePayload() {
+    debugger;
+    return mockFns.apiPostMessage.mock.calls[0][1];
+  }
+
+  return {
+    getApiPostMessagePayload,
+  };
+};
