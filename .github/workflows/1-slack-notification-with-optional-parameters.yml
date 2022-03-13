@@ -13,7 +13,7 @@ jobs:
         id: send-message
         with:
           slack-bot-user-oauth-access-token: ${{ secrets.SLACK_BOT_USER_OAUTH_ACCESS_TOKEN }}
-          slack-channel: CPPUV5KU0
+          slack-channel: C02HEBQP46T
           slack-text: "Test 1 - :fire:"
           slack-optional-icon_emoji: ":fire:"
           slack-optional-as_user: false
