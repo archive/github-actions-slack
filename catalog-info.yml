@@ -1,0 +1,16 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: github-actions-slack
+  description: |
+    Github Action for sending message to Slack - With support for Slack's optional arguments
+  annotations:
+    github.com/project-slug: Tradeshift/github-actions-slack
+  tags:
+    - github-action
+    - nodejs
+    - fork
+spec:
+  type: library
+  owner: developer-productivity
+  lifecycle: production
