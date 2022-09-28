@@ -1,6 +1,13 @@
 const https = require("https");
+const context = require("../context");
+const HttpsProxyAgent = require('https-proxy-agent');
 
 const getOptions = (token, path) => {
+  const proxyAddr = context.getOptional("http-proxy") || null;
+  let agent = null
+  if (proxyAddr != null) {
+    agent = new HttpsProxyAgent(proxyAddr);
+  }
   return {
     hostname: "slack.com",
     port: 443,
@@ -10,6 +17,7 @@ const getOptions = (token, path) => {
       "Content-Type": "application/json; charset=utf-8",
       Authorization: `Bearer ${token}`,
     },
+    agent: agent,
   };
 };
 

@@ -67,6 +67,9 @@ inputs:
   slack-update-message-text:
     description: https://api.slack.com/methods/chat.update#text
     required: false
+  http-proxy:
+    description: "HTTP(S) Proxy server"
+    required: false
 
 outputs:
   slack-result:
