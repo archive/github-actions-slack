@@ -1736,10 +1736,11 @@ const {
   restoreEscapedTab,
 } = __nccwpck_require__(307);
 
-const buildMessage = (channel = "", text = "", optional = {}) => {
+const buildMessage = (channel = "", text = "", blocks = "", optional = {}) => {
   const message = {
     channel,
     text,
+    blocks,
   };
 
   message.text = restoreEscapedNewLine(message.text);
@@ -1771,13 +1772,14 @@ const postMessage = async () => {
   try {
     const token = context.getRequired("slack-bot-user-oauth-access-token");
     const channels = context.getRequired("slack-channel");
-    const text = context.getRequired("slack-text");
+    const text = context.getOptional("slack-text");
+    const blocks = context.getOptional("slack-blocks");
 
     const results = [];
     for (let channel of channels.split(",")) {
       channel = channel.trim();
 
-      const payload = buildMessage(channel, text, optional());
+      const payload = buildMessage(channel, text, blocks, optional());
 
       context.debug("Post Message PAYLOAD", payload);
       const result = await apiPostMessage(token, payload);
@@ -1881,11 +1883,12 @@ const {
   restoreEscapedTab,
 } = __nccwpck_require__(307);
 
-const buildMessage = (channel = "", text = "", ts = "", optional = {}) => {
+const buildMessage = (channel = "", text = "", blocks = "", ts = "", optional = {}) => {
   const message = {
     channel,
     text,
     ts,
+    blocks,
   };
 
   message.text = restoreEscapedNewLine(message.text);
@@ -1916,10 +1919,11 @@ const updateMessage = async () => {
   try {
     const token = context.getRequired("slack-bot-user-oauth-access-token");
     const channelId = context.getRequired("slack-channel");
-    const text = context.getRequired("slack-update-message-text");
     const ts = context.getRequired("slack-update-message-ts");
+    const text = context.getOptional("slack-update-message-text");
+    const blocks = context.getOptional("slack-update-message-blocks");
 
-    const payload = buildUpdateMessage(channelId, text, ts);
+    const payload = buildUpdateMessage(channelId, text, blocks, ts, optional());
 
     context.debugExtra("Update Message PAYLOAD", payload);
     const result = await apiUpdateMessage(token, payload);
@@ -1931,6 +1935,21 @@ const updateMessage = async () => {
     context.debug(error);
     context.setFailed(jsonPretty(error));
   }
+};
+
+const optional = () => {
+  let opt = {};
+
+  const env = context.getEnv();
+  Object.keys(env)
+    .filter((key) => !!env[key])
+    .filter((key) => key.toUpperCase().startsWith("INPUT_SLACK-OPTIONAL-"))
+    .forEach((key) => {
+      const slackKey = key.replace("INPUT_SLACK-OPTIONAL-", "").toLowerCase();
+      opt[slackKey] = env[key];
+    });
+
+  return opt;
 };
 
 module.exports = { updateMessage };

@@ -9,13 +9,14 @@ const postMessage = async () => {
   try {
     const token = context.getRequired("slack-bot-user-oauth-access-token");
     const channels = context.getRequired("slack-channel");
-    const text = context.getRequired("slack-text");
+    const text = context.getOptional("slack-text");
+    const blocks = context.getOptional("slack-blocks");
 
     const results = [];
     for (let channel of channels.split(",")) {
       channel = channel.trim();
 
-      const payload = buildMessage(channel, text, optional());
+      const payload = buildMessage(channel, text, blocks, optional());
 
       context.debug("Post Message PAYLOAD", payload);
       const result = await apiPostMessage(token, payload);

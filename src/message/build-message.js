@@ -3,10 +3,11 @@ const {
   restoreEscapedTab,
 } = require("../util/escaper.js");
 
-const buildMessage = (channel = "", text = "", optional = {}) => {
+const buildMessage = (channel = "", text = "", blocks = "", optional = {}) => {
   const message = {
     channel,
     text,
+    blocks,
   };
 
   message.text = restoreEscapedNewLine(message.text);
