@@ -12,7 +12,10 @@ inputs:
     required: true
   slack-text:
     description: "Text"
-    required: true
+    required: false
+  slack-blocks:
+    description: "Blocks"
+    required: false
   slack-optional-as_user:
     description: "https://api.slack.com/methods/chat.postMessage#arg_as_user"
     required: false
@@ -66,6 +69,9 @@ inputs:
     required: false
   slack-update-message-text:
     description: https://api.slack.com/methods/chat.update#text
+    required: false
+  slack-update-message-blocks:
+    description: https://api.slack.com/methods/chat.update#blocks
     required: false
 
 outputs:
