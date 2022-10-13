@@ -1,4 +1,4 @@
-name: test-11-slack-message-blocks
+name: test-12-slack-message-blocks-update
 
 on: [push, issues]
 
