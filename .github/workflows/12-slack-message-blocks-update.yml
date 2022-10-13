@@ -49,7 +49,7 @@ jobs:
                 "type": "divider"
               },
               {
-                "block_id": "text1",
+                "block_id": "text2",
                 "type": "section",
                 "text": {
                   "type": "mrkdwn",
