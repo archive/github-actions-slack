@@ -8,7 +8,7 @@ jobs:
     name: Test 11 [ubuntu-20.04]
 
     steps:
-      - name: Send Slack Message
+      - name: Send Slack Message (Blocks)
         uses: archive/github-actions-slack@update_message_with_blocks
         id: send-message
         with:

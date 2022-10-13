@@ -1,0 +1,59 @@
+name: test-11-slack-message-blocks
+
+on: [push, issues]
+
+jobs:
+  slack-action:
+    runs-on: ubuntu-20.04
+    name: Test 11 [ubuntu-20.04]
+
+    steps:
+      - name: Send Slack Message (Blocks)
+        uses: archive/github-actions-slack@update_message_with_blocks
+        id: send-message
+        with:
+          slack-bot-user-oauth-access-token: ${{ secrets.SLACK_BOT_USER_OAUTH_ACCESS_TOKEN }}
+          slack-channel: C046FKM3TNF
+          slack-blocks: >-
+            [
+              {
+                "block_id": "text1",
+                "type": "section",
+                "text": {
+                  "type": "mrkdwn",
+                  "text": "Building... *please wait*"
+                }
+              }
+            ]
+
+      - name: Result from "Send Slack Message"
+        run: echo '${{ steps.send-message.outputs.slack-result }}'
+
+      - name: Send Slack Message (Blocks) - Update
+        uses: archive/github-actions-slack@update_message_with_blocks
+        id: send-message-update
+        with:
+          slack-bot-user-oauth-access-token: ${{ secrets.SLACK_BOT_USER_OAUTH_ACCESS_TOKEN }}
+          slack-channel: C046FKM3TNF
+          slack-update-message-blocks: >-
+            [
+              {
+                "block_id": "text1",
+                "type": "section",
+                "text": {
+                  "type": "mrkdwn",
+                  "text": "Building..."
+                }
+              },
+              {
+                "type": "divider"
+              },
+              {
+                "block_id": "text1",
+                "type": "section",
+                "text": {
+                  "type": "mrkdwn",
+                  "text": "*Done* 😁"
+                }
+              }
+            ]
