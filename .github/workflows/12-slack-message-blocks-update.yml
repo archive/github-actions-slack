@@ -42,18 +42,7 @@ jobs:
                 "type": "section",
                 "text": {
                   "type": "mrkdwn",
-                  "text": "Building..."
-                }
-              },
-              {
-                "type": "divider"
-              },
-              {
-                "block_id": "text2",
-                "type": "section",
-                "text": {
-                  "type": "mrkdwn",
-                  "text": "*Done* 😁"
+                  "text": "Building... *done!*"
                 }
               }
             ]
