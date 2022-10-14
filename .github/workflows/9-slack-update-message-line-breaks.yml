@@ -28,13 +28,13 @@ jobs:
           slack-function: update-message
           slack-bot-user-oauth-access-token: ${{ secrets.SLACK_BOT_USER_OAUTH_ACCESS_TOKEN }}
           slack-channel: ${{ fromJson(steps.send-message-1.outputs.slack-result).response.channel }}
+          slack-update-message-ts: ${{ fromJson(steps.send-message-1.outputs.slack-result).response.message.ts }}
           slack-update-message-text: |
             Test 9.1 - 1/2
 
             Message to update
 
             Updated!
-          slack-update-message-ts: ${{ fromJson(steps.send-message-1.outputs.slack-result).response.message.ts }}
 
       - name: Send Slack Reaction To Message Result
         run: echo 'Data - ${{ steps.send-message-1.outputs.slack-result }}'
@@ -63,8 +63,8 @@ jobs:
           slack-function: update-message
           slack-bot-user-oauth-access-token: ${{ secrets.SLACK_BOT_USER_OAUTH_ACCESS_TOKEN }}
           slack-channel: ${{ fromJson(steps.send-message-2.outputs.slack-result).response.channel }}
-          slack-update-message-text: "${{ format('{0}\n\n{1}', 'Test 9.1 - 2/2', toJson(runner)) }}"
           slack-update-message-ts: ${{ fromJson(steps.send-message-2.outputs.slack-result).response.message.ts }}
+          slack-update-message-text: "${{ format('{0}\n\n{1}', 'Test 9.1 - 2/2', toJson(runner)) }}"
 
       - name: Send Slack Reaction To Message Result
         run: echo 'Data - ${{ steps.send-message-2.outputs.slack-result }}'

@@ -4,7 +4,6 @@ on: [push]
 
 jobs:
   slack-action:
-    if: ${{ false }}  # temp disable
     runs-on: ubuntu-20.04
     name: Test 5 [ubuntu-20.04]
 
@@ -31,8 +30,8 @@ jobs:
           slack-function: update-message
           slack-bot-user-oauth-access-token: ${{ secrets.SLACK_BOT_USER_OAUTH_ACCESS_TOKEN }}
           slack-channel: ${{ fromJson(steps.send-message.outputs.slack-result).response.channel }}
-          slack-update-message-text: Test 5.1 - Message to update - updated
           slack-update-message-ts: ${{ fromJson(steps.send-message.outputs.slack-result).response.message.ts }}
+          slack-update-message-text: Test 5.1 - Message to update - updated
 
       - name: Send Slack Reaction To Message Result
         run: echo 'Data - ${{ steps.send-message.outputs.slack-result }}'
