@@ -1,6 +1,7 @@
 const context = require("../context");
 const { apiUpdateMessage } = require("../integration/slack-api");
 const buildUpdateMessage = require("./build-update-message");
+const { optional } = require("../util/optional");
 
 const jsonPretty = (data) => JSON.stringify(data, undefined, 2);
 
@@ -24,21 +25,6 @@ const updateMessage = async () => {
     context.debug(error);
     context.setFailed(jsonPretty(error));
   }
-};
-
-const optional = () => {
-  let opt = {};
-
-  const env = context.getEnv();
-  Object.keys(env)
-    .filter((key) => !!env[key])
-    .filter((key) => key.toUpperCase().startsWith("INPUT_SLACK-OPTIONAL-"))
-    .forEach((key) => {
-      const slackKey = key.replace("INPUT_SLACK-OPTIONAL-", "").toLowerCase();
-      opt[slackKey] = env[key];
-    });
-
-  return opt;
 };
 
 module.exports = { updateMessage };
