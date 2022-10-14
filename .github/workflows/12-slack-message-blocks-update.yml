@@ -5,7 +5,7 @@ on: [push, issues]
 jobs:
   slack-action:
     runs-on: ubuntu-20.04
-    name: Test 11 [ubuntu-20.04]
+    name: Test 12 [ubuntu-20.04]
 
     steps:
       - name: Send Slack Message (Blocks)
