@@ -17,6 +17,9 @@ const post = (token, path, message) => {
   return new Promise((resolve, reject) => {
     const payload = JSON.stringify(message);
 
+    console.log("PAYLOAD101");
+    console.log(message);
+
     const options = getOptions(token, path);
 
     const req = https.request(options, (res) => {
