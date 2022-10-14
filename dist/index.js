@@ -2753,9 +2753,6 @@ const post = (token, path, message) => {
   return new Promise((resolve, reject) => {
     const payload = JSON.stringify(message);
 
-    console.log("PAYLOAD101");
-    console.log(message);
-
     const options = getOptions(token, path);
 
     const req = https.request(options, (res) => {
@@ -3108,9 +3105,6 @@ const updateMessage = async () => {
     const blocks = context.getOptional("slack-update-message-blocks");
 
     const payload = buildUpdateMessage(channelId, text, blocks, ts, optional());
-
-    console.log("buildUpdateMessage101");
-    console.log(payload);
 
     context.debugExtra("Update Message PAYLOAD", payload);
     const result = await apiUpdateMessage(token, payload);
