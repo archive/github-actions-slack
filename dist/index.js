@@ -3043,7 +3043,21 @@ const {
   restoreEscapedTab,
 } = __nccwpck_require__(307);
 
-const buildMessage = (channel = "", text = "", blocks = "", ts = "", optional = {}) => {
+const buildMessage = (
+  channel = "",
+  text = "",
+  blocks = "",
+  ts = "",
+  optional = {}
+) => {
+  if (!channel || !ts) {
+    throw new Error("Channel and/or TS must be set");
+  }
+
+  if (!text && !blocks) {
+    throw new Error("Text OR Block must be set");
+  }
+
   const message = {
     channel,
     text,
