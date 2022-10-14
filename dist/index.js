@@ -2731,7 +2731,7 @@ module.exports = {
 
 /***/ }),
 
-/***/ 202:
+/***/ 451:
 /***/ ((module, __unused_webpack_exports, __nccwpck_require__) => {
 
 const https = __nccwpck_require__(687);
@@ -2766,10 +2766,22 @@ const post = (token, path, message) => {
         const result = Buffer.concat(chunks).toString();
         const response = JSON.parse(result);
 
+        const isOk = res.statusCode >= 200 && res.statusCode <= 299;
+
+        // This solves the issue that block updates returns 200
+        // but contains ok = false in the response
+        if (
+          response &&
+          response.hasOwnProperty("ok") &&
+          response.ok === false
+        ) {
+          isOk = false;
+        }
+
         resolve({
           statusCode: res.statusCode,
           statusMessage: res.statusMessage,
-          ok: res.statusCode >= 200 && res.statusCode <= 299,
+          ok: isOk,
           result: result,
           response: response,
         });
@@ -2785,37 +2797,49 @@ const post = (token, path, message) => {
   });
 };
 
+module.exports = { post };
+
+
+/***/ }),
+
+/***/ 202:
+/***/ ((module, __unused_webpack_exports, __nccwpck_require__) => {
+
+const { post } = __nccwpck_require__(451);
+
+const hasErrors = (res) => !res || !res.ok;
+
 const apiPostMessage = async (token, message) => {
   const path = "/api/chat.postMessage";
-  const result = await post(token, path, message);
+  const res = await post(token, path, message);
 
-  if (!result || !result.ok) {
-    throw `Error! ${JSON.stringify(response)}`;
+  if (hasErrors(res)) {
+    throw `Error! ${JSON.stringify(res)}`;
   }
 
-  return result;
+  return res;
 };
 
 const apiAddReaction = async (token, message) => {
   const path = "/api/reactions.add";
-  const result = await post(token, path, message);
+  const res = await post(token, path, message);
 
-  if (!result || !result.ok) {
-    throw `Error! ${JSON.stringify(response)}`;
+  if (hasErrors(res)) {
+    throw `Error! ${JSON.stringify(res)}`;
   }
 
-  return result;
+  return res;
 };
 
 const apiUpdateMessage = async (token, message) => {
   const path = "/api/chat.update";
-  const result = await post(token, path, message);
+  const res = await post(token, path, message);
 
-  if (!result || !result.ok) {
-    throw `Error! ${JSON.stringify(response)}`;
+  if (hasErrors(res)) {
+    throw `Error! ${JSON.stringify(res)}`;
   }
 
-  return result;
+  return res;
 };
 
 module.exports = { apiPostMessage, apiAddReaction, apiUpdateMessage };
