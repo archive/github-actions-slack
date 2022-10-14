@@ -1,6 +1,6 @@
 name: test-6-slack-thread-with-broadcast
 
-on: [push, issues]
+on: [push]
 
 jobs:
   slack-action:

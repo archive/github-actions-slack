@@ -1,6 +1,6 @@
 name: test-1-slack-notification-with-optional-parameters
 
-on: [push, issues]
+on: [push]
 
 jobs:
   slack-action:

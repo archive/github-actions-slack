@@ -1,6 +1,6 @@
 name: test-8-slack-notification-line-breaks
 
-on: [push, issues]
+on: [push]
 
 jobs:
   slack-action:
