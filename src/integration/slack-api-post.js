@@ -30,7 +30,7 @@ const post = (token, path, message) => {
         const result = Buffer.concat(chunks).toString();
         const response = JSON.parse(result);
 
-        const isOk = res.statusCode >= 200 && res.statusCode <= 299;
+        let isOk = res.statusCode >= 200 && res.statusCode <= 299;
 
         // This solves the issue that block updates returns 200
         // but contains ok = false in the response
