@@ -3,12 +3,7 @@ const {
   restoreEscapedTab,
 } = require("../util/escaper.js");
 
-const buildMessage = (
-  channel = "",
-  text = "",
-  blocks = null,
-  optional = {}
-) => {
+const buildMessage = (channel = "", text = "", blocks = "", optional = {}) => {
   if (!channel) {
     throw new Error("Channel must be set");
   }

@@ -6,7 +6,7 @@ const {
 const buildMessage = (
   channel = "",
   text = "",
-  blocks = null,
+  blocks = "",
   ts = "",
   optional = {}
 ) => {
