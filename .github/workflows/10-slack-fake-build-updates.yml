@@ -1,6 +1,6 @@
 name: test-10-fake-build-updates
 
-on: [push, issues]
+on: [push]
 
 jobs:
   slack-action:

@@ -1,6 +1,6 @@
 name: test-4-slack-thread
 
-on: [push, issues]
+on: [push]
 
 jobs:
   slack-action:

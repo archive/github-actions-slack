@@ -1,6 +1,6 @@
 name: test-2-slack-notification
 
-on: [push, issues]
+on: [push]
 
 jobs:
   slack-action:
