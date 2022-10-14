@@ -12,15 +12,20 @@ const buildMessage = (channel = "", text = "", blocks = "", optional = {}) => {
     throw new Error("Text OR Block must be set");
   }
 
-  const message = {
-    channel,
-    text,
-    blocks,
-  };
+  let message;
+  if (text) {
+    message = {
+      channel,
+      text,
+    };
 
-  if (message.text) {
     message.text = restoreEscapedNewLine(message.text);
     message.text = restoreEscapedTab(message.text);
+  } else {
+    message = {
+      channel,
+      blocks,
+    };
   }
 
   Object.keys(optional).forEach((name) => {

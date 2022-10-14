@@ -1,4 +1,5 @@
 const https = require("https");
+const context = require("../context");
 
 const getOptions = (token, path) => {
   return {
@@ -16,6 +17,8 @@ const getOptions = (token, path) => {
 const post = (token, path, message) => {
   return new Promise((resolve, reject) => {
     const payload = JSON.stringify(message);
+
+    context.debugExtra("SLACK POST PAYLOAD", payload);
 
     const options = getOptions(token, path);
 
