@@ -4,6 +4,7 @@ on: [push]
 
 jobs:
   slack-action:
+    if: ${{ false }}  # temp disable
     runs-on: ubuntu-20.04
     name: Test 5 [ubuntu-20.04]
 

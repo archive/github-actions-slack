@@ -12,7 +12,6 @@ jobs:
         uses: archive/github-actions-slack@update_message_with_blocks
         id: send-message
         with:
-          slack-function: update-message
           slack-bot-user-oauth-access-token: ${{ secrets.SLACK_BOT_USER_OAUTH_ACCESS_TOKEN }}
           slack-channel: C046FKM3TNF
           slack-blocks: >-
@@ -34,6 +33,7 @@ jobs:
         uses: archive/github-actions-slack@update_message_with_blocks
         id: send-message-update
         with:
+          slack-function: update-message
           slack-bot-user-oauth-access-token: ${{ secrets.SLACK_BOT_USER_OAUTH_ACCESS_TOKEN }}
           slack-channel: C046FKM3TNF
           slack-update-message-ts: ${{ fromJson(steps.send-message.outputs.slack-result).response.message.ts }}
