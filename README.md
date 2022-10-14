@@ -1,4 +1,4 @@
-# Github Action for sending message (and reactions/threads/update) to Slack
+# Github Action for sending message (and reactions/threads/update/blocks) to Slack
 
 — With support for Slack's optional arguments
 
@@ -7,7 +7,7 @@
 ![](https://api.codiga.io/project/30889/status/svg)
 ![](https://api.codiga.io/project/30889/score/svg)
 
-This Action allows you to send messages (and reactions/threads/update) to Slack from your Github Actions. Supports Slack's required arguments as well as all the optional once. It's JavaScript-based and thus fast to run.
+This Action allows you to send messages (and reactions/threads/update/blocks) to Slack from your Github Actions. Supports Slack's required arguments as well as all the optional once. It's JavaScript-based and thus fast to run.
 
 ![Slack result](./images/slack-result.png "Slack result")
 
@@ -49,7 +49,7 @@ This action supports:
 
 - `slack-channel` - The channel/channels where you want the message (comma separated)
 
-- `slack-text` - The text of the message
+- `slack-text` - The text of the message (or use `slack-blocks`)
 
 **Optional: Github Action Parameters:**
 
@@ -290,6 +290,15 @@ jobs:
 Similar to Add Reaction, but with text instead.
 
 Please see [.github/workflows/5-slack-update-message.yml](.github/workflows/5-slack-update-message.yml)
+
+## 5. Using blocks
+
+With blocks you can create more rich and complex messages / message layouts: https://api.slack.com/messaging/composing/layouts
+
+For some examples, please see:
+
+- [.github/workflows/11-slack-message-blocks.yml](.github/workflows/11-slack-message-blocks.yml)
+- [.github/workflows/12-slack-message-blocks-update.yml](.github/workflows/12-slack-message-blocks-update.yml)
 
 ## How to setup your first Github Action in your repository that will call this Action
 

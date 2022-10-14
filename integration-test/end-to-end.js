@@ -10,7 +10,7 @@ const buildReaction = require("../src/reaction/build-reaction");
 const buildUpdateMessage = require("../src/update-message/build-update-message");
 
 const testSendMessage = async (channel, token, text, optional = {}) => {
-  const message = buildMessage(channel, text, {
+  const message = buildMessage(channel, text, null, {
     as_user: false,
     icon_emoji: ":fire:",
     ...optional,
@@ -22,7 +22,7 @@ const testSendMessage = async (channel, token, text, optional = {}) => {
 };
 
 const testSendReaction = async (channel, token) => {
-  const message = buildMessage(channel, "Test 2 - testSendReaction 🤓", {
+  const message = buildMessage(channel, "Test 2 - testSendReaction 🤓", null, {
     as_user: false,
     icon_emoji: ":fire:",
   });
@@ -67,6 +67,7 @@ const testUpdateMessage = async (channel, token) => {
   const message = buildUpdateMessage(
     process.env.CHANNEL,
     "Test 4 - testUpdateMessage - Updated!",
+    null,
     messageToUpdate.response.message.ts
   );
 

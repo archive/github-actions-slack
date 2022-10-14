@@ -4,6 +4,7 @@ on: [push]
 
 jobs:
   slack-action:
+    #if: ${{ false }}
     runs-on: windows-latest
     name: Test 2 [windows-latest]
 

@@ -4,6 +4,7 @@ on: [push]
 
 jobs:
   slack-action:
+    #if: ${{ false }}
     runs-on: macos-latest
     name: Test 4 [macos-latest]
 

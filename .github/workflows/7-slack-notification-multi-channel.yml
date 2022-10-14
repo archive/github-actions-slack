@@ -4,6 +4,7 @@ on: [push]
 
 jobs:
   slack-action:
+    #if: ${{ false }}
     runs-on: windows-2019
     name: Test 7 [windows-2019]
 
