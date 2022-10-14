@@ -90,7 +90,7 @@ const testUpdateMessage = async (channel, token) => {
     "Test 1 - testSendMessage"
   );
 
-  await testSendReaction(
+  /*await testSendReaction(
     process.env.CHANNEL,
     process.env.BOT_USER_OAUTH_ACCESS_TOKEN
   );
@@ -103,5 +103,5 @@ const testUpdateMessage = async (channel, token) => {
   await testUpdateMessage(
     process.env.CHANNEL,
     process.env.BOT_USER_OAUTH_ACCESS_TOKEN
-  );
+  );*/
 })();

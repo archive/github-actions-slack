@@ -6,7 +6,7 @@ const {
 const buildMessage = (
   channel = "",
   text = "",
-  blocks = "",
+  blocks = null,
   ts = "",
   optional = {}
 ) => {
@@ -14,7 +14,7 @@ const buildMessage = (
     throw new Error("Channel and/or TS must be set");
   }
 
-  if (!text && !blocks) {
+  if (text && blocks) {
     throw new Error("Text OR Block must be set");
   }
 
@@ -25,8 +25,10 @@ const buildMessage = (
     blocks,
   };
 
-  message.text = restoreEscapedNewLine(message.text);
-  message.text = restoreEscapedTab(message.text);
+  if (message.text) {
+    message.text = restoreEscapedNewLine(message.text);
+    message.text = restoreEscapedTab(message.text);
+  }
 
   Object.keys(optional).forEach((name) => {
     message[name] = optional[name];
