@@ -3099,6 +3099,9 @@ const updateMessage = async () => {
 
     const payload = buildUpdateMessage(channelId, text, blocks, ts, optional());
 
+    console.log("buildUpdateMessage101");
+    console.log(payload);
+
     context.debugExtra("Update Message PAYLOAD", payload);
     const result = await apiUpdateMessage(token, payload);
     context.debug("Update Message RESULT", result);
