@@ -3,13 +3,7 @@ const { post } = require("./slack-api-post");
 const hasErrors = (res) => !res || !res.ok;
 
 const buildErrorMessage = (res) => {
-  let trace = "";
-  try {
-    trace = JSON.stringify(console.trace());
-  } catch (error) {
-    trace = "n/a " + error;
-  }
-  return `Error! ${JSON.stringify(res)} [${trace}]`;
+  return `Error! ${JSON.stringify(res)} (response)`;
 };
 
 const apiPostMessage = async (token, message) => {
