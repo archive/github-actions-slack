@@ -22,6 +22,7 @@ on:
 
 jobs:
   analyze:
+    if: ${{ false }}  # temp disable
     name: Analyze
     runs-on: ubuntu-latest
     permissions:
