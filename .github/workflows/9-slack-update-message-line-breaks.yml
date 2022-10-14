@@ -4,8 +4,8 @@ on: [push, issues]
 
 jobs:
   slack-action:
-    runs-on: ubuntu-20.04
-    name: Test 9 [ubuntu-20.04]
+    runs-on: ubuntu-latest
+    name: Test 9 [ubuntu-latest]
 
     steps:
       - name: Send Slack Message
