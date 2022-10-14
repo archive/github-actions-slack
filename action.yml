@@ -1,5 +1,5 @@
 name: "💬 Send Message to Slack 🚀"
-description: "From Github Action to Slack. Easy to use. Supports all Slack's optional arguments. Pure JavaScript = Fast."
+description: "From Github Action to Slack. Easy to use. Supports Slack's optional arguments. Pure JavaScript = Fast."
 branding:
   icon: "message-circle"
   color: "orange"
