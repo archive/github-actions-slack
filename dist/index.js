@@ -2735,6 +2735,7 @@ module.exports = {
 /***/ ((module, __unused_webpack_exports, __nccwpck_require__) => {
 
 const https = __nccwpck_require__(5687);
+const context = __nccwpck_require__(1319);
 
 const getOptions = (token, path) => {
   return {
@@ -2752,6 +2753,8 @@ const getOptions = (token, path) => {
 const post = (token, path, message) => {
   return new Promise((resolve, reject) => {
     const payload = JSON.stringify(message);
+
+    context.debugExtra("SLACK POST PAYLOAD", payload);
 
     const options = getOptions(token, path);
 
@@ -2906,15 +2909,20 @@ const buildMessage = (channel = "", text = "", blocks = "", optional = {}) => {
     throw new Error("Text OR Block must be set");
   }
 
-  const message = {
-    channel,
-    text,
-    blocks,
-  };
+  let message;
+  if (text) {
+    message = {
+      channel,
+      text,
+    };
 
-  if (message.text) {
     message.text = restoreEscapedNewLine(message.text);
     message.text = restoreEscapedTab(message.text);
+  } else {
+    message = {
+      channel,
+      blocks,
+    };
   }
 
   Object.keys(optional).forEach((name) => {
@@ -3055,16 +3063,22 @@ const buildMessage = (
     throw new Error("Text OR Block must be set");
   }
 
-  const message = {
-    channel,
-    text,
-    ts,
-    blocks,
-  };
+  let message;
+  if (text) {
+    message = {
+      channel,
+      text,
+      ts,
+    };
 
-  if (message.text) {
     message.text = restoreEscapedNewLine(message.text);
     message.text = restoreEscapedTab(message.text);
+  } else {
+    message = {
+      channel,
+      ts,
+      blocks,
+    };
   }
 
   Object.keys(optional).forEach((name) => {

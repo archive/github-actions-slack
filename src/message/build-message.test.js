@@ -7,7 +7,6 @@ describe("build message", () => {
     expect(message).toEqual({
       channel: "channel",
       text: "text",
-      blocks: null,
     });
   });
 
@@ -18,7 +17,6 @@ describe("build message", () => {
 
     expect(message).toEqual({
       channel: "channel",
-      text: null,
       blocks: "blocks",
     });
   });
@@ -31,7 +29,6 @@ describe("build message", () => {
     expect(message).toEqual({
       channel: "channel",
       text: "text",
-      blocks: null,
       key: "value",
     });
   });
