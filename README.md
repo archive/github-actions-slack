@@ -297,6 +297,8 @@ Please see [.github/workflows/5-slack-update-message.yml](.github/workflows/5-sl
 
 With blocks you can create more rich and complex messages / message layouts: https://api.slack.com/messaging/composing/layouts
 
+![image](https://user-images.githubusercontent.com/351045/195956018-11f1d646-f9cb-4c67-8bf6-bb413eecc2be.png)
+
 For some examples, please see:
 
 - [.github/workflows/11-slack-message-blocks.yml](.github/workflows/11-slack-message-blocks.yml)
