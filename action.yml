@@ -16,9 +16,9 @@ inputs:
   slack-blocks:
     description: "Blocks"
     required: false
-  slack-optional-as_user:
-    description: "https://api.slack.com/methods/chat.postMessage#arg_as_user"
-    required: false
+  #slack-optional-as_user: - THIS HAS BEEN DEPRECATED BY SLACK - https://twitter.com/SlackAPI/status/1288171767887024130
+  #  description: "https://api.slack.com/methods/chat.postMessage#arg_as_user"
+  #  required: false
   slack-optional-attachments:
     description: "https://api.slack.com/methods/chat.postMessage#arg_attachments"
     required: false
