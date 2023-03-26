@@ -4,7 +4,7 @@ on: [push]
 
 jobs:
   slack-action:
-    #if: ${{ false }}
+    if: ${{ false }}
     runs-on: ubuntu-latest
     name: Test 9 [ubuntu-latest]
 
@@ -38,8 +38,6 @@ jobs:
 
       - name: Send Slack Reaction To Message Result
         run: echo 'Data - ${{ steps.send-message-1.outputs.slack-result }}'
-
-
 
       - name: Send Slack Message
         uses: archive/github-actions-slack@master

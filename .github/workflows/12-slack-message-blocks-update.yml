@@ -4,7 +4,7 @@ on: [push, issues]
 
 jobs:
   slack-action:
-    #if: ${{ false }}
+    if: ${{ false }}
     runs-on: ubuntu-20.04
     name: Test 12 [ubuntu-20.04]
 

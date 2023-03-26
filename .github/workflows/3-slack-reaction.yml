@@ -4,7 +4,7 @@ on: [push]
 
 jobs:
   slack-action:
-    #if: ${{ false }}
+    if: ${{ false }}
     runs-on: ubuntu-latest
     name: Test 3 [ubuntu-latest]
 
