@@ -26,7 +26,7 @@ jobs:
         id: fake-build-process
         run: |
           echo 'BUILD_RESULT<<EOF' >> $GITHUB_OUTPUT
-          curl https://httpbin.org/robots.txt -s >> $GITHUB_OUTPUT
+          curl https://httpbin.org/json -s >> $GITHUB_OUTPUT
           echo 'EOF' >> $GITHUB_OUTPUT
 
       - name: Update slack with build result
