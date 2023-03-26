@@ -17,7 +17,6 @@ jobs:
           slack-channel: C02HEBQP46T
           slack-text: "Test 1 - :fire:"
           slack-optional-icon_emoji: ":fire:"
-          slack-optional-as_user: false
 
       - name: Result from "Send Slack Message"
         run: echo '${{ steps.send-message.outputs.slack-result }}'

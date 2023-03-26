@@ -11,7 +11,6 @@ const buildUpdateMessage = require("../src/update-message/build-update-message")
 
 const testSendMessage = async (channel, token, text, optional = {}) => {
   const message = buildMessage(channel, text, null, {
-    as_user: false,
     icon_emoji: ":fire:",
     ...optional,
   });
@@ -23,7 +22,6 @@ const testSendMessage = async (channel, token, text, optional = {}) => {
 
 const testSendReaction = async (channel, token) => {
   const message = buildMessage(channel, "Test 2 - testSendReaction 🤓", null, {
-    as_user: false,
     icon_emoji: ":fire:",
   });
   const messageToReactTo = await apiPostMessage(token, message);

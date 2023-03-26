@@ -154,7 +154,6 @@ jobs:
           slack-channel: CPPUV5KU0 #USE CHANNEL ID, NOT CHANNEL NAME, SINCE ID IS USED IN NEW SLACK API's
           slack-text: Hello! Something is burning! Or not...
           slack-optional-icon_emoji: ":fire:"
-          slack-optional-as_user: false
       - name: Result from "Send Message"
         run: echo "The result was ${{ steps.notify.outputs.slack-result }}"
 ```
