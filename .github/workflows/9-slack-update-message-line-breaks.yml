@@ -39,8 +39,6 @@ jobs:
       - name: Send Slack Reaction To Message Result
         run: echo 'Data - ${{ steps.send-message-1.outputs.slack-result }}'
 
-
-
       - name: Send Slack Message
         uses: archive/github-actions-slack@master
         id: send-message-2

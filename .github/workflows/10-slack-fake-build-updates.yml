@@ -25,11 +25,9 @@ jobs:
       - name: Fake build process
         id: fake-build-process
         run: |
-          RES=$(curl https://httpbin.org/json -s)
-          RES="${RES//'%'/'%25'}"
-          RES="${RES//$'\n'/'%0A'}"
-          RES="${RES//$'\r'/'%0D'}"
-          echo "::set-output name=BUILD_RESULT::$RES"
+          echo 'BUILD_RESULT<<EOF' >> $GITHUB_OUTPUT
+          curl https://httpbin.org/json -s >> $GITHUB_OUTPUT
+          echo 'EOF' >> $GITHUB_OUTPUT
 
       - name: Update slack with build result
         uses: archive/github-actions-slack@master

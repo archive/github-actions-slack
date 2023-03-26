@@ -9,7 +9,6 @@ jobs:
     name: Test 8 [windows-latest]
 
     steps:
-
       - name: Send Slack Message 1/3
         uses: archive/github-actions-slack@master
         id: send-message-1
@@ -28,7 +27,6 @@ jobs:
       - name: Result from "Send Slack Message"
         run: echo '${{ steps.send-message-1.outputs.slack-result }}'
 
-
       - name: Send Slack Message 2/3
         uses: archive/github-actions-slack@master
         id: send-message-2
@@ -39,7 +37,6 @@ jobs:
 
       - name: Result from "Send Slack Message"
         run: echo '${{ steps.send-message-2.outputs.slack-result }}'
-
 
       - name: Send Slack Message 3/3
         uses: archive/github-actions-slack@master
