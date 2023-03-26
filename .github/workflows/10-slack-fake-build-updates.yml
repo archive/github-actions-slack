@@ -29,7 +29,7 @@ jobs:
           RES="${RES//'%'/'%25'}"
           RES="${RES//$'\n'/'%0A'}"
           RES="${RES//$'\r'/'%0D'}"
-          echo "::set-output name=BUILD_RESULT::$RES"
+          echo "{BUILD_RESULT}={$RES}" >> $GITHUB_OUTPUT
 
       - name: Update slack with build result
         uses: archive/github-actions-slack@master
