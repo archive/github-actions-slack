@@ -6,7 +6,7 @@ jobs:
   slack-action:
     #if: ${{ false }}
     runs-on: ubuntu-lates
-    name: Test 10 [ubuntu-20.04]
+    name: Test 10 [ubuntu-lates]
 
     steps:
       - name: Send build started to slack
