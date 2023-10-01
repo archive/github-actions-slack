@@ -51,7 +51,7 @@ This action supports:
 
 - `slack-channel` - The channel/channels where you want the message (comma separated)
 
-- `slack-text` - The text of the message (or use `slack-blocks`)
+- `slack-text` - The text of the message (or use `slack-optional-blocks`)
 
 **Optional: Github Action Parameters:**
 
