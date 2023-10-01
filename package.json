@@ -14,15 +14,15 @@
     "deploy": "rm -f dist/index.js && yarn build && git ac build && git push"
   },
   "devDependencies": {
-    "@vercel/ncc": "^0.36.1",
-    "eslint": "^8.36.0",
-    "eslint-config-prettier": "^8.8.0",
-    "eslint-plugin-prettier": "^4.2.1",
-    "jest": "^29.5.0",
-    "prettier": "^2.8.7"
+    "@vercel/ncc": "^0.38.0",
+    "eslint": "^8.50.0",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-plugin-prettier": "^5.0.0",
+    "jest": "^29.7.0",
+    "prettier": "^3.0.3"
   },
   "dependencies": {
-    "@actions/core": "^1.10.0",
+    "@actions/core": "^1.10.1",
     "@actions/github": "^5.1.1"
   }
 }
