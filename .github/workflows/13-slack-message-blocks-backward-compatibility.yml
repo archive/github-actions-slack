@@ -15,8 +15,8 @@ jobs:
         with:
           slack-bot-user-oauth-access-token: ${{ secrets.SLACK_BOT_USER_OAUTH_ACCESS_TOKEN }}
           slack-channel: C06G1B1KLMU
-          #slack-blocks: >-
-          slack-optional-blocks: >-
+          # This is an old format, the correct one is "slack-optional-blocks"
+          slack-blocks: >-
             [
               {
                 "block_id": "text1",

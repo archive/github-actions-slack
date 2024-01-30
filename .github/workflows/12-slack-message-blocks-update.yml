@@ -15,7 +15,7 @@ jobs:
         with:
           slack-bot-user-oauth-access-token: ${{ secrets.SLACK_BOT_USER_OAUTH_ACCESS_TOKEN }}
           slack-channel: C046FKM3TNF
-          slack-blocks: >-
+          slack-optional-blocks: >-
             [
               {
                 "block_id": "text1",
