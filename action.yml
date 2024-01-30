@@ -78,5 +78,5 @@ outputs:
   slack-result:
     description: "The result from the post to slack"
 runs:
-  using: "node16"
+  using: "node20"
   main: "dist/index.js"
