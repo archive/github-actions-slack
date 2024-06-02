@@ -1,0 +1,20 @@
+name: test-1-slack-notification-with-optional-parameters
+
+on: [push]
+
+jobs:
+  slack-action:
+    #if: ${{ false }}
+    runs-on: ubuntu-20.04
+    name: Test 14 [ubuntu-20.04]
+
+    steps:
+      - name: Send Slack Message
+        uses: archive/github-actions-slack@master
+        id: send-message
+        with:
+          slack-bot-user-oauth-access-token: ${{ secrets.SLACK_BOT_USER_OAUTH_ACCESS_TOKEN }}
+          slack-channel: C075RQRGDC7
+          slack-text: "Test 14 - :cold_face: x :fire: = :grinning_face:"
+          ##slack-optional-icon_emoji: ":fire:"
+
