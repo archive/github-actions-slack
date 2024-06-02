@@ -15,6 +15,6 @@ jobs:
         with:
           slack-bot-user-oauth-access-token: ${{ secrets.SLACK_BOT_USER_OAUTH_ACCESS_TOKEN }}
           slack-channel: C075RQRGDC7
-          slack-text: "Test 14 - :cold_face: x :fire: = :grinning_face:"
-          ##slack-optional-icon_emoji: ":fire:"
+          slack-text: "Test 14 - :cold_face: x :fire: = :joy:"
+          slack-optional-icon_emoji: ":robot_face:"
 
