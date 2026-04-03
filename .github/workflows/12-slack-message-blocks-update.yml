@@ -2,11 +2,13 @@ name: test-12-slack-message-blocks-update
 
 on: [push, issues]
 
+permissions: {}
+
 jobs:
   slack-action:
     #if: ${{ false }}
-    runs-on: ubuntu-20.04
-    name: Test 12 [ubuntu-20.04]
+    runs-on: ubuntu-24.04
+    name: Test 12 [ubuntu-24.04]
 
     steps:
       - name: Send Slack Message (Blocks)

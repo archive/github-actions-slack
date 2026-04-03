@@ -2,6 +2,8 @@ name: test-2-slack-notification
 
 on: [push]
 
+permissions: {}
+
 jobs:
   slack-action:
     #if: ${{ false }}

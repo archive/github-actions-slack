@@ -2,11 +2,13 @@ name: test-1-slack-notification-with-optional-parameters
 
 on: [push]
 
+permissions: {}
+
 jobs:
   slack-action:
     #if: ${{ false }}
-    runs-on: ubuntu-20.04
-    name: Test 14 [ubuntu-20.04]
+    runs-on: ubuntu-24.04
+    name: Test 14 [ubuntu-24.04]
 
     steps:
       - name: Send Slack Message
@@ -17,4 +19,3 @@ jobs:
           slack-channel: C075RQRGDC7
           slack-text: "Test 14 - :cold_face: x :fire: = :joy:"
           slack-optional-icon_emoji: ":robot_face:"
-
