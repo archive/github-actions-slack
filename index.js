@@ -1,4 +1,4 @@
-const invoke = require("./src/invoke");
+import invoke from "./src/invoke.js";
 
 const run = async () => {
   await invoke();

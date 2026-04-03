@@ -1,13 +1,13 @@
-const assert = require("assert");
+import assert from "assert";
 
-const {
+import {
   apiPostMessage,
   apiAddReaction,
   apiUpdateMessage,
-} = require("../src/integration/slack-api");
-const buildMessage = require("../src/message/build-message");
-const buildReaction = require("../src/reaction/build-reaction");
-const buildUpdateMessage = require("../src/update-message/build-update-message");
+} from "../src/integration/slack-api.js";
+import buildMessage from "../src/message/build-message.js";
+import buildReaction from "../src/reaction/build-reaction.js";
+import buildUpdateMessage from "../src/update-message/build-update-message.js";
 
 const testSendMessage = async (channel, token, text, optional = {}) => {
   const message = buildMessage(channel, text, null, {

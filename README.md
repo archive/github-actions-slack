@@ -7,7 +7,7 @@
 
 This Action allows you to send messages (and reactions/threads/update/blocks) to Slack from your Github Actions. Supports Slack's required arguments as well as all the optional once. It's JavaScript-based and thus fast to run.
 
-The goal is to have zero npm/yarn dependencies except the two from Github that is required for an action to work (@actions/core & @actions/github).
+The goal is to have zero npm/yarn dependencies except `@actions/core` which is required for an action to work.
 
 ![Slack result](./images/slack-result.png "Slack result")
 

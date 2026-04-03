@@ -1,6 +1,6 @@
 describe("build message", () => {
-  test("with channel and text parameters", () => {
-    const buildMessage = require("./build-message");
+  test("with channel and text parameters", async () => {
+    const { default: buildMessage } = await import("./build-message.js");
 
     const message = buildMessage("channel", "text", null);
 
@@ -10,8 +10,8 @@ describe("build message", () => {
     });
   });
 
-  test("with channel and blocks parameters", () => {
-    const buildMessage = require("./build-message");
+  test("with channel and blocks parameters", async () => {
+    const { default: buildMessage } = await import("./build-message.js");
 
     const message = buildMessage("channel", null, "blocks");
 
@@ -21,8 +21,8 @@ describe("build message", () => {
     });
   });
 
-  test("with optional parameters", () => {
-    const buildMessage = require("./build-message");
+  test("with optional parameters", async () => {
+    const { default: buildMessage } = await import("./build-message.js");
 
     const message = buildMessage("channel", "text", null, { key: "value" });
 

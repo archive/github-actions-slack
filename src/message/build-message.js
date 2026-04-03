@@ -1,7 +1,7 @@
-const {
+import {
   restoreEscapedNewLine,
   restoreEscapedTab,
-} = require("../util/escaper.js");
+} from "../util/escaper.js";
 
 const buildMessage = (channel = "", text = "", blocks = "", optional = {}) => {
   if (!channel) {
@@ -35,4 +35,4 @@ const buildMessage = (channel = "", text = "", blocks = "", optional = {}) => {
   return message;
 };
 
-module.exports = buildMessage;
+export default buildMessage;

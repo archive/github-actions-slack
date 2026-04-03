@@ -1,6 +1,6 @@
-const context = require("../context");
-const { apiAddReaction } = require("../integration/slack-api");
-const buildMessage = require("./build-reaction");
+import * as context from "../context.js";
+import { apiAddReaction } from "../integration/slack-api.js";
+import buildMessage from "./build-reaction.js";
 
 const jsonPretty = (data) => JSON.stringify(data, undefined, 2);
 
@@ -24,4 +24,4 @@ const addReaction = async () => {
   }
 };
 
-module.exports = { addReaction };
+export { addReaction };

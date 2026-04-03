@@ -30,7 +30,7 @@ export default [...compat.extends("eslint:recommended", "plugin:prettier/recomme
         },
 
         ecmaVersion: 9,
-        sourceType: "commonjs",
+        sourceType: "module",
     },
 
     rules: {
