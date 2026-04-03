@@ -1,4 +1,4 @@
-const { post } = require("./slack-api-post");
+import { post } from "./slack-api-post.js";
 
 const hasErrors = (res) => !res || !res.ok;
 
@@ -39,4 +39,4 @@ const apiUpdateMessage = async (token, message) => {
   return res;
 };
 
-module.exports = { apiPostMessage, apiAddReaction, apiUpdateMessage };
+export { apiPostMessage, apiAddReaction, apiUpdateMessage };

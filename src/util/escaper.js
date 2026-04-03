@@ -3,4 +3,4 @@ const restoreEscapedNewLine = (text) =>
 
 const restoreEscapedTab = (text) => text.replace(/\\t/g, "\t");
 
-module.exports = { restoreEscapedNewLine, restoreEscapedTab };
+export { restoreEscapedNewLine, restoreEscapedTab };

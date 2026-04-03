@@ -1,4 +1,4 @@
-const context = require("../context");
+import * as context from "../context.js";
 
 const optional = () => {
   let opt = {};
@@ -15,4 +15,4 @@ const optional = () => {
   return opt;
 };
 
-module.exports = { optional };
+export { optional };

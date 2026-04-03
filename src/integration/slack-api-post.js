@@ -1,5 +1,5 @@
-const https = require("https");
-const context = require("../context");
+import https from "https";
+import * as context from "../context.js";
 
 const getOptions = (token, path) => {
   return {
@@ -64,4 +64,4 @@ const post = (token, path, message) => {
   });
 };
 
-module.exports = { post };
+export { post };

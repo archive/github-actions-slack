@@ -12,4 +12,4 @@ const buildReaction = (
   return message;
 };
 
-module.exports = buildReaction;
+export default buildReaction;

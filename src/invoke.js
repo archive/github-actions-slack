@@ -1,7 +1,7 @@
-const context = require("./context");
-const { postMessage } = require("./message");
-const { addReaction } = require("./reaction");
-const { updateMessage } = require("./update-message");
+import * as context from "./context.js";
+import { postMessage } from "./message/index.js";
+import { addReaction } from "./reaction/index.js";
+import { updateMessage } from "./update-message/index.js";
 
 const jsonPretty = (data) => JSON.stringify(data, undefined, 2);
 
@@ -28,4 +28,4 @@ const invoke = async () => {
   }
 };
 
-module.exports = invoke;
+export default invoke;

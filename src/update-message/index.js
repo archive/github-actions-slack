@@ -1,7 +1,7 @@
-const context = require("../context");
-const { apiUpdateMessage } = require("../integration/slack-api");
-const buildUpdateMessage = require("./build-update-message");
-const { optional } = require("../util/optional");
+import * as context from "../context.js";
+import { apiUpdateMessage } from "../integration/slack-api.js";
+import buildUpdateMessage from "./build-update-message.js";
+import { optional } from "../util/optional.js";
 
 const jsonPretty = (data) => JSON.stringify(data, undefined, 2);
 
@@ -27,4 +27,4 @@ const updateMessage = async () => {
   }
 };
 
-module.exports = { updateMessage };
+export { updateMessage };

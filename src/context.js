@@ -1,4 +1,4 @@
-const core = require("@actions/core");
+import * as core from "@actions/core";
 
 const getRequired = (name) => core.getInput(name, { required: true });
 
@@ -23,7 +23,7 @@ const info = (msg) => core.info(msg);
 
 const warning = (msg) => core.warning(msg);
 
-module.exports = {
+export {
   getRequired,
   getOptional,
   getEnv,
