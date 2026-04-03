@@ -12,11 +12,11 @@ A GitHub Action that sends messages, reactions, threads, and block-based message
 ## Commands
 
 ```bash
-yarn test                  # Run Jest unit tests (src/ only)
-yarn test-debug            # Debug Jest with Node inspector
-yarn lint                  # ESLint with auto-fix
-yarn build                 # Compile dist/index.js via ncc (required before deploy)
-yarn build-legacy          # Use if build fails due to OpenSSL issues
+npm test                   # Run Jest unit tests (src/ only)
+npm run test-debug         # Debug Jest with Node inspector
+npm run lint               # ESLint with auto-fix
+npm run build              # Compile dist/index.js via ncc (required before deploy)
+npm run build-legacy       # Use if build fails due to OpenSSL issues
 
 # Integration test (requires real Slack token)
 env BOT_USER_OAUTH_ACCESS_TOKEN=<token> CHANNEL=<channel-id> node integration-test/end-to-end.js
