@@ -1,6 +1,6 @@
 {
   "name": "github-actions-slack",
-  "version": "3.0.0",
+  "version": "1.0.0",
   "main": "index.js",
   "repository": "git@github.com:archive/github-actions-slack.git",
   "license": "MIT",
