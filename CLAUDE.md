@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## What this is
 
-A GitHub Action that sends messages, reactions, threads, and block-based messages to Slack via the Slack API. Written in JavaScript with zero runtime dependencies beyond `@actions/core` and `@actions/github`.
+A GitHub Action that sends messages, reactions, threads, and block-based messages to Slack via the Slack API. Written in JavaScript with one runtime dependency: `@actions/core`.
 
 - **Action entry point:** `dist/index.js` (compiled bundle — never edit this directly)
 - **Source entry point:** `index.js` → `src/invoke.js`
@@ -17,12 +17,18 @@ npm run test-debug         # Debug Jest with Node inspector
 npm run lint               # ESLint with auto-fix
 npm run build              # Compile dist/index.js via ncc (required before deploy)
 npm run build-legacy       # Use if build fails due to OpenSSL issues
-
-# Integration test (requires real Slack token)
-env BOT_USER_OAUTH_ACCESS_TOKEN=<token> CHANNEL=<channel-id> node integration-test/end-to-end.js
 ```
 
-**After any source change, run `yarn build` to update `dist/index.js`.** The action runs from `dist/index.js`, not the source files.
+Integration test (requires real Slack token):
+```bash
+# PowerShell
+$env:BOT_USER_OAUTH_ACCESS_TOKEN="<token>"; $env:CHANNEL="<channel-id>"; node integration-test/end-to-end.js
+
+# bash/macOS
+BOT_USER_OAUTH_ACCESS_TOKEN=<token> CHANNEL=<channel-id> node integration-test/end-to-end.js
+```
+
+**After any source change, run `npm run build` to update `dist/index.js`.** The action runs from `dist/index.js`, not the source files.
 
 ## Architecture
 
