@@ -2,6 +2,8 @@ name: test-7-slack-notification-multi-channel
 
 on: [push]
 
+permissions: {}
+
 jobs:
   slack-action:
     #if: ${{ false }}
