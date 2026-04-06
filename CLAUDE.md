@@ -15,8 +15,7 @@ A GitHub Action that sends messages, reactions, threads, and block-based message
 npm test                   # Run Jest unit tests (src/ only)
 npm run test-debug         # Debug Jest with Node inspector
 npm run lint               # ESLint with auto-fix
-npm run build              # Compile dist/index.js via ncc (required before deploy)
-npm run build-legacy       # Use if build fails due to OpenSSL issues
+npm run build              # Compile dist/index.js via esbuild (required before deploy)
 ```
 
 Integration test (requires real Slack token):
