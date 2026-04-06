@@ -19093,6 +19093,7 @@ var import_path = __toESM(require("path"), 1);
 
 // src/integration/slack-api-post.js
 var import_https = __toESM(require("https"), 1);
+var ALLOWED_UPLOAD_HOSTS = /* @__PURE__ */ new Set(["files.slack.com"]);
 var getOptions = (token, path2) => {
   return {
     hostname: "slack.com",
@@ -19181,9 +19182,19 @@ var postForm = (token, path2, fields) => {
     req.end();
   });
 };
+var validateUploadUrl = (uploadUrl) => {
+  const url = new URL(uploadUrl);
+  if (url.protocol !== "https:") {
+    throw new Error("Upload URL must use https");
+  }
+  if (!ALLOWED_UPLOAD_HOSTS.has(url.hostname)) {
+    throw new Error(`Upload host not allowed: ${url.hostname}`);
+  }
+  return url;
+};
 var postBinary = (uploadUrl, fileContent) => {
   return new Promise((resolve, reject) => {
-    const url = new URL(uploadUrl);
+    const url = validateUploadUrl(uploadUrl);
     const options = {
       hostname: url.hostname,
       port: 443,
@@ -19216,9 +19227,47 @@ var postBinary = (uploadUrl, fileContent) => {
 };
 
 // src/integration/slack-api.js
+var MAX_UPLOAD_BYTES = 10 * 1024 * 1024;
+var ALLOWED_EXTENSIONS = /* @__PURE__ */ new Set([
+  ".txt",
+  ".log",
+  ".json",
+  ".yaml",
+  ".yml",
+  ".xml",
+  ".pdf",
+  ".jpg",
+  ".jpeg",
+  ".png",
+  ".gif",
+  ".webp",
+  ".bmp",
+  ".svg",
+  ".tif",
+  ".tiff",
+  ".doc",
+  ".docx",
+  ".xls",
+  ".xlsx",
+  ".ppt",
+  ".pptx"
+]);
 var hasErrors = (res) => !res || !res.ok;
 var buildErrorMessage = (res) => {
   return `Error! ${JSON.stringify(res)} (response)`;
+};
+var validateUploadFile = (filePath) => {
+  const extension = import_path.default.extname(filePath).toLowerCase();
+  if (!ALLOWED_EXTENSIONS.has(extension)) {
+    throw new Error(`File type not allowed: ${extension || "<none>"}`);
+  }
+  const stat2 = import_fs2.default.statSync(filePath);
+  if (!stat2.isFile()) {
+    throw new Error("Upload path must be a file");
+  }
+  if (stat2.size > MAX_UPLOAD_BYTES) {
+    throw new Error(`File too large: ${stat2.size}`);
+  }
 };
 var apiPostMessage = async (token, message) => {
   const path2 = "/api/chat.postMessage";
@@ -19245,6 +19294,7 @@ var apiUpdateMessage = async (token, message) => {
   return res;
 };
 var apiUploadFile = async (token, payload) => {
+  validateUploadFile(payload.filePath);
   const fileContent = import_fs2.default.readFileSync(payload.filePath);
   const filename = payload.filename || import_path.default.basename(payload.filePath);
   const urlRes = await postForm(token, "/api/files.getUploadURLExternal", {
