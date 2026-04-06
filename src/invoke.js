@@ -2,6 +2,7 @@ import * as context from "./context.js";
 import { postMessage } from "./message/index.js";
 import { addReaction } from "./reaction/index.js";
 import { updateMessage } from "./update-message/index.js";
+import { uploadFile } from "./upload-file/index.js";
 
 const jsonPretty = (data) => JSON.stringify(data, undefined, 2);
 
@@ -18,6 +19,9 @@ const invoke = async () => {
         break;
       case "update-message":
         await updateMessage();
+        break;
+      case "upload-file":
+        await uploadFile();
         break;
       default:
         context.setFailed("Unhandled `slack-function`: " + func);

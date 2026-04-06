@@ -1063,14 +1063,14 @@ var require_util = __commonJS({
         }
         const port = url.port != null ? url.port : url.protocol === "https:" ? 443 : 80;
         let origin = url.origin != null ? url.origin : `${url.protocol || ""}//${url.hostname || ""}:${port}`;
-        let path = url.path != null ? url.path : `${url.pathname || ""}${url.search || ""}`;
+        let path2 = url.path != null ? url.path : `${url.pathname || ""}${url.search || ""}`;
         if (origin[origin.length - 1] === "/") {
           origin = origin.slice(0, origin.length - 1);
         }
-        if (path && path[0] !== "/") {
-          path = `/${path}`;
+        if (path2 && path2[0] !== "/") {
+          path2 = `/${path2}`;
         }
-        return new URL(`${origin}${path}`);
+        return new URL(`${origin}${path2}`);
       }
       if (!isHttpOrHttpsPrefixed(url.origin || url.protocol)) {
         throw new InvalidArgumentError("Invalid URL protocol: the URL must start with `http:` or `https:`.");
@@ -1521,39 +1521,39 @@ var require_diagnostics = __commonJS({
       });
       diagnosticsChannel.channel("undici:client:sendHeaders").subscribe((evt) => {
         const {
-          request: { method, path, origin }
+          request: { method, path: path2, origin }
         } = evt;
-        debuglog("sending request to %s %s/%s", method, origin, path);
+        debuglog("sending request to %s %s/%s", method, origin, path2);
       });
       diagnosticsChannel.channel("undici:request:headers").subscribe((evt) => {
         const {
-          request: { method, path, origin },
+          request: { method, path: path2, origin },
           response: { statusCode }
         } = evt;
         debuglog(
           "received response to %s %s/%s - HTTP %d",
           method,
           origin,
-          path,
+          path2,
           statusCode
         );
       });
       diagnosticsChannel.channel("undici:request:trailers").subscribe((evt) => {
         const {
-          request: { method, path, origin }
+          request: { method, path: path2, origin }
         } = evt;
-        debuglog("trailers received from %s %s/%s", method, origin, path);
+        debuglog("trailers received from %s %s/%s", method, origin, path2);
       });
       diagnosticsChannel.channel("undici:request:error").subscribe((evt) => {
         const {
-          request: { method, path, origin },
+          request: { method, path: path2, origin },
           error: error2
         } = evt;
         debuglog(
           "request to %s %s/%s errored - %s",
           method,
           origin,
-          path,
+          path2,
           error2.message
         );
       });
@@ -1602,9 +1602,9 @@ var require_diagnostics = __commonJS({
         });
         diagnosticsChannel.channel("undici:client:sendHeaders").subscribe((evt) => {
           const {
-            request: { method, path, origin }
+            request: { method, path: path2, origin }
           } = evt;
-          debuglog("sending request to %s %s/%s", method, origin, path);
+          debuglog("sending request to %s %s/%s", method, origin, path2);
         });
       }
       diagnosticsChannel.channel("undici:websocket:open").subscribe((evt) => {
@@ -1667,7 +1667,7 @@ var require_request = __commonJS({
     var kHandler = /* @__PURE__ */ Symbol("handler");
     var Request = class {
       constructor(origin, {
-        path,
+        path: path2,
         method,
         body,
         headers,
@@ -1682,11 +1682,11 @@ var require_request = __commonJS({
         expectContinue,
         servername
       }, handler) {
-        if (typeof path !== "string") {
+        if (typeof path2 !== "string") {
           throw new InvalidArgumentError("path must be a string");
-        } else if (path[0] !== "/" && !(path.startsWith("http://") || path.startsWith("https://")) && method !== "CONNECT") {
+        } else if (path2[0] !== "/" && !(path2.startsWith("http://") || path2.startsWith("https://")) && method !== "CONNECT") {
           throw new InvalidArgumentError("path must be an absolute URL or start with a slash");
-        } else if (invalidPathRegex.test(path)) {
+        } else if (invalidPathRegex.test(path2)) {
           throw new InvalidArgumentError("invalid request path");
         }
         if (typeof method !== "string") {
@@ -1752,7 +1752,7 @@ var require_request = __commonJS({
         this.completed = false;
         this.aborted = false;
         this.upgrade = upgrade || null;
-        this.path = query ? buildURL(path, query) : path;
+        this.path = query ? buildURL(path2, query) : path2;
         this.origin = origin;
         this.idempotent = idempotent == null ? method === "HEAD" || method === "GET" : idempotent;
         this.blocking = blocking == null ? false : blocking;
@@ -6271,7 +6271,7 @@ var require_client_h1 = __commonJS({
       return method !== "GET" && method !== "HEAD" && method !== "OPTIONS" && method !== "TRACE" && method !== "CONNECT";
     }
     function writeH1(client, request) {
-      const { method, path, host, upgrade, blocking, reset } = request;
+      const { method, path: path2, host, upgrade, blocking, reset } = request;
       let { body, headers, contentLength } = request;
       const expectsPayload = method === "PUT" || method === "POST" || method === "PATCH" || method === "QUERY" || method === "PROPFIND" || method === "PROPPATCH";
       if (util.isFormDataLike(body)) {
@@ -6337,7 +6337,7 @@ var require_client_h1 = __commonJS({
       if (blocking) {
         socket[kBlocking] = true;
       }
-      let header = `${method} ${path} HTTP/1.1\r
+      let header = `${method} ${path2} HTTP/1.1\r
 `;
       if (typeof host === "string") {
         header += `host: ${host}\r
@@ -6863,7 +6863,7 @@ var require_client_h2 = __commonJS({
     }
     function writeH2(client, request) {
       const session = client[kHTTP2Session];
-      const { method, path, host, upgrade, expectContinue, signal, headers: reqHeaders } = request;
+      const { method, path: path2, host, upgrade, expectContinue, signal, headers: reqHeaders } = request;
       let { body } = request;
       if (upgrade) {
         util.errorRequest(client, request, new Error("Upgrade not supported for H2"));
@@ -6930,7 +6930,7 @@ var require_client_h2 = __commonJS({
         });
         return true;
       }
-      headers[HTTP2_HEADER_PATH] = path;
+      headers[HTTP2_HEADER_PATH] = path2;
       headers[HTTP2_HEADER_SCHEME] = "https";
       const expectsPayload = method === "PUT" || method === "POST" || method === "PATCH";
       if (body && typeof body.read === "function") {
@@ -7283,9 +7283,9 @@ var require_redirect_handler = __commonJS({
           return this.handler.onHeaders(statusCode, headers, resume, statusText);
         }
         const { origin, pathname, search } = util.parseURL(new URL(this.location, this.opts.origin && new URL(this.opts.path, this.opts.origin)));
-        const path = search ? `${pathname}${search}` : pathname;
+        const path2 = search ? `${pathname}${search}` : pathname;
         this.opts.headers = cleanRequestHeaders(this.opts.headers, statusCode === 303, this.opts.origin !== origin);
-        this.opts.path = path;
+        this.opts.path = path2;
         this.opts.origin = origin;
         this.opts.maxRedirections = 0;
         this.opts.query = null;
@@ -8519,10 +8519,10 @@ var require_proxy_agent = __commonJS({
         };
         const {
           origin,
-          path = "/",
+          path: path2 = "/",
           headers = {}
         } = opts;
-        opts.path = origin + path;
+        opts.path = origin + path2;
         if (!("host" in headers) && !("Host" in headers)) {
           const { host } = new URL2(origin);
           headers.host = host;
@@ -10443,20 +10443,20 @@ var require_mock_utils = __commonJS({
       }
       return true;
     }
-    function safeUrl(path) {
-      if (typeof path !== "string") {
-        return path;
+    function safeUrl(path2) {
+      if (typeof path2 !== "string") {
+        return path2;
       }
-      const pathSegments = path.split("?");
+      const pathSegments = path2.split("?");
       if (pathSegments.length !== 2) {
-        return path;
+        return path2;
       }
       const qp = new URLSearchParams(pathSegments.pop());
       qp.sort();
       return [...pathSegments, qp.toString()].join("?");
     }
-    function matchKey(mockDispatch2, { path, method, body, headers }) {
-      const pathMatch = matchValue(mockDispatch2.path, path);
+    function matchKey(mockDispatch2, { path: path2, method, body, headers }) {
+      const pathMatch = matchValue(mockDispatch2.path, path2);
       const methodMatch = matchValue(mockDispatch2.method, method);
       const bodyMatch = typeof mockDispatch2.body !== "undefined" ? matchValue(mockDispatch2.body, body) : true;
       const headersMatch = matchHeaders(mockDispatch2, headers);
@@ -10478,7 +10478,7 @@ var require_mock_utils = __commonJS({
     function getMockDispatch(mockDispatches, key) {
       const basePath = key.query ? buildURL(key.path, key.query) : key.path;
       const resolvedPath = typeof basePath === "string" ? safeUrl(basePath) : basePath;
-      let matchedMockDispatches = mockDispatches.filter(({ consumed }) => !consumed).filter(({ path }) => matchValue(safeUrl(path), resolvedPath));
+      let matchedMockDispatches = mockDispatches.filter(({ consumed }) => !consumed).filter(({ path: path2 }) => matchValue(safeUrl(path2), resolvedPath));
       if (matchedMockDispatches.length === 0) {
         throw new MockNotMatchedError(`Mock dispatch not matched for path '${resolvedPath}'`);
       }
@@ -10516,9 +10516,9 @@ var require_mock_utils = __commonJS({
       }
     }
     function buildKey(opts) {
-      const { path, method, body, headers, query } = opts;
+      const { path: path2, method, body, headers, query } = opts;
       return {
-        path,
+        path: path2,
         method,
         body,
         headers,
@@ -10981,10 +10981,10 @@ var require_pending_interceptors_formatter = __commonJS({
       }
       format(pendingInterceptors) {
         const withPrettyHeaders = pendingInterceptors.map(
-          ({ method, path, data: { statusCode }, persist, times, timesInvoked, origin }) => ({
+          ({ method, path: path2, data: { statusCode }, persist, times, timesInvoked, origin }) => ({
             Method: method,
             Origin: origin,
-            Path: path,
+            Path: path2,
             "Status code": statusCode,
             Persistent: persist ? PERSISTENT : NOT_PERSISTENT,
             Invocations: timesInvoked,
@@ -15865,9 +15865,9 @@ var require_util6 = __commonJS({
         }
       }
     }
-    function validateCookiePath(path) {
-      for (let i = 0; i < path.length; ++i) {
-        const code = path.charCodeAt(i);
+    function validateCookiePath(path2) {
+      for (let i = 0; i < path2.length; ++i) {
+        const code = path2.charCodeAt(i);
         if (code < 32 || // exclude CTLs (0-31)
         code === 127 || // DEL
         code === 59) {
@@ -18507,11 +18507,11 @@ var require_undici = __commonJS({
           if (typeof opts.path !== "string") {
             throw new InvalidArgumentError("invalid opts.path");
           }
-          let path = opts.path;
+          let path2 = opts.path;
           if (!opts.path.startsWith("/")) {
-            path = `/${path}`;
+            path2 = `/${path2}`;
           }
-          url = new URL(util.parseOrigin(url).origin + path);
+          url = new URL(util.parseOrigin(url).origin + path2);
         } else {
           if (!opts) {
             opts = typeof url === "object" ? url : {};
@@ -19087,13 +19087,18 @@ var debugExtra = (name, json) => {
   debug(message);
 };
 
+// src/integration/slack-api.js
+var import_fs2 = __toESM(require("fs"), 1);
+var import_path = __toESM(require("path"), 1);
+
 // src/integration/slack-api-post.js
 var import_https = __toESM(require("https"), 1);
-var getOptions = (token, path) => {
+var ALLOWED_UPLOAD_HOSTS = /* @__PURE__ */ new Set(["files.slack.com"]);
+var getOptions = (token, path2) => {
   return {
     hostname: "slack.com",
     port: 443,
-    path,
+    path: path2,
     method: "POST",
     headers: {
       "Content-Type": "application/json; charset=utf-8",
@@ -19101,11 +19106,11 @@ var getOptions = (token, path) => {
     }
   };
 };
-var post = (token, path, message) => {
+var post = (token, path2, message) => {
   return new Promise((resolve, reject) => {
     const payload = JSON.stringify(message);
     debugExtra("SLACK POST PAYLOAD", payload);
-    const options = getOptions(token, path);
+    const options = getOptions(token, path2);
     const req = import_https.default.request(options, (res) => {
       const chunks = [];
       res.on("data", (chunk) => {
@@ -19134,35 +19139,192 @@ var post = (token, path, message) => {
     req.end();
   });
 };
+var postForm = (token, path2, fields) => {
+  return new Promise((resolve, reject) => {
+    const payload = new URLSearchParams(fields).toString();
+    debugExtra("SLACK POST FORM PAYLOAD", payload);
+    const options = {
+      hostname: "slack.com",
+      port: 443,
+      path: path2,
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+        "Content-Length": Buffer.byteLength(payload),
+        Authorization: `Bearer ${token}`
+      }
+    };
+    const req = import_https.default.request(options, (res) => {
+      const chunks = [];
+      res.on("data", (chunk) => {
+        chunks.push(chunk);
+      });
+      res.on("end", () => {
+        const result = Buffer.concat(chunks).toString();
+        const response = JSON.parse(result);
+        let isOk = res.statusCode >= 200 && res.statusCode <= 299;
+        if (response && response.hasOwnProperty("ok") && response.ok === false) {
+          isOk = false;
+        }
+        resolve({
+          statusCode: res.statusCode,
+          statusMessage: res.statusMessage,
+          ok: isOk,
+          result,
+          response
+        });
+      });
+    });
+    req.on("error", (error2) => {
+      reject(error2);
+    });
+    req.write(payload);
+    req.end();
+  });
+};
+var validateUploadUrl = (uploadUrl) => {
+  const url = new URL(uploadUrl);
+  if (url.protocol !== "https:") {
+    throw new Error("Upload URL must use https");
+  }
+  if (!ALLOWED_UPLOAD_HOSTS.has(url.hostname)) {
+    throw new Error(`Upload host not allowed: ${url.hostname}`);
+  }
+  return url;
+};
+var postBinary = (uploadUrl, fileContent) => {
+  return new Promise((resolve, reject) => {
+    const url = validateUploadUrl(uploadUrl);
+    const options = {
+      hostname: url.hostname,
+      port: 443,
+      path: url.pathname + url.search,
+      method: "POST",
+      headers: {
+        "Content-Type": "application/octet-stream",
+        "Content-Length": fileContent.length
+      }
+    };
+    debug2("SLACK UPLOAD BINARY to " + url.hostname + url.pathname);
+    const req = import_https.default.request(options, (res) => {
+      const chunks = [];
+      res.on("data", (chunk) => {
+        chunks.push(chunk);
+      });
+      res.on("end", () => {
+        resolve({
+          statusCode: res.statusCode,
+          ok: res.statusCode >= 200 && res.statusCode <= 299
+        });
+      });
+    });
+    req.on("error", (error2) => {
+      reject(error2);
+    });
+    req.write(fileContent);
+    req.end();
+  });
+};
 
 // src/integration/slack-api.js
+var MAX_UPLOAD_BYTES = 10 * 1024 * 1024;
+var ALLOWED_EXTENSIONS = /* @__PURE__ */ new Set([
+  ".txt",
+  ".log",
+  ".json",
+  ".yaml",
+  ".yml",
+  ".xml",
+  ".pdf",
+  ".jpg",
+  ".jpeg",
+  ".png",
+  ".gif",
+  ".webp",
+  ".bmp",
+  ".svg",
+  ".tif",
+  ".tiff",
+  ".doc",
+  ".docx",
+  ".xls",
+  ".xlsx",
+  ".ppt",
+  ".pptx"
+]);
 var hasErrors = (res) => !res || !res.ok;
 var buildErrorMessage = (res) => {
   return `Error! ${JSON.stringify(res)} (response)`;
 };
+var validateUploadFile = (filePath) => {
+  const extension = import_path.default.extname(filePath).toLowerCase();
+  if (!ALLOWED_EXTENSIONS.has(extension)) {
+    throw new Error(`File type not allowed: ${extension || "<none>"}`);
+  }
+  const stat2 = import_fs2.default.statSync(filePath);
+  if (!stat2.isFile()) {
+    throw new Error("Upload path must be a file");
+  }
+  if (stat2.size > MAX_UPLOAD_BYTES) {
+    throw new Error(`File too large: ${stat2.size}`);
+  }
+};
 var apiPostMessage = async (token, message) => {
-  const path = "/api/chat.postMessage";
-  const res = await post(token, path, message);
+  const path2 = "/api/chat.postMessage";
+  const res = await post(token, path2, message);
   if (hasErrors(res)) {
     throw buildErrorMessage(res);
   }
   return res;
 };
 var apiAddReaction = async (token, message) => {
-  const path = "/api/reactions.add";
-  const res = await post(token, path, message);
+  const path2 = "/api/reactions.add";
+  const res = await post(token, path2, message);
   if (hasErrors(res)) {
     throw buildErrorMessage(res);
   }
   return res;
 };
 var apiUpdateMessage = async (token, message) => {
-  const path = "/api/chat.update";
-  const res = await post(token, path, message);
+  const path2 = "/api/chat.update";
+  const res = await post(token, path2, message);
   if (hasErrors(res)) {
     throw buildErrorMessage(res);
   }
   return res;
+};
+var apiUploadFile = async (token, payload) => {
+  validateUploadFile(payload.filePath);
+  const fileContent = import_fs2.default.readFileSync(payload.filePath);
+  const filename = payload.filename || import_path.default.basename(payload.filePath);
+  const urlRes = await postForm(token, "/api/files.getUploadURLExternal", {
+    filename,
+    length: fileContent.length
+  });
+  if (hasErrors(urlRes)) {
+    throw buildErrorMessage(urlRes);
+  }
+  const { upload_url, file_id } = urlRes.response;
+  const uploadRes = await postBinary(upload_url, fileContent);
+  if (!uploadRes.ok) {
+    throw `Error uploading file content (status ${uploadRes.statusCode})`;
+  }
+  const completePayload = {
+    files: [{ id: file_id, title: payload.title || filename }],
+    channel_id: payload.channel
+  };
+  if (payload.initialComment) {
+    completePayload.initial_comment = payload.initialComment;
+  }
+  const result = await post(
+    token,
+    "/api/files.completeUploadExternal",
+    completePayload
+  );
+  if (hasErrors(result)) {
+    throw buildErrorMessage(result);
+  }
+  return result;
 };
 
 // src/util/escaper.js
@@ -19317,8 +19479,53 @@ var updateMessage = async () => {
   }
 };
 
-// src/invoke.js
+// src/upload-file/build-upload-file.js
+var buildUploadFile = (channel = "", filePath = "", filename = "", title = "", initialComment = "") => {
+  if (!channel) {
+    throw new Error("Channel must be set");
+  }
+  if (!filePath) {
+    throw new Error("File path must be set");
+  }
+  return {
+    channel,
+    filePath,
+    filename,
+    title,
+    initialComment
+  };
+};
+var build_upload_file_default = buildUploadFile;
+
+// src/upload-file/index.js
 var jsonPretty4 = (data) => JSON.stringify(data, void 0, 2);
+var uploadFile = async () => {
+  try {
+    const token = getRequired("slack-bot-user-oauth-access-token");
+    const channel = getRequired("slack-channel");
+    const filePath = getRequired("slack-upload-file-path");
+    const filename = getOptional("slack-upload-filename");
+    const title = getOptional("slack-upload-file-title");
+    const initialComment = getOptional("slack-upload-initial-comment");
+    const payload = build_upload_file_default(
+      channel,
+      filePath,
+      filename,
+      title,
+      initialComment
+    );
+    debugExtra("Upload File PAYLOAD", payload);
+    const result = await apiUploadFile(token, payload);
+    debugExtra("Upload File RESULT", result);
+    const resultAsJson = jsonPretty4(result);
+    setOutput2("slack-result", resultAsJson);
+  } catch (error2) {
+    setFailed2(jsonPretty4(error2));
+  }
+};
+
+// src/invoke.js
+var jsonPretty5 = (data) => JSON.stringify(data, void 0, 2);
 var invoke = async () => {
   try {
     const func = getOptional("slack-function") || "send-message";
@@ -19332,12 +19539,15 @@ var invoke = async () => {
       case "update-message":
         await updateMessage();
         break;
+      case "upload-file":
+        await uploadFile();
+        break;
       default:
         setFailed2("Unhandled `slack-function`: " + func);
         break;
     }
   } catch (error2) {
-    setFailed2("invoke failed:" + error2 + ":" + jsonPretty4(error2));
+    setFailed2("invoke failed:" + error2 + ":" + jsonPretty5(error2));
   }
 };
 var invoke_default = invoke;

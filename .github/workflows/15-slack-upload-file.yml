@@ -1,0 +1,29 @@
+name: test-15-slack-upload-file
+
+on: [push]
+
+permissions: {}
+
+jobs:
+  slack-action:
+    #if: ${{ false }}
+    runs-on: ubuntu-latest
+    name: Test 15 [ubuntu-latest]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Upload File to Slack
+        uses: archive/github-actions-slack@upload-files
+        id: upload-file
+        with:
+          slack-function: upload-file
+          slack-bot-user-oauth-access-token: ${{ secrets.SLACK_BOT_USER_OAUTH_ACCESS_TOKEN }}
+          slack-channel: C0ARB84BQC9
+          slack-upload-file-path: integration-test/one-does-not-simply.jpg
+          slack-upload-file-title: Test 15 - Image upload
+          slack-upload-initial-comment: Test 15 - Uploading a file 📎
+
+      - name: Result from "Upload File"
+        run: echo '${{ steps.upload-file.outputs.slack-result }}'

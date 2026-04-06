@@ -56,7 +56,19 @@ inputs:
     description: "https://api.slack.com/methods/chat.postMessage#arg_username"
     required: false
   slack-function:
-    description: send-message (https://api.slack.com/methods/chat.postMessage) or send-reaction (https://api.slack.com/methods/reactions.add) or update-message (https://api.slack.com/methods/chat.update)
+    description: send-message (https://api.slack.com/methods/chat.postMessage) or send-reaction (https://api.slack.com/methods/reactions.add) or update-message (https://api.slack.com/methods/chat.update) or upload-file (https://api.slack.com/methods/files.upload)
+    required: false
+  slack-upload-file-path:
+    description: "https://api.slack.com/methods/files.upload#arg_file"
+    required: false
+  slack-upload-filename:
+    description: "https://api.slack.com/methods/files.upload#arg_filename"
+    required: false
+  slack-upload-file-title:
+    description: "https://api.slack.com/methods/files.upload#arg_title"
+    required: false
+  slack-upload-initial-comment:
+    description: "https://api.slack.com/methods/files.upload#arg_initial_comment"
     required: false
   slack-emoji-name:
     description: "https://api.slack.com/methods/reactions.add#arg_name"

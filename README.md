@@ -1,13 +1,13 @@
-# Github Action for sending message (and reactions/threads/update/blocks) to Slack
+# Github Action for sending message (and reactions/threads/update/blocks/file uploads) to Slack
 
 — With support for Slack's optional arguments
 
 ![](https://img.shields.io/github/release/archive/github-actions-slack/all.svg)
 ![](https://snyk.io/test/github/archive/github-actions-slack/badge.svg)
 
-This Action allows you to send messages (and reactions/threads/update/blocks) to Slack from your Github Actions. Supports Slack's required arguments as well as all the optional once. It's JavaScript-based and thus fast to run.
+This Action allows you to send messages (and reactions/threads/update/blocks/file uploads) to Slack from your Github Actions. Supports Slack's required arguments as well as all the optional once. It's JavaScript-based and thus fast to run.
 
-The goal is to have zero npm/yarn dependencies except `@actions/core` which is required for an action to work.
+The goal is to have zero npm production dependencies except `@actions/core` which is required for an action to work.
 
 ![Slack result](./images/slack-result.png "Slack result")
 
@@ -36,6 +36,9 @@ This action supports:
 
 - 3. Send reaction on sent messages<br>
      <img src="./images/reaction.png" width="300">
+
+- 4. Upload files<br>
+     <img src="./images/upload.png" width="300">
 
 ## 1. Send messages to Slack
 
@@ -301,6 +304,68 @@ For some examples, please see:
 - [.github/workflows/11-slack-message-blocks.yml](.github/workflows/11-slack-message-blocks.yml)
 - [.github/workflows/12-slack-message-blocks-update.yml](.github/workflows/12-slack-message-blocks-update.yml)
 
+## 6. Upload files
+
+Upload files to a Slack channel using the `upload-file` function.
+
+**Required: Github Action Parameters:**
+
+- `slack-bot-user-oauth-access-token` - `SLACK_BOT_USER_OAUTH_ACCESS_TOKEN` secret
+
+- `slack-channel` - The channel where you want to upload the file
+
+- `slack-upload-file-path` - Path to the file to upload
+
+**Optional: Github Action Parameters:**
+
+- `slack-upload-filename` - Override the filename shown in Slack
+
+- `slack-upload-file-title` - Title of the file
+
+- `slack-upload-initial-comment` - Initial comment to add alongside the file
+
+**Upload security checks:**
+
+- Uploads are limited to `https` and allowlisted Slack upload hosts only. Currently the upload host must be `files.slack.com`.
+
+- Uploads are limited to 10 MB per file.
+
+- The upload path must point to a file with an allowlisted extension. Current allowlist: `.txt`, `.log`, `.json`, `.yaml`, `.yml`, `.xml`, `.pdf`, `.jpg`, `.jpeg`, `.png`, `.gif`, `.webp`, `.bmp`, `.svg`, `.tif`, `.tiff`, `.doc`, `.docx`, `.xls`, `.xlsx`, `.ppt`, `.pptx`.
+
+### Sample Action file
+
+[.github/workflows/15-slack-upload-file.yml](.github/workflows/15-slack-upload-file.yml)
+
+```
+name: slack-upload-file
+
+on: [push]
+
+jobs:
+  slack-upload-file:
+    runs-on: ubuntu-24.04
+    name: Uploads a file to Slack
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Upload File to Slack
+        uses: archive/github-actions-slack@v2.0.0
+        id: upload-file
+        with:
+          slack-function: upload-file
+          slack-bot-user-oauth-access-token: ${{ secrets.SLACK_BOT_USER_OAUTH_ACCESS_TOKEN }}
+          slack-channel: CPPUV5KU0
+          slack-upload-file-path: path/to/file.png
+          slack-upload-file-title: My File
+          slack-upload-initial-comment: Here is the file!
+      - name: Result from "Upload File"
+        run: echo "${{ steps.upload-file.outputs.slack-result }}"
+```
+
+![Slack result](./images/upload.png "Slack result")
+
 ## How to setup your first Github Action in your repository that will call this Action
 
 ### 1. Create a Slack bot
@@ -415,12 +480,12 @@ The source code moved from CommonJS (`require`) to ES Modules (`import`/`export`
 
 ## Development and testing
 
-See package.json for `yarn lint`, `yarn test`, etc.
+See package.json for commands.
 
 Remember to create the dist with `npm run build`.
 
 To run local integration test (from this repository):
 
 ```
-env BOT_USER_OAUTH_ACCESS_TOKEN=<YOUR TOKEN> CHANNEL=<YOUR CHANNEL> node integration-test/end-to-end.js
+env BOT_USER_OAUTH_ACCESS_TOKEN=<YOUR TOKEN> CHANNEL=<YOUR CHANNEL ID> node integration-test/end-to-end.js
 ```

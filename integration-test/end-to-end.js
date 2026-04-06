@@ -4,6 +4,7 @@ import {
   apiPostMessage,
   apiAddReaction,
   apiUpdateMessage,
+  apiUploadFile,
 } from "../src/integration/slack-api.js";
 import buildMessage from "../src/message/build-message.js";
 import buildReaction from "../src/reaction/build-reaction.js";
@@ -103,4 +104,16 @@ const testUpdateMessage = async (channel, token) => {
     process.env.CHANNEL,
     process.env.BOT_USER_OAUTH_ACCESS_TOKEN
   );
+
+  const uploadResult = await apiUploadFile(
+    process.env.BOT_USER_OAUTH_ACCESS_TOKEN,
+    {
+      channel: process.env.CHANNEL,
+      filePath: "integration-test/one-does-not-simply.jpg",
+      filename: "one-does-not-simply.jpg",
+      title: "Test 5 - Upload File",
+      initialComment: "Test 5 - testUploadFile 📎",
+    }
+  );
+  assert.strictEqual(uploadResult.statusCode, 200);
 })();
