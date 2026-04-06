@@ -15,7 +15,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Upload File to Slack
-        uses: archive/github-actions-slack@upload-files
+        uses: archive/github-actions-slack@master
         id: upload-file
         with:
           slack-function: upload-file
