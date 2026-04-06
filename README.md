@@ -413,7 +413,7 @@ This action is just an HTTPS POST to Slack API, so you can easily build this by 
 
 See package.json for `yarn lint`, `yarn test`, etc.
 
-Remember to create the dist with `yarn build`.
+Remember to create the dist with `npm run build`.
 
 To run local integration test (from this repository):
 
