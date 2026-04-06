@@ -47,7 +47,7 @@ jobs:
                 "type": "section",
                 "text": {
                   "type": "mrkdwn",
-                  "text": "Building... *done!*"
+                  "text": "Test 12 - Building... *done!*"
                 }
               }
             ]
