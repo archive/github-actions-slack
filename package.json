@@ -7,11 +7,11 @@
   "license": "MIT",
   "scripts": {
     "lint": "eslint --fix *.js",
-    "build": "esbuild index.js --bundle --platform=node --target=node24 --format=esm --outfile=dist/index.js --banner:js=\"import { createRequire } from 'module'; const require = createRequire(import.meta.url);\"",
+    "build": "esbuild index.js --bundle --platform=node --target=node24 --format=cjs --outfile=dist/index.cjs",
     "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js src --config=jest.config.cjs",
     "test-debug": "node --experimental-vm-modules --inspect-brk node_modules/jest/bin/jest.js --runInBand src --config=jest.config.cjs",
-    "deploy-wip": "rimraf dist/index.js && npm run build && git ac wip && git push",
-    "deploy": "rimraf dist/index.js && npm run build && git ac build && git push"
+    "deploy-wip": "rimraf dist/index.cjs && npm run build && git ac wip && git push",
+    "deploy": "rimraf dist/index.cjs && npm run build && git ac build && git push"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3.3.5",

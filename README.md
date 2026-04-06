@@ -409,6 +409,10 @@ It was a good way to learn more about Github Actions
 
 This action is just an HTTPS POST to Slack API, so you can easily build this by yourself, or use this, or use any other action available on the marketplace :)
 
+## v2 → v3: CommonJS vs ES Modules
+
+The source code moved from CommonJS (`require`) to ES Modules (`import`/`export`) in v3, with `"type": "module"` in `package.json`. However, the bundled action entry point (`dist/index.cjs`) is still built as CommonJS using esbuild. This is intentional for now,`@actions/core` and its dependencies (e.g. `tunnel`) use dynamic `require()` calls for Node built-ins like `net` and `tls`, which fail at runtime inside an ESM bundle. Building the action as CJS avoids this.
+
 ## Development and testing
 
 See package.json for `yarn lint`, `yarn test`, etc.
