@@ -1,4 +1,4 @@
-name: test-4-slack-thread
+name: test-4_v3-slack-thread
 
 on: [push]
 
@@ -19,7 +19,7 @@ jobs:
           slack-function: send-message
           slack-bot-user-oauth-access-token: ${{ secrets.SLACK_BOT_USER_OAUTH_ACCESS_TOKEN }}
           slack-channel: C036E7G0RPH
-          slack-text: Test 4 - Message to send thread to
+          slack-text: Test 4 (master) - Message to send thread to
 
       - name: Send "Slack Message" Result
         run: echo 'Data - ${{ steps.send-message.outputs.slack-result }}'
@@ -33,7 +33,7 @@ jobs:
           slack-function: send-message
           slack-bot-user-oauth-access-token: ${{ secrets.SLACK_BOT_USER_OAUTH_ACCESS_TOKEN }}
           slack-channel: ${{ fromJson(steps.send-message.outputs.slack-result).response.channel }}
-          slack-text: Test 4.1 - Reply in thread
+          slack-text: Test 4.1 (master) - Reply in thread
           slack-optional-thread_ts: ${{ fromJson(steps.send-message.outputs.slack-result).response.message.ts }}
           #slack-optional-reply_broadcast: true # To broadcast thread reply in channel
 

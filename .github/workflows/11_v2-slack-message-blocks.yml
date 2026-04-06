@@ -1,6 +1,8 @@
-name: test-11-slack-message-blocks
+name: test-11_v2-slack-message-blocks
 
-on: [push, issues]
+# Note: This action is only to ensure that backward compatibility is maintained
+
+on: [push]
 
 permissions: {}
 
@@ -12,7 +14,7 @@ jobs:
 
     steps:
       - name: Send Slack Message (Blocks)
-        uses: archive/github-actions-slack@master
+        uses: archive/github-actions-slack@v2.11.0
         id: send-message
         with:
           slack-bot-user-oauth-access-token: ${{ secrets.SLACK_BOT_USER_OAUTH_ACCESS_TOKEN }}
@@ -24,7 +26,7 @@ jobs:
                 "type": "section",
                 "text": {
                   "type": "mrkdwn",
-                  "text": "Test 11 - Building repo *product-service*"
+                  "text": "Test 11 (v2.11.0) - Building repo *product-service*"
                 }
               },
               {
