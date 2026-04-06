@@ -24,7 +24,7 @@ jobs:
                 "type": "section",
                 "text": {
                   "type": "mrkdwn",
-                  "text": "Building... *please wait*"
+                  "text": "Test 12 - Building... *please wait*"
                 }
               }
             ]

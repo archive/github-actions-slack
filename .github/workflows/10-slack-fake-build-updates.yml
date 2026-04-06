@@ -20,7 +20,8 @@ jobs:
           slack-bot-user-oauth-access-token: ${{ secrets.SLACK_BOT_USER_OAUTH_ACCESS_TOKEN }}
           slack-channel: C036UR31LTD
           slack-text: |
-            :hourglass: Build status: Building...
+            Test 10 -
+            hourglass: Build status: Building...
 
             Please wait 😁
 
