@@ -324,6 +324,14 @@ Upload files to a Slack channel using the `upload-file` function.
 
 - `slack-upload-initial-comment` - Initial comment to add alongside the file
 
+**Upload security checks:**
+
+- Uploads are limited to `https` and allowlisted Slack upload hosts only. Currently the upload host must be `files.slack.com`.
+
+- Uploads are limited to 10 MB per file.
+
+- The upload path must point to a file with an allowlisted extension. Current allowlist: `.txt`, `.log`, `.json`, `.yaml`, `.yml`, `.xml`, `.pdf`, `.jpg`, `.jpeg`, `.png`, `.gif`, `.webp`, `.bmp`, `.svg`, `.tif`, `.tiff`, `.doc`, `.docx`, `.xls`, `.xlsx`, `.ppt`, `.pptx`.
+
 ### Sample Action file
 
 [.github/workflows/15-slack-upload-file.yml](.github/workflows/15-slack-upload-file.yml)

@@ -1,6 +1,8 @@
 import https from "https";
 import * as context from "../context.js";
 
+const ALLOWED_UPLOAD_HOSTS = new Set(["files.slack.com"]);
+
 const getOptions = (token, path) => {
   return {
     hostname: "slack.com",
@@ -119,11 +121,25 @@ const postForm = (token, path, fields) => {
   });
 };
 
+const validateUploadUrl = (uploadUrl) => {
+  const url = new URL(uploadUrl);
+
+  if (url.protocol !== "https:") {
+    throw new Error("Upload URL must use https");
+  }
+
+  if (!ALLOWED_UPLOAD_HOSTS.has(url.hostname)) {
+    throw new Error(`Upload host not allowed: ${url.hostname}`);
+  }
+
+  return url;
+};
+
 // Used for step 2 of the files.getUploadURLExternal flow — posts raw binary
 // to the pre-signed upload URL returned by Slack (may be a different hostname).
 const postBinary = (uploadUrl, fileContent) => {
   return new Promise((resolve, reject) => {
-    const url = new URL(uploadUrl);
+    const url = validateUploadUrl(uploadUrl);
     const options = {
       hostname: url.hostname,
       port: 443,
@@ -161,4 +177,4 @@ const postBinary = (uploadUrl, fileContent) => {
   });
 };
 
-export { post, postForm, postBinary };
+export { post, postForm, postBinary, validateUploadUrl, ALLOWED_UPLOAD_HOSTS };
