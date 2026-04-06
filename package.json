@@ -8,7 +8,7 @@
   "scripts": {
     "lint": "eslint --fix *.js",
     "build": "ncc build index.js -o dist",
-    "build-legacy": "NODE_OPTIONS=--openssl-legacy-provider ncc build index.js -o dist",
+    "postbuild": "node --input-type=commonjs -e \"require('fs').writeFileSync('dist/package.json', '{}')\"",
     "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js src --config=jest.config.cjs",
     "test-debug": "node --experimental-vm-modules --inspect-brk node_modules/jest/bin/jest.js --runInBand src --config=jest.config.cjs",
     "deploy-wip": "rimraf dist/index.js && npm run build && git ac wip && git push",
