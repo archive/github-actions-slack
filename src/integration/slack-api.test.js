@@ -12,6 +12,12 @@ describe("slack api", () => {
       post: function (token, path, message) {
         return errorResponse;
       },
+      postForm: function (token, path, fields) {
+        return errorResponse;
+      },
+      postBinary: function (uploadUrl, fileContent) {
+        return errorResponse;
+      },
     }));
 
     const slackApi = await import("./slack-api.js");
